@@ -1,0 +1,9 @@
+<resources>
+
+    <style name="AppTheme" parent="android:Theme.Light.NoTitleBar" />
+	
+    <style name="AnimationPopup">
+	    <item name="@android:windowEnterAnimation">@android:anim/slide_in_left</item>
+	    <item name="@android:windowExitAnimation">@android:anim/slide_out_right</item>
+</style>
+</resources>

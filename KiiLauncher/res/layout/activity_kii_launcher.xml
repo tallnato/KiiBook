@@ -1,0 +1,70 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_kii_launcher_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    <LinearLayout 
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="#55c0c0c0"
+        android:orientation="horizontal"
+        android:padding="5dip">
+
+        <ImageView
+            android:id="@+id/activity_kii_launcher_logo"
+            android:layout_width="40dip"
+            android:layout_height="40dip"
+            android:layout_margin="5dip"
+            android:src="@drawable/ic_launcher"
+            android:contentDescription="@string/app_name" />
+
+        <ImageView
+            android:id="@+id/activity_kii_launcher_avatar"
+            android:layout_width="45dip"
+            android:layout_height="45dip"
+            android:src="@drawable/avatar_gusta"
+            android:paddingLeft="10dip"
+            android:background="#00ff00" />
+        <TableLayout 
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:gravity="center_vertical"
+            android:paddingLeft="10dip"
+            android:background="#00ff00">
+            <TextView 
+	            android:layout_width="fill_parent"
+	            android:layout_height="wrap_content"
+	            android:text="Me Gusta"
+	            android:textColor="#FFF"
+	            android:textStyle="bold"
+	            android:textSize="14sp"
+	            android:layout_margin="2dip"
+                />
+            <TableRow 
+	            android:layout_width="fill_parent"
+	            android:layout_height="wrap_content"
+				android:layout_margin="2dip">
+                <TextView 
+		            android:layout_width="wrap_content"
+		            android:layout_height="wrap_content"
+		            android:text="Nº26 | 6ºB"
+		            android:textColor="#FFF"
+	            	android:textSize="10sp"
+                />
+            </TableRow>
+        </TableLayout>
+    </LinearLayout>
+    <GridView xmlns:android="http://schemas.android.com/apk/res/android" 
+	    android:id="@+id/activity_kii_launcher_gridview"
+	    android:layout_width="fill_parent" 
+	    android:layout_height="fill_parent"
+	    android:columnWidth="90dp"
+	    android:numColumns="auto_fit"
+	    android:verticalSpacing="10dp"
+	    android:horizontalSpacing="10dp"
+	    android:stretchMode="columnWidth"
+	    android:gravity="center"
+	/>
+	
+</LinearLayout>

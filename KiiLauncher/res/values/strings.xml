@@ -1,0 +1,23 @@
+<resources>
+
+    <string name="app_name">KiiLauncher</string>
+    <string name="drawer_title">O meu KiiBook</string>
+    <string name="title_activity_kii_laucher">KiiLaucher</string>
+    
+    <string name="drawer_menu_apps">Aplicações</string>
+    <string name="drawer_menu_apps_widgets">Widgets</string>
+    <string name="drawer_menu_apps_all">Todas</string>
+    <string name="drawer_menu_apps_kii">Aplicações Kii</string>
+    
+    <string name="drawer_menu_library">Biblioteca</string>
+    <string name="drawer_menu_library_books">Livros</string>
+    <string name="drawer_menu_library_notes">Apontamentos</string>
+    <string name="drawer_menu_library_documents">Documentos</string>
+    
+    <string name="drawer_menu_favorites">Favoritos</string>
+    <string name="drawer_menu_movies">Videos</string>
+    <string name="drawer_menu_pictures">Fotos</string>
+    <string name="drawer_menu_music">Musica</string>
+    <string name="drawer_menu_downloads">Transferências</string>
+    <string name="drawer_menu_under_development">Em desenvolvimento</string>
+</resources>
