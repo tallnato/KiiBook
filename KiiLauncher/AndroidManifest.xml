@@ -7,8 +7,8 @@
 	<original-package android:name="com.kii.launcher" />
 	
     <uses-sdk
-        android:minSdkVersion="15"
-        android:targetSdkVersion="15" />
+        android:minSdkVersion="16"
+        android:targetSdkVersion="16" />
 
     <application
         android:icon="@drawable/ic_launcher"

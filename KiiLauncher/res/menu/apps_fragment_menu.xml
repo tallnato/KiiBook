@@ -1,13 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <group 
-        android:checkableBehavior="single">
-        <item android:id="@+id/apps_fragment_menu_all"
-              android:title="@string/drawer_menu_apps_all"
-              android:icon="@android:drawable/ic_menu_info_details"
-			  android:checked="true"/>
-        <item android:id="@+id/apps_fragment_menu_kii"
-              android:title="@string/drawer_menu_apps_kii"
-              android:icon="@android:drawable/ic_menu_compass"/>
-    </group>
+    <item android:id="@+id/apps_fragment_menu_kiimarket"
+              android:title="@string/kiimarket"
+              android:icon="@drawable/ic_kiimarket"
+              android:showAsAction="always|withText"/>
 </menu>

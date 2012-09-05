@@ -46,7 +46,7 @@ public class MusicFragment extends ListFragment implements IDrawerFragment {
         super.onCreate(savedInstanceState);
         File root = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/Music");
         
-        setListAdapter(new FileManagerAdapter(getActivity(), root, null));
+        setListAdapter(new FileManagerAdapter(getActivity(), root, ff));
     }
     
     @Override

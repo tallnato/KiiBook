@@ -4,7 +4,9 @@ package com.kii.launcher.drawer;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ListView;
 
 import com.kii.launcher.R;
@@ -21,15 +23,27 @@ public class MenuFragment extends ListFragment {
     public void onCreate( Bundle savedInstanceState ) {
     
         super.onCreate(savedInstanceState);
-        mMenuAdapter = new MenuAdapter(getActivity(), R.layout.fragment_kii_drawer_menu_item, getMenuItems());
+        mMenuAdapter = new MenuAdapter(this, R.layout.fragment_kii_drawer_menu_item, getMenuItems());
         setListAdapter(mMenuAdapter);
+    }
+    
+    @Override
+    public View onCreateView( LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState ) {
+    
+        View rootView = inflater.inflate(R.layout.fragment_kii_drawer_menu, container, false);
+        
+        return rootView;
     }
     
     @Override
     public void onListItemClick( ListView listView, View view, int position, long id ) {
     
         super.onListItemClick(listView, view, position, id);
-        
+        setSelectedItem(position);
+    }
+    
+    public void setSelectedItem( int position ) {
+    
         mMenuAdapter.setPosition(position);
         topActivity.onItemSelected(mMenuAdapter.getItem(position));
     }

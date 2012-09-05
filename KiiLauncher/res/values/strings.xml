@@ -4,6 +4,8 @@
     <string name="drawer_title">O meu KiiBook</string>
     <string name="title_activity_kii_laucher">KiiLaucher</string>
     
+    
+    <string name="kiimarket">KiiMarket</string>
     <string name="drawer_menu_apps">Aplicações</string>
     <string name="drawer_menu_apps_widgets">Widgets</string>
     <string name="drawer_menu_apps_all">Todas</string>
@@ -20,4 +22,21 @@
     <string name="drawer_menu_music">Musica</string>
     <string name="drawer_menu_downloads">Transferências</string>
     <string name="drawer_menu_under_development">Em desenvolvimento</string>
+    
+    <string name="drawer_menu_manager_back">Voltar</string>
+    
+    <string name="activity_kii_wall_calendar_agenda">Abrir agenda</string>
+    <string name="activity_kii_wall_calendar">Calendário</string>
+    
+    <string name="activity_kii_wall_messages">Mensagens</string>
+    <string name="activity_kii_wall_messages_show_all">Mostrar todas</string>
+    
+    <string name="activity_kii_wall_homework">Trabalhos para casa</string>
+    <string name="activity_kii_wall_homework_show_all">Mostrar todos</string>
+    
+    <string name="activity_kii_wall_news">Notícias</string>
+    <string name="activity_kii_wall_news_show_all">Mostrar todas</string>
+    
+    
+    <string name="activity_kii_wall_search">Procurar</string>
 </resources>

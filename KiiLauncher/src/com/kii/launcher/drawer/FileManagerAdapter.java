@@ -29,8 +29,9 @@ import java.util.List;
 
 public class FileManagerAdapter extends ArrayAdapter<File> {
     
-    private final File root;
-    private File       currentPath;
+    private final File       root;
+    private File             currentPath;
+    private final FileFilter fileFilter;
     
     public FileManagerAdapter( Context context, File root, FileFilter fileFilter ) {
     
@@ -38,6 +39,7 @@ public class FileManagerAdapter extends ArrayAdapter<File> {
         
         this.root = root;
         currentPath = root;
+        this.fileFilter = fileFilter;
     }
     
     @Override
@@ -59,8 +61,8 @@ public class FileManagerAdapter extends ArrayAdapter<File> {
         String mimetype = MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension);
         
         if (item.equals(currentPath.getParentFile())) {
-            icon.setImageResource(android.R.drawable.arrow_up_float);
-            text.setText("Top");
+            icon.setImageResource(android.R.drawable.ic_media_previous);
+            text.setText(R.string.drawer_menu_manager_back);
         } else {
             
             if (item.isDirectory()) {
@@ -93,12 +95,13 @@ public class FileManagerAdapter extends ArrayAdapter<File> {
                     if (!currentPath.equals(root)) {
                         add(currentPath.getParentFile());
                     }
-                    addAll(getFiles(currentPath, null));
+                    addAll(getFiles(currentPath, fileFilter));
                     notifyDataSetChanged();
                     
                     Toast.makeText(getContext(), currentPath.getAbsolutePath(), Toast.LENGTH_SHORT).show();
                     
-                    TextView tv = (TextView) v.getRootView().findViewById(R.id.fragment_kii_drawer_pictures_path);
+                    // TextView tv = (TextView)
+                    // v.getRootView().findViewById(R.id.fragment_kii_drawer_pictures_path);
                     // tv.setText("cenas");
                     
                     return;
@@ -112,8 +115,9 @@ public class FileManagerAdapter extends ArrayAdapter<File> {
                     i.setAction(android.content.Intent.ACTION_VIEW);
                     i.setDataAndType(Uri.fromFile(item), mimetype);
                     getContext().startActivity(i);
+                    
                 } else {
-                    Toast.makeText(getContext(), "não dá pá...", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "não dá pá..." + mimetype, Toast.LENGTH_SHORT).show();
                 }
             }
         });

@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-    <ImageView xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/imageView1"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:src="@drawable/shelf" />
+<GridView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/gridView1"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:gravity="center"
+    android:layout_gravity="center"
+    android:numColumns="5"
+    android:padding="0dip"
+    android:stretchMode="columnWidth"
+    android:layout_marginBottom="15dip" >
 
+</GridView>

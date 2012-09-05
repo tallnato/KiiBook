@@ -5,12 +5,14 @@ import android.support.v4.app.Fragment;
 
 public class MenuItem {
     
-    private static int     nMenuItemTotal = 0;
+    public final static String MENUITEMKEY    = "MenuItem:Key";
     
-    private final int      name;
-    private final int      iconResource;
-    private final Fragment fragment;
-    private final int      num;
+    private static int         nMenuItemTotal = 0;
+    
+    private final int          name;
+    private final int          iconResource;
+    private Fragment           fragment;
+    private final int          num;
     
     public MenuItem( IDrawerFragment ifrag ) {
     
@@ -51,5 +53,10 @@ public class MenuItem {
     public Fragment getFragment() {
     
         return fragment;
+    }
+    
+    public void setFragment( Fragment frag ) {
+    
+        fragment = frag;
     }
 }

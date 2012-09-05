@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal" 
+    android:padding="5dip">
+
+    <ImageView
+        android:id="@+id/activity_kii_wall_messages_item_image"
+        android:layout_width="40dip"
+        android:layout_height="40dip"
+        android:src="@drawable/avatar_gusta"
+        android:padding="2dip" />
+    <View 
+       android:layout_height="fill_parent" 
+       android:layout_width="1dip"
+       android:layout_marginLeft="5dip"
+       android:layout_marginRight="5dip"
+       android:background="#55FFFFFF" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/activity_kii_wall_messages_item_from_to"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold" />
+        <View 
+	       android:layout_height="1dip" 
+	       android:layout_width="fill_parent"
+	       android:layout_marginTop="3dip"
+	       android:layout_marginBottom="3dip"
+	       android:background="#55FFFFFF" />
+
+        <TextView
+            android:id="@+id/activity_kii_wall_messages_item_message"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textSize="12dip" />
+    </LinearLayout>
+
+</LinearLayout>

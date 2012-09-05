@@ -1,3 +1,8 @@
 eclipse.preferences.version=1
+encoding//src/com/kii/launcher/KiiLaucher.java=UTF-8
 encoding//src/com/kii/launcher/drawer/AppsFragment.java=UTF-8
 encoding//src/com/kii/launcher/drawer/FileManagerAdapter.java=UTF-8
+encoding//src/com/kii/launcher/drawer/LibraryFragment.java=UTF-8
+encoding//src/com/kii/launcher/wall/popups/HomeWorkPopUp.java=UTF-8
+encoding//src/com/kii/launcher/wall/popups/MessagePopUp.java=UTF-8
+encoding//src/com/kii/launcher/wall/popups/NewsPopUp.java=UTF-8

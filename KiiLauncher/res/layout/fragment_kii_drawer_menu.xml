@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+    <ListView 
+        android:id="@android:id/list"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1"
+        android:listSelector="@color/kii_drawer_menu_selected_menu"
+        android:choiceMode="singleChoice"/>
+    
+    <ImageView 
+        android:id="@+id/fragment_kii_drawer_menu_trash"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_gravity="center_horizontal|bottom"
+        android:padding="20dip"
+        android:layout_weight="5"/>
+
+</LinearLayout>

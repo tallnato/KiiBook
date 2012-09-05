@@ -6,11 +6,19 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
+import android.widget.Toast;
 
+import com.kii.launcher.PackagePermissions;
 import com.kii.launcher.R;
+import com.kii.launcher.drawer.favorites.AppFavoriteItem;
+import com.kii.launcher.drawer.favorites.FavoriteItem;
+import com.kii.launcher.drawer.favorites.FavoritesAdapter;
 import com.kii.launcher.drawer.util.IDrawerFragment;
 
 public class FavoritesFragment extends Fragment implements IDrawerFragment {
+    
+    private FavoritesAdapter mAdapter;
     
     @Override
     public void onCreate( Bundle savedInstanceState ) {
@@ -21,8 +29,39 @@ public class FavoritesFragment extends Fragment implements IDrawerFragment {
     @Override
     public View onCreateView( LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState ) {
     
-        View rootView = inflater.inflate(R.layout.fragment_kii_drawer_under_construction, container, false);
+        final View rootView = inflater.inflate(R.layout.fragment_kii_drawer_favorites, container, false);
+        
+        final ListView list = (ListView) rootView.findViewById(R.id.fragment_kii_drawer_favorites_list);
+        mAdapter = new FavoritesAdapter(getActivity());
+        list.setAdapter(mAdapter);
+        
         return rootView;
+    }
+    
+    @Override
+    public void onStop() {
+    
+        super.onStop();
+        
+    }
+    
+    public void addFavorite( FavoriteItem item ) {
+    
+        mAdapter.add(item);
+    }
+    
+    public void removeFavorite( FavoriteItem item ) {
+    
+        mAdapter.remove(item);
+    }
+    
+    public void dropView( Object dropObject ) {
+    
+        if (dropObject instanceof PackagePermissions) {
+            mAdapter.add(new AppFavoriteItem((PackagePermissions) dropObject));
+        } else {
+            Toast.makeText(getActivity(), "Unkown " + dropObject, Toast.LENGTH_LONG).show();
+        }
     }
     
     @Override

@@ -13,15 +13,17 @@ public class PackagePermissions implements Comparable<PackagePermissions>, Seria
     
     private static final long serialVersionUID = 1984367383700433342L;
     
+    private final int         id;
     private final String      label;
     private final String      packageName;
     private final String      intentActivity;
     private boolean           blocked;
     private final byte[]      appIcon;
     
-    public PackagePermissions( String packageName, String intentActivity, String appName, Drawable icon ) {
+    public PackagePermissions( int id, String packageName, String intentActivity, String appName, Drawable icon ) {
     
         super();
+        this.id = id;
         label = appName;
         this.packageName = packageName;
         this.intentActivity = intentActivity;
@@ -30,6 +32,18 @@ public class PackagePermissions implements Comparable<PackagePermissions>, Seria
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         ((BitmapDrawable) icon).getBitmap().compress(Bitmap.CompressFormat.PNG, 100, stream);
         appIcon = stream.toByteArray();
+    }
+    
+    public PackagePermissions( int id, String packageName, String intentActivity, String appName, byte[] icon ) {
+    
+        super();
+        this.id = id;
+        label = appName;
+        this.packageName = packageName;
+        this.intentActivity = intentActivity;
+        blocked = false;
+        
+        appIcon = icon;
     }
     
     public String getLabel() {
@@ -57,6 +71,11 @@ public class PackagePermissions implements Comparable<PackagePermissions>, Seria
         return intentActivity;
     }
     
+    public int getId() {
+    
+        return id;
+    }
+    
     public Bitmap getAppIcon() {
     
         return BitmapFactory.decodeByteArray(appIcon, 0, appIcon.length);
@@ -65,7 +84,8 @@ public class PackagePermissions implements Comparable<PackagePermissions>, Seria
     @Override
     public String toString() {
     
-        return "PackagePermissions [appName=" + label + ", packageName=" + packageName + ", intentActivity=" + intentActivity + "]";
+        return "PackagePermissions [id=" + id + ", label=" + label + ", packageName=" + packageName + ", intentActivity=" + intentActivity
+                                        + ", blocked=" + blocked + "]";
     }
     
     @Override
