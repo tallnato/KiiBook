@@ -11,7 +11,7 @@ import java.util.List;
 public class FavoritesAdapter extends ArrayAdapter<FavoriteItem> {
     
     private final AppFavoriteAdapter  appsAdapter;
-    private final BookFavoriteAdapter booksAdapter;
+    private BookFavoriteAdapter       booksAdapter;
     private List<VideoFavoriteItem>   videos;
     private List<PictureFavoriteItem> pictures;
     private List<MusicFavoriteItem>   music;
@@ -21,7 +21,7 @@ public class FavoritesAdapter extends ArrayAdapter<FavoriteItem> {
         super(context, android.R.layout.simple_list_item_1);
         
         appsAdapter = new AppFavoriteAdapter(context);
-        booksAdapter = new BookFavoriteAdapter(context);
+        // booksAdapter = new BookFavoriteAdapter(context);
     }
     
     @Override
@@ -77,7 +77,8 @@ public class FavoritesAdapter extends ArrayAdapter<FavoriteItem> {
     @Override
     public int getCount() {
     
-        return (appsAdapter.isEmpty() ? 0 : 1) + (booksAdapter.isEmpty() ? 0 : 1);
+        return appsAdapter.isEmpty() ? 1 : 1;// + (booksAdapter.isEmpty() ? 0 :
+                                             // 1);
         
         /*return (apps.isEmpty() ? 0 : 1) + (books.isEmpty() ? 0 : 1) + (videos.isEmpty() ? 0 : 1) + (pictures.isEmpty() ? 0 : 1)
                                         + (music.isEmpty() ? 0 : 1);*/

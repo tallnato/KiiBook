@@ -33,7 +33,7 @@ public class BookFavoriteAdapter {
     private final String                 title;
     private final BookFavoriteDataSource booksDataSource;
     
-    private final int                    NUM_HORIZONTAL_BOOKS;
+    private final int                    NUM_HORIZONTAL_BOOKS = 5;
     
     public BookFavoriteAdapter( Context context ) {
     
@@ -45,7 +45,8 @@ public class BookFavoriteAdapter {
         objects = booksDataSource.getAllBooks();
         booksDataSource.close();
         
-        NUM_HORIZONTAL_BOOKS = context.getResources().getInteger(R.integer.drawer_favorites_books_horizontal_count);
+        // NUM_HORIZONTAL_BOOKS =
+        // context.getResources().getInteger(R.integer.drawer_favorites_books_horizontal_count);
         
     }
     
