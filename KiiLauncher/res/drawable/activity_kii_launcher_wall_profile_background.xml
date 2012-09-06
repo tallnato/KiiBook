@@ -4,10 +4,9 @@
 	
     <gradient
         android:angle="-90"
-        android:endColor="#bb868585"
-        android:startColor="#c0c0c0" />
+        android:endColor="@color/kii_launcher_profile_background"
+        android:startColor="@color/kii_launcher_profile_background" />
 	
     <corners
-        android:bottomLeftRadius="8dp"
-        android:bottomRightRadius="8dp" />
+        android:radius="8dp" />
 </shape>

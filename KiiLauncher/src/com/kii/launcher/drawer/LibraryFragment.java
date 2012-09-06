@@ -1,9 +1,20 @@
 
 package com.kii.launcher.drawer;
 
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
@@ -11,47 +22,184 @@ import android.widget.GridView;
 import com.kii.launcher.R;
 import com.kii.launcher.drawer.util.IDrawerFragment;
 import com.kii.launcher.drawer.util.LibraryItem;
+import com.viewpagerindicator.CirclePageIndicator;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 public class LibraryFragment extends Fragment implements IDrawerFragment {
     
+    private int                 NUM_HORIZONTAL_BOOKS;
+    private int                 NUM_VERTICAL_BOOKS;
+    private int                 booksPerView;
+    
+    private ViewPager           mViewPager;
+    private PageViewAdapter     mPagerAdapter;
+    private CirclePageIndicator circleIndicator;
+    
+    private List<LibraryItem>   books;
+    
+    private static int          currentPos = 0;
+    
     @Override
     public void onCreate( Bundle savedInstanceState ) {
     
         super.onCreate(savedInstanceState);
+        
+        setHasOptionsMenu(true);
+        
+        NUM_HORIZONTAL_BOOKS = getResources().getInteger(R.integer.drawer_books_horizontal_count);
+        NUM_VERTICAL_BOOKS = getResources().getInteger(R.integer.drawer_books_vertical_count);
+        
+        booksPerView = NUM_HORIZONTAL_BOOKS * NUM_VERTICAL_BOOKS;
+        
+        books = new ArrayList<LibraryItem>();
+        File folder = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/kiibooks");
+        
+        new BookImageRetriver().execute(folder.listFiles());
     }
     
     @Override
     public View onCreateView( LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState ) {
     
-        GridView list = (GridView) inflater.inflate(R.layout.fragment_kii_drawer_library, container, false);
-        List<LibraryItem> books = new ArrayList<LibraryItem>();
-        books.add(new LibraryItem("Sr dos azeites", ""));
-        books.add(new LibraryItem("Sermão do gajo aos peixes", ""));
-        books.add(new LibraryItem("Os camões", ""));
-        books.add(new LibraryItem("Lusidias, os Cavalos", ""));
-        books.add(new LibraryItem("Harry Potter e o calhau filosofal", ""));
-        books.add(new LibraryItem("Sr dos azeites", ""));
-        books.add(new LibraryItem("Sermão do gajo aos peixes", ""));
-        books.add(new LibraryItem("Os camões", ""));
-        books.add(new LibraryItem("Lusidias, os Cavalos", ""));
-        books.add(new LibraryItem("Harry Potter e o calhau filosofal", ""));
-        books.add(new LibraryItem("Sr dos azeites", ""));
-        books.add(new LibraryItem("Sermão do gajo aos peixes", ""));
-        books.add(new LibraryItem("Os camões", ""));
-        books.add(new LibraryItem("Lusidias, os Cavalos", ""));
-        books.add(new LibraryItem("Harry Potter e o calhau filosofal", ""));
-        books.add(new LibraryItem("Sr dos azeites", ""));
-        books.add(new LibraryItem("Sermão do gajo aos peixes", ""));
-        books.add(new LibraryItem("Os camões", ""));
-        books.add(new LibraryItem("Lusidias, os Cavalos", ""));
-        books.add(new LibraryItem("Harry Potter e o calhau filosofal", ""));
+        View rootView = inflater.inflate(R.layout.fragment_kii_drawer_library, container, false);
         
-        list.setAdapter(new LibraryAdapter(getActivity(), books));
+        circleIndicator = (CirclePageIndicator) rootView.findViewById(R.id.fragment_kii_drawer_books_indicator);
         
-        return list;
+        mPagerAdapter = new PageViewAdapter();
+        mViewPager = (ViewPager) rootView.findViewById(R.id.fragment_kii_drawer_books_view_pager);
+        
+        mViewPager.setAdapter(mPagerAdapter);
+        
+        circleIndicator.setViewPager(mViewPager);
+        circleIndicator.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+            
+            @Override
+            public void onPageSelected( int position ) {
+            
+                currentPos = position;
+            }
+        });
+        
+        return rootView;
+    }
+    
+    @Override
+    public void onCreateOptionsMenu( Menu menu, MenuInflater inflater ) {
+    
+        inflater.inflate(R.menu.apps_fragment_menu, menu);
+    }
+    
+    @Override
+    public boolean onOptionsItemSelected( MenuItem item ) {
+    
+        switch (item.getItemId()) {
+            case R.id.apps_fragment_menu_kiimarket:
+                
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details")));
+                
+                return true;
+                
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+    
+    private class BookImageRetriver extends AsyncTask<File, LibraryItem, Void> {
+        
+        @Override
+        protected Void doInBackground( File... params ) {
+        
+            for (File f : params) {
+                if (!f.isDirectory()) {
+                    continue;
+                }
+                
+                File image = new File(f.getAbsolutePath() + "/cover.jpeg");
+                if (!image.exists()) {
+                    image = new File(f.getAbsolutePath() + "/cover.jpg");
+                } else if (!image.exists()) {
+                    image = new File(f.getAbsolutePath() + "/cover.png");
+                }
+                
+                Drawable icon = Drawable.createFromPath(image.getAbsolutePath());
+                
+                LibraryItem li = new LibraryItem(f.getName(), f.getAbsolutePath(), icon);
+                
+                publishProgress(li);
+            }
+            return null;
+        }
+        
+        @Override
+        protected void onProgressUpdate( LibraryItem... progress ) {
+        
+            books.add(progress[0]);
+            
+            mPagerAdapter.notifyDataSetChanged();
+            circleIndicator.notifyDataSetChanged();
+        }
+        
+        @Override
+        public void onPostExecute( Void result ) {
+        
+            circleIndicator.setCurrentItem(currentPos);
+        }
+        
+    }
+    
+    public void setPage( int position ) {
+    
+        currentPos = position;
+    }
+    
+    private class PageViewAdapter extends PagerAdapter {
+        
+        @Override
+        public int getCount() {
+        
+            return (int) Math.ceil(books.size() / (double) booksPerView);
+        }
+        
+        @Override
+        public Object instantiateItem( View collection, int position ) {
+        
+            List<LibraryItem> list;
+            
+            int start, nElem;
+            start = position * booksPerView;
+            
+            nElem = Math.min(books.size() - start, booksPerView);
+            
+            list = books.subList(start, start + nElem);
+            
+            LayoutInflater li = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            GridView gridview = (GridView) li.inflate(R.layout.fragment_kii_drawer_library_tabs, (ViewGroup) collection, false);
+            gridview.setAdapter(new LibraryAdapter(getActivity(), list));
+            
+            ((ViewPager) collection).addView(gridview);
+            
+            return gridview;
+        }
+        
+        @Override
+        public void destroyItem( View collection, int position, Object view ) {
+        
+            ((ViewPager) collection).removeView((View) view);
+        }
+        
+        @Override
+        public boolean isViewFromObject( View view, Object object ) {
+        
+            return view == object;
+        }
+        
+        @Override
+        public int getItemPosition( Object object ) {
+        
+            return POSITION_NONE;
+        }
     }
     
     @Override

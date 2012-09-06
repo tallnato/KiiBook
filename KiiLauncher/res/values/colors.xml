@@ -3,4 +3,6 @@
     <color name="wall_activated_button">#00ff00</color>
     
     <color name="kii_drawer_menu_selected_menu">#00ff00</color>
+    
+    <color name="kii_launcher_profile_background">#33cFcFcF</color>
 </resources>

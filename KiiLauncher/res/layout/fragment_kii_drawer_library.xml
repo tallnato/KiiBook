@@ -1,13 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<GridView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/gridView1"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:gravity="center"
-    android:layout_gravity="center"
-    android:numColumns="5"
-    android:padding="0dip"
-    android:stretchMode="columnWidth"
-    android:layout_marginBottom="15dip" >
-
-</GridView>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent">
+	
+	<android.support.v4.view.ViewPager
+		android:id="@+id/fragment_kii_drawer_books_view_pager"
+		android:layout_width="fill_parent"
+		android:layout_height="0dp"
+		android:layout_weight="1"
+		/>
+	
+    <com.viewpagerindicator.CirclePageIndicator
+		android:id="@+id/fragment_kii_drawer_books_indicator"
+		android:layout_height="wrap_content"
+		android:layout_width="fill_parent"
+		android:layout_marginBottom="5dip" />    
+</LinearLayout>

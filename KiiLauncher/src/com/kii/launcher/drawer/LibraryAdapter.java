@@ -24,12 +24,6 @@ public class LibraryAdapter extends ArrayAdapter<LibraryItem> {
     public LibraryAdapter( Context context, List<LibraryItem> books ) {
     
         super(context, 0, books);
-        int dif = 20 - books.size();
-        if (dif > 0) {
-            for (int i = 0; i < dif; i++) {
-                books.add(new LibraryItem());
-            }
-        }
     }
     
     @Override
@@ -40,49 +34,37 @@ public class LibraryAdapter extends ArrayAdapter<LibraryItem> {
         if (view == null) {
             view = ((Activity) getContext()).getLayoutInflater().inflate(R.layout.fragment_kii_drawer_library_shelf_item, parent, false);
         }
+        LibraryItem item = getItem(position);
         
         TextView tv = (TextView) view.findViewById(R.id.fragment_kii_drawer_library_item_text);
-        ImageView iv = (ImageView) view.findViewById(R.id.fragment_kii_drawer_library_item_image);
-        View v = view.findViewById(R.id.fragment_kii_drawer_library_item_divider);
+        final ImageView iv = (ImageView) view.findViewById(R.id.fragment_kii_drawer_library_item_image);
         
-        LibraryItem item = getItem(position);
-        if (item.isEmpty()) {
-            tv.setVisibility(View.INVISIBLE);
-            iv.setVisibility(View.INVISIBLE);
-            v.setVisibility(View.INVISIBLE);
-        } else {
-            tv.setVisibility(View.VISIBLE);
-            tv.setText(item.getName());
-            iv.setVisibility(View.VISIBLE);
-            v.setVisibility(View.VISIBLE);
-            
-            if (position % 2 == 0) {
-                iv.setImageResource(R.drawable.book);
-            } else {
-                iv.setImageResource(R.drawable.book2);
-            }
-        }
+        tv.setText(item.getName());
+        iv.setImageDrawable(item.getIcon());
         
+        view.setTag(item);
         iv.setTag(item);
         
-        iv.setOnClickListener(new OnClickListener() {
+        view.setOnClickListener(new OnClickListener() {
             
             @Override
             public void onClick( View view ) {
             
-                Toast.makeText(getContext(), "abrir o livro...", Toast.LENGTH_SHORT).show();
+                LibraryItem li = (LibraryItem) view.getTag();
+                
+                Toast.makeText(getContext(), "abrir o livro " + li.getName() + " ...", Toast.LENGTH_SHORT).show();
             }
         });
         
-        iv.setOnLongClickListener(new OnLongClickListener() {
+        view.setOnLongClickListener(new OnLongClickListener() {
             
             @Override
             public boolean onLongClick( View view ) {
             
                 ClipData data = ClipData.newPlainText("", "");
-                DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(view);
+                DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(iv);
                 
-                view.startDrag(data, shadowBuilder, view.getTag(), 0);
+                view.startDrag(data, shadowBuilder, iv.getTag(), 0);
                 
                 return true;
             }

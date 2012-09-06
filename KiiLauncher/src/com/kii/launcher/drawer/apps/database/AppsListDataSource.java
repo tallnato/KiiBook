@@ -16,6 +16,7 @@ import com.kii.launcher.PackagePermissions;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class AppsListDataSource {
@@ -67,13 +68,6 @@ public class AppsListDataSource {
         return createPackagePermissions(label, packageName, intent, stream.toByteArray());
     }
     
-    /*public void deleteComment( Comment comment ) {
-    
-        long id = comment.getId();
-        System.out.println("Comment deleted with id: " + id);
-        database.delete(MySQLiteHelper.TABLE_COMMENTS, MySQLiteHelper.COLUMN_ID + " = " + id, null);
-    }*/
-    
     public void deletePackage( String packageName ) {
     
         // TODO fix this shit
@@ -91,7 +85,8 @@ public class AppsListDataSource {
         List<PackagePermissions> list = new ArrayList<PackagePermissions>();
         Cursor cursor;
         try {
-            cursor = database.query(AppsListTable.TABLE_NAME, allColumns, null, null, null, null, AppsListTable.COLUMN_LABEL);
+            
+            cursor = database.query(AppsListTable.TABLE_NAME, allColumns, null, null, null, null, AppsListTable.COLUMN_LABEL + " ASC");
         }
         catch (SQLException e) {
             return null;
@@ -107,6 +102,9 @@ public class AppsListDataSource {
         if (list.isEmpty()) {
             return null;
         }
+        
+        Collections.sort(list);
+        
         return list;
     }
     

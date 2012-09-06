@@ -163,15 +163,11 @@ public class DrawerActivity extends FragmentActivity implements ListCallbacks {
             ft.setCustomAnimations(R.anim.slide_in_down, R.anim.slide_out_up);
         }
         
-        // if (menuItem.getFragment().isDetached()) {
-        // ft.detach(currentMenu.getFragment());
-        // ft.attach(menuItem.getFragment());
-        ft.replace(R.id.activity_kii_launcher_drawer_container, menuItem.getFragment());
-        /*} else {
-            ft.detach(currentMenu.getFragment());
-            ft.replace(R.id.activity_kii_launcher_drawer_container, menuItem.getFragment());
-        }*/
+        if (menuItem.getFragment() instanceof LibraryFragment) {
+            ((LibraryFragment) menuItem.getFragment()).setPage(0);
+        }
         
+        ft.replace(R.id.activity_kii_launcher_drawer_container, menuItem.getFragment());
         ft.commit();
         
         currentMenu = menuItem;

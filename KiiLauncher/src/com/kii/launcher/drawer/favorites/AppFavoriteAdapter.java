@@ -30,6 +30,8 @@ public class AppFavoriteAdapter {
     private final String                 title;
     private final AppsFavoriteDataSource appsDataSource;
     
+    private final int                    NUM_HORIZONTAL_APPS;
+    
     public AppFavoriteAdapter( Context context ) {
     
         this.context = context;
@@ -39,6 +41,9 @@ public class AppFavoriteAdapter {
         appsDataSource.open();
         objects = appsDataSource.getAllApps();
         appsDataSource.close();
+        
+        NUM_HORIZONTAL_APPS = context.getResources().getInteger(R.integer.drawer_favorites_apps_horizontal_count);
+        
     }
     
     public String getTitle() {
@@ -71,7 +76,7 @@ public class AppFavoriteAdapter {
         }
     }
     
-    public View getView( int position, View convertView, ViewGroup parent ) {
+    public View getView( View convertView, ViewGroup parent ) {
     
         convertView = ((Activity) context).getLayoutInflater().inflate(R.layout.fragment_kii_drawer_favorites_item, parent, false);
         
@@ -129,7 +134,7 @@ public class AppFavoriteAdapter {
                 }
             });
             row.addView(ll, new TableRow.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
-            if ((i + 1) % 10 == 0) {
+            if ((i + 1) % NUM_HORIZONTAL_APPS == 0) {
                 list.addView(row);
                 row = new TableRow(context);
             }

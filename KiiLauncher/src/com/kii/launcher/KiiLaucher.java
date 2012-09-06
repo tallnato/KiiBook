@@ -91,14 +91,13 @@ public class KiiLaucher extends Activity {
                 startActivity(new Intent(getApplicationContext(), DrawerActivity.class));
             }
         });
-        final ImageView iv = (ImageView) findViewById(R.id.activity_kii_launcher_avatar);
-        iv.setOnClickListener(new OnClickListener() {
+        View profile = findViewById(R.id.activity_kii_launcher_profile);
+        profile.setOnClickListener(new OnClickListener() {
             
             @Override
             public void onClick( View v ) {
             
-                Toast.makeText(getApplicationContext(), "mostrar fronha...", Toast.LENGTH_SHORT).show();
-                
+                Toast.makeText(getApplicationContext(), "mostrar prefil...", Toast.LENGTH_SHORT).show();
             }
         });
         

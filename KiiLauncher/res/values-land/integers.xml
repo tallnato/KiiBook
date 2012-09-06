@@ -2,4 +2,11 @@
 <resources>
     <integer name="drawer_apps_horizontal_count">7</integer>
     <integer name="drawer_apps_vertical_count">6</integer>
+    
+    <integer name="drawer_books_horizontal_count">5</integer>
+    <integer name="drawer_books_vertical_count">3</integer>
+    
+    <integer name="drawer_favorites_apps_horizontal_count">11</integer>
+    
+    <integer name="drawer_favorites_books_horizontal_count">5</integer>
 </resources>

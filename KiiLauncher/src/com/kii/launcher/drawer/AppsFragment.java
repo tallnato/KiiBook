@@ -36,6 +36,8 @@ public class AppsFragment extends Fragment implements IDrawerFragment {
     private PageViewAdapter                 mPagerAdapter;
     private CirclePageIndicator             circleIndicator;
     
+    private int                             appsPerView;
+    
     @Override
     public void onCreate( Bundle savedInstanceState ) {
     
@@ -46,6 +48,8 @@ public class AppsFragment extends Fragment implements IDrawerFragment {
         NUM_HORIZONTAL_APPS = getResources().getInteger(R.integer.drawer_apps_horizontal_count);
         NUM_VERTICAL_APPS = getResources().getInteger(R.integer.drawer_apps_vertical_count);
         
+        appsPerView = NUM_HORIZONTAL_APPS * NUM_VERTICAL_APPS;
+        
         if (installedApps == null || installedApps.isEmpty()) {
             AppsListDataSource appsDataSource = new AppsListDataSource(getActivity());
             appsDataSource.open();
@@ -53,7 +57,6 @@ public class AppsFragment extends Fragment implements IDrawerFragment {
             appsDataSource.close();
         }
         
-        getActivity().invalidateOptionsMenu();
     }
     
     @Override
@@ -114,13 +117,9 @@ public class AppsFragment extends Fragment implements IDrawerFragment {
             List<PackagePermissions> list;
             
             int start, nElem;
-            start = position * NUM_HORIZONTAL_APPS * NUM_VERTICAL_APPS;
+            start = position * appsPerView;
             
-            if (position == getCount() - 1) {
-                nElem = installedApps.size() - start;
-            } else {
-                nElem = (position + 1) * NUM_HORIZONTAL_APPS * NUM_VERTICAL_APPS;
-            }
+            nElem = Math.min(installedApps.size() - start, appsPerView);
             
             list = installedApps.subList(start, start + nElem);
             

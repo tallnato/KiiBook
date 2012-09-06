@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:gravity="left"
         android:layout_gravity="center_horizontal|bottom"
-        android:layout_marginTop="10dip"
+        android:layout_marginTop="4dip"
         android:maxLength="24"
         android:maxLines="1"
         android:textStyle="bold"
@@ -23,7 +23,6 @@
         android:shadowRadius="7"/>
 	
     <View
-        android:id="@+id/fragment_kii_drawer_library_item_divider"
         android:layout_width="fill_parent"
         android:layout_height="2dip"
         android:background="#500f" />

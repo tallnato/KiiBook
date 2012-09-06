@@ -11,7 +11,7 @@ import java.util.List;
 public class FavoritesAdapter extends ArrayAdapter<FavoriteItem> {
     
     private final AppFavoriteAdapter  appsAdapter;
-    private List<BookFavoriteItem>    books;
+    private final BookFavoriteAdapter booksAdapter;
     private List<VideoFavoriteItem>   videos;
     private List<PictureFavoriteItem> pictures;
     private List<MusicFavoriteItem>   music;
@@ -21,6 +21,7 @@ public class FavoritesAdapter extends ArrayAdapter<FavoriteItem> {
         super(context, android.R.layout.simple_list_item_1);
         
         appsAdapter = new AppFavoriteAdapter(context);
+        booksAdapter = new BookFavoriteAdapter(context);
     }
     
     @Override
@@ -30,9 +31,8 @@ public class FavoritesAdapter extends ArrayAdapter<FavoriteItem> {
             appsAdapter.add((AppFavoriteItem) item);
             
         } else if (item instanceof BookFavoriteItem) {
-            if (!books.contains(item)) {
-                books.add((BookFavoriteItem) item);
-            }
+            booksAdapter.add((BookFavoriteItem) item);
+            
         } else if (item instanceof VideoFavoriteItem) {
             if (!videos.contains(item)) {
                 videos.add((VideoFavoriteItem) item);
@@ -56,9 +56,8 @@ public class FavoritesAdapter extends ArrayAdapter<FavoriteItem> {
             appsAdapter.remove((AppFavoriteItem) item);
             
         } else if (item instanceof BookFavoriteItem) {
-            if (!books.contains(item)) {
-                books.add((BookFavoriteItem) item);
-            }
+            booksAdapter.remove((BookFavoriteItem) item);
+            
         } else if (item instanceof VideoFavoriteItem) {
             if (!videos.contains(item)) {
                 videos.add((VideoFavoriteItem) item);
@@ -78,7 +77,7 @@ public class FavoritesAdapter extends ArrayAdapter<FavoriteItem> {
     @Override
     public int getCount() {
     
-        return appsAdapter.isEmpty() ? 0 : 1;
+        return (appsAdapter.isEmpty() ? 0 : 1) + (booksAdapter.isEmpty() ? 0 : 1);
         
         /*return (apps.isEmpty() ? 0 : 1) + (books.isEmpty() ? 0 : 1) + (videos.isEmpty() ? 0 : 1) + (pictures.isEmpty() ? 0 : 1)
                                         + (music.isEmpty() ? 0 : 1);*/
@@ -89,7 +88,9 @@ public class FavoritesAdapter extends ArrayAdapter<FavoriteItem> {
     
         switch (position) {
             case 0:
-                return appsAdapter.getView(position, convertView, parent);
+                return appsAdapter.getView(convertView, parent);
+            case 1:
+                return booksAdapter.getView(convertView, parent);
                 
             default:
                 return null;

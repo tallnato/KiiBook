@@ -1,8 +1,6 @@
 
 package com.kii.launcher.drawer.favorites;
 
-import android.view.View;
-
 import com.kii.launcher.PackagePermissions;
 
 public class AppFavoriteItem implements FavoriteItem {
@@ -20,18 +18,12 @@ public class AppFavoriteItem implements FavoriteItem {
     }
     
     @Override
-    public View getView() {
-    
-        return null;
-    }
-    
-    @Override
     public boolean equals( Object o ) {
     
         if (!(o instanceof AppFavoriteItem)) {
             return false;
         }
         
-        return ((AppFavoriteItem) o).pp == pp;
+        return ((AppFavoriteItem) o).pp.equals(pp);
     }
 }

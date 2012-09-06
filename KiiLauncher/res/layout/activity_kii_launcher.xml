@@ -5,155 +5,162 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <LinearLayout
+    <FrameLayout
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="2dip"
-        android:layout_marginRight="2dip"
-        android:background="@drawable/activity_kii_launcher_wall_background"
-        android:orientation="horizontal"
-        android:padding="5dip" >
-
-        <ImageView
-            android:id="@+id/activity_kii_launcher_logo"
-            android:layout_width="40dip"
-            android:layout_height="40dip"
-            android:layout_margin="5dip"
-            android:contentDescription="@string/app_name"
-            android:src="@drawable/ic_launcher" />
+        android:layout_height="wrap_content" >
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:orientation="horizontal" >
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="2dip"
+            android:layout_marginRight="2dip"
+            android:background="@drawable/activity_kii_launcher_wall_background"
+            android:orientation="horizontal"
+            android:padding="5dip" >
 
-            <ImageView
-                android:id="@+id/activity_kii_launcher_avatar"
-                android:layout_width="45dip"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="5dip"
-                android:layout_marginRight="5dip"
-                android:background="@drawable/activity_kii_launcher_avatar_background"
-                android:padding="4dip"
-                android:src="@drawable/avatar_gusta" />
-
-            <TableLayout
+            <LinearLayout
+                android:id="@+id/activity_kii_launcher_profile"
                 android:layout_width="wrap_content"
-                android:layout_height="fill_parent"
-                android:gravity="center_vertical"
-                android:paddingLeft="10dip" >
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="60dip"
+                android:orientation="horizontal"
+                android:background="@drawable/activity_kii_launcher_profile_background" >
 
-                <TextView
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="2dip"
-                    android:text="Me Gusta"
-                    android:textColor="#000"
-                    android:textSize="14sp"
-                    android:textStyle="bold" />
+                <ImageView
+                    android:id="@+id/activity_kii_launcher_avatar"
+                    android:layout_width="45dip"
+                    android:layout_height="45dip"
+                    android:padding="4dip"
+                    android:src="@drawable/kid" />
 
-                <TableRow
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="2dip" >
+                <TableLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="10dip" >
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Nº26 | 6ºB"
+                        android:layout_margin="2dip"
+                        android:text="Tiago Silva"
                         android:textColor="#000"
-                        android:textSize="10sp" />
-                </TableRow>
-            </TableLayout>
-        </LinearLayout>
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
 
-        <View
-            android:layout_width="0dip"
-            android:layout_height="match_parent"
-            android:layout_weight="1" />
+                    <TableRow
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="2dip" >
 
-        <LinearLayout
-            android:id="@+id/activity_kii_wall_calendar"
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:layout_margin="5dip"
-            android:background="@drawable/calendar_background"
-            android:clickable="true"
-            android:minHeight="45dp"
-            android:minWidth="45dp"
-            android:orientation="vertical" >
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Nº26 | 6ºB"
+                            android:textColor="#000"
+                            android:textSize="12sp" />
+                    </TableRow>
+                </TableLayout>
+            </LinearLayout>
 
-            <TextView
-                android:id="@+id/activity_kii_wall_calendar_month"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:textColor="#000"
-                android:textSize="9dip"
-                android:textStyle="bold" />
+            <View
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
 
-            <TextView
-                android:id="@+id/activity_kii_wall_calendar_day"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:gravity="center"
-                android:textColor="#000"
-                android:textSize="17dip"
-                android:textStyle="bold" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/activity_kii_wall_messages"
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:layout_margin="5dip"
-            android:background="@drawable/ic_wall_messages"
-            android:clickable="true"
-            android:minHeight="45dp"
-            android:minWidth="45dp"
-            android:orientation="vertical" >
-            <TextView 
-                android:id="@+id/activity_kii_wall_messages_notifications"
+            <LinearLayout
+                android:id="@+id/activity_kii_wall_calendar"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:text="1"
-                android:padding="2dip"
-                android:background="#ff0000"
-                android:visibility="invisible"/>
+                android:layout_height="fill_parent"
+                android:layout_margin="5dip"
+                android:background="@drawable/calendar_background"
+                android:clickable="true"
+                android:minHeight="45dp"
+                android:minWidth="45dp"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/activity_kii_wall_calendar_month"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textColor="#000"
+                    android:textSize="9dip"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/activity_kii_wall_calendar_day"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:gravity="center"
+                    android:textColor="#000"
+                    android:textSize="17dip"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/activity_kii_wall_messages"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_margin="5dip"
+                android:background="@drawable/ic_wall_messages"
+                android:clickable="true"
+                android:minHeight="45dp"
+                android:minWidth="45dp"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/activity_kii_wall_messages_notifications"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:background="#ff0000"
+                    android:padding="2dip"
+                    android:text="1"
+                    android:visibility="invisible" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/activity_kii_wall_homework"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_margin="5dip"
+                android:background="@drawable/ic_wall_homework"
+                android:clickable="true"
+                android:minHeight="45dp"
+                android:minWidth="45dp" />
+
+            <LinearLayout
+                android:id="@+id/activity_kii_wall_news"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_margin="5dip"
+                android:background="@drawable/ic_wall_news"
+                android:clickable="true"
+                android:minHeight="45dp"
+                android:minWidth="45dp" />
+
+            <LinearLayout
+                android:id="@+id/activity_kii_wall_search"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_margin="5dip"
+                android:background="@drawable/ic_wall_search"
+                android:clickable="true"
+                android:minHeight="45dp"
+                android:minWidth="45dp" >
+            </LinearLayout>
         </LinearLayout>
-        <LinearLayout
-            android:id="@+id/activity_kii_wall_homework"
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:layout_margin="5dip"
-            android:background="@drawable/ic_wall_homework"
-            android:clickable="true"
-            android:minHeight="45dp"
-            android:minWidth="45dp" />
-        
-        <LinearLayout
-            android:id="@+id/activity_kii_wall_news"
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:layout_margin="5dip"
-            android:background="@drawable/ic_wall_news"
-            android:clickable="true"
-            android:minHeight="45dp"
-            android:minWidth="45dp" />
-        
-        <LinearLayout
-            android:id="@+id/activity_kii_wall_search"
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:layout_margin="5dip"
-            android:background="@drawable/ic_wall_search"
-            android:clickable="true"
-            android:minHeight="45dp"
-            android:minWidth="45dp" >
-        </LinearLayout>
-        
-    </LinearLayout>
+
+        <ImageView
+            android:id="@+id/activity_kii_launcher_logo"
+            android:layout_width="45dip"
+            android:layout_height="75dip"
+            android:layout_marginLeft="10dip"
+            android:layout_marginTop="3dip"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/ic_launcher" />
+    </FrameLayout>
 
     <GridView
         xmlns:android="http://schemas.android.com/apk/res/android"

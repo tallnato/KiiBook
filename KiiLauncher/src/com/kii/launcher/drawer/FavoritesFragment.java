@@ -12,9 +12,11 @@ import android.widget.Toast;
 import com.kii.launcher.PackagePermissions;
 import com.kii.launcher.R;
 import com.kii.launcher.drawer.favorites.AppFavoriteItem;
+import com.kii.launcher.drawer.favorites.BookFavoriteItem;
 import com.kii.launcher.drawer.favorites.FavoriteItem;
 import com.kii.launcher.drawer.favorites.FavoritesAdapter;
 import com.kii.launcher.drawer.util.IDrawerFragment;
+import com.kii.launcher.drawer.util.LibraryItem;
 
 public class FavoritesFragment extends Fragment implements IDrawerFragment {
     
@@ -59,7 +61,10 @@ public class FavoritesFragment extends Fragment implements IDrawerFragment {
     
         if (dropObject instanceof PackagePermissions) {
             mAdapter.add(new AppFavoriteItem((PackagePermissions) dropObject));
+        } else if (dropObject instanceof LibraryItem) {
+            mAdapter.add(new BookFavoriteItem((LibraryItem) dropObject));
         } else {
+            
             Toast.makeText(getActivity(), "Unkown " + dropObject, Toast.LENGTH_LONG).show();
         }
     }

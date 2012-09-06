@@ -9,13 +9,15 @@ import android.util.Log;
 import com.kii.launcher.drawer.apps.database.AppsListTable;
 import com.kii.launcher.drawer.apps.database.KiiListTable;
 import com.kii.launcher.drawer.favorites.database.AppFavoriteTable;
+import com.kii.launcher.drawer.favorites.database.BookFavoriteTable;
 
 public class DBDataSource extends SQLiteOpenHelper {
     
     private static final String      DATABASE_NAME    = "KiiLauncher.db";
-    private static final int         DATABASE_VERSION = 1;
+    private static final int         DATABASE_VERSION = 2;
     
-    private static final IAppTableDB list[]           = { new AppsListTable(), new KiiListTable(), new AppFavoriteTable() };
+    private static final IAppTableDB list[]           = { new AppsListTable(), new KiiListTable(), new AppFavoriteTable(),
+                                    new BookFavoriteTable() };
     
     public DBDataSource( Context context ) {
     
