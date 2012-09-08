@@ -6,7 +6,7 @@
     android:padding="3dip">
 
     <TextView
-        android:id="@+id/fragment_kii_drawer_pictures_path"
+        android:id="@+id/fragment_kii_drawer_videos_path"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:textStyle="bold"
@@ -20,10 +20,10 @@
         android:layout_margin="2dip" />
 
     <GridView
-        android:id="@+id/fragment_kii_drawer_pictures_grid"
+        android:id="@+id/fragment_kii_drawer_videos_grid"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:layout_gravity="center"
-        android:numColumns="@integer/drawer_pictures_horizontal_count" />
+        android:numColumns="@integer/drawer_videos_horizontal_count" />
 </LinearLayout>

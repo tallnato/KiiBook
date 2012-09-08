@@ -160,6 +160,6 @@ public class AppsFragment extends Fragment implements IDrawerFragment {
     @Override
     public int getIconResource() {
     
-        return R.drawable.ic_drawer_appsfragment;
+        return R.drawable.ic_drawer_applications;
     }
 }

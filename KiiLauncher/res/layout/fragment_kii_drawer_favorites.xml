@@ -8,11 +8,21 @@
         android:id="@+id/fragment_kii_drawer_favorites_list"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:divider="@null"
-        android:dividerHeight="0dp"
         android:choiceMode="none"
         android:clickable="false"
+        android:divider="@null"
+        android:dividerHeight="0dp"
         android:focusable="false"
         android:focusableInTouchMode="false"
         android:listSelector="@android:color/transparent" />
+
+    <TextView
+        android:id="@+id/fragment_kii_drawer_favorites_list_empty"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:text="@string/drawer_menu_favorites_empty"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
 </LinearLayout>

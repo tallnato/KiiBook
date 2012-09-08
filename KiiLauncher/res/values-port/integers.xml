@@ -6,5 +6,7 @@
     <integer name="drawer_books_horizontal_count">3</integer>
     <integer name="drawer_books_vertical_count">5</integer>
     
+    <integer name="drawer_pictures_horizontal_count">3</integer>
     
+    <integer name="drawer_videos_horizontal_count">3</integer>
 </resources>

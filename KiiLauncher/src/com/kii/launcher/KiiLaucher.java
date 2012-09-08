@@ -2,6 +2,7 @@
 package com.kii.launcher;
 
 import android.app.Activity;
+import android.app.ActivityOptions;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -88,7 +89,9 @@ public class KiiLaucher extends Activity {
             @Override
             public void onClick( View v ) {
             
-                startActivity(new Intent(getApplicationContext(), DrawerActivity.class));
+                Bundle b = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.slide_in_up, android.R.anim.fade_out)
+                                                .toBundle();
+                startActivity(new Intent(getApplicationContext(), DrawerActivity.class), b);
             }
         });
         View profile = findViewById(R.id.activity_kii_launcher_profile);

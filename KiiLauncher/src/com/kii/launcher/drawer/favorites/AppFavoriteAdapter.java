@@ -10,11 +10,13 @@ import android.view.View.DragShadowBuilder;
 import android.view.View.OnClickListener;
 import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 
-import com.devsmart.android.ui.HorizontalListView;
 import com.kii.launcher.PackagePermissions;
 import com.kii.launcher.R;
 import com.kii.launcher.drawer.favorites.database.AppsFavoriteDataSource;
@@ -28,8 +30,6 @@ public class AppFavoriteAdapter {
     private final String                 title;
     private final AppsFavoriteDataSource appsDataSource;
     
-    private final Adapter                mAdapter;
-    
     public AppFavoriteAdapter( Context context ) {
     
         this.context = context;
@@ -39,13 +39,6 @@ public class AppFavoriteAdapter {
         appsDataSource.open();
         objects = appsDataSource.getAllApps();
         appsDataSource.close();
-        
-        mAdapter = new Adapter(context);
-    }
-    
-    public String getTitle() {
-    
-        return title;
     }
     
     public void add( AppFavoriteItem item ) {
@@ -55,8 +48,6 @@ public class AppFavoriteAdapter {
             appsDataSource.createFavoriteApp(item.getPp().getId());
             objects = appsDataSource.getAllApps();
             appsDataSource.close();
-            
-            mAdapter.notifyDataSetChanged();
         }
     }
     
@@ -72,71 +63,39 @@ public class AppFavoriteAdapter {
             appsDataSource.deleteFavoriteApp(item.getPp().getId());
             objects = appsDataSource.getAllApps();
             appsDataSource.close();
-            
-            mAdapter.notifyDataSetChanged();
         }
     }
     
     public View getView( View convertView, ViewGroup parent ) {
     
-        System.out.println("" + objects.size());
-        
         if (convertView == null) {
             convertView = ((Activity) context).getLayoutInflater().inflate(R.layout.fragment_kii_drawer_favorites_item, parent, false);
         }
         
         TextView section = (TextView) convertView.findViewById(R.id.fragment_kii_drawer_favorites_section_title);
-        HorizontalListView list = (HorizontalListView) convertView.findViewById(R.id.fragment_kii_drawer_favorites_section_list);
-        list.setEmptyView(convertView.findViewById(R.id.fragment_kii_drawer_favorites_section_list_empty));
+        TableLayout list = (TableLayout) convertView.findViewById(R.id.fragment_kii_drawer_favorites_section_list);
+        
+        list.removeAllViews();
         
         section.setText(title);
-        list.setAdapter(mAdapter);
         
-        return convertView;
-    }
-    
-    private class Adapter extends ArrayAdapter<AppFavoriteItem> {
-        
-        public Adapter( Context context ) {
-        
-            super(context, 0);
-        }
-        
-        @Override
-        public AppFavoriteItem getItem( int position ) {
-        
-            return objects.get(position);
-        }
-        
-        @Override
-        public int getCount() {
-        
-            return objects.size();
-        }
-        
-        @Override
-        public View getView( int position, View convertView, ViewGroup parent ) {
-        
-            if (convertView == null) {
-                convertView = ((Activity) context).getLayoutInflater().inflate(R.layout.fragment_kii_drawer_favorites_apps_iconlayout,
-                                                parent, false);
-            }
-            
-            AppFavoriteItem item = getItem(position);
+        TableRow row = new TableRow(context);
+        for (int i = 0; i < objects.size(); i++) {
+            AppFavoriteItem item = objects.get(i);
             PackagePermissions app = item.getPp();
             
-            ImageView iv = (ImageView) convertView.findViewById(R.id.fragment_kii_drawer_favorites_apps_iconlayout_icon);
-            TextView tv = (TextView) convertView.findViewById(R.id.fragment_kii_drawer_favorites_apps_iconlayout_name);
+            LinearLayout ll = (LinearLayout) ((Activity) context).getLayoutInflater().inflate(
+                                            R.layout.fragment_kii_drawer_favorites_apps_iconlayout, list, false);
+            
+            ImageView iv = (ImageView) ll.findViewById(R.id.fragment_kii_drawer_favorites_apps_iconlayout_icon);
+            TextView tv = (TextView) ll.findViewById(R.id.fragment_kii_drawer_favorites_apps_iconlayout_name);
             
             iv.setImageBitmap(app.getAppIcon());
             tv.setText(app.getLabel());
             
-            iv.setImageBitmap(app.getAppIcon());
-            tv.setText(app.getLabel());
+            ll.setTag(item);
             
-            convertView.setTag(item);
-            
-            convertView.setOnClickListener(new OnClickListener() {
+            ll.setOnClickListener(new OnClickListener() {
                 
                 @Override
                 public void onClick( View view ) {
@@ -148,11 +107,10 @@ public class AppFavoriteAdapter {
                     intent.setClassName(app.getPp().getPackage(), app.getPp().getIntentActivity());
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
                     context.startActivity(intent);
-                    
                 }
             });
             
-            convertView.setOnLongClickListener(new OnLongClickListener() {
+            ll.setOnLongClickListener(new OnLongClickListener() {
                 
                 @Override
                 public boolean onLongClick( View view ) {
@@ -166,8 +124,10 @@ public class AppFavoriteAdapter {
                 }
             });
             
-            return convertView;
+            row.addView(ll, new TableRow.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
         }
+        list.addView(row);
         
+        return convertView;
     }
 }

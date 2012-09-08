@@ -5,7 +5,6 @@ import android.app.Activity;
 import android.content.ClipData;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-import android.os.AsyncTask;
 import android.view.View;
 import android.view.View.DragShadowBuilder;
 import android.view.View.OnClickListener;
@@ -33,26 +32,15 @@ public class BookFavoriteAdapter {
     private final String                 title;
     private final BookFavoriteDataSource booksDataSource;
     
-    private final int                    NUM_HORIZONTAL_BOOKS = 5;
-    
     public BookFavoriteAdapter( Context context ) {
     
         this.context = context;
-        title = context.getResources().getString(R.string.drawer_menu_library);
+        title = context.getResources().getString(R.string.drawer_menu_library_books);
         booksDataSource = new BookFavoriteDataSource(context);
         
         booksDataSource.open();
         objects = booksDataSource.getAllBooks();
         booksDataSource.close();
-        
-        // NUM_HORIZONTAL_BOOKS =
-        // context.getResources().getInteger(R.integer.drawer_favorites_books_horizontal_count);
-        
-    }
-    
-    public String getTitle() {
-    
-        return title;
     }
     
     public void add( BookFavoriteItem item ) {
@@ -82,10 +70,14 @@ public class BookFavoriteAdapter {
     
     public View getView( View convertView, ViewGroup parent ) {
     
-        convertView = ((Activity) context).getLayoutInflater().inflate(R.layout.fragment_kii_drawer_favorites_item, parent, false);
+        if (convertView == null) {
+            convertView = ((Activity) context).getLayoutInflater().inflate(R.layout.fragment_kii_drawer_favorites_item, parent, false);
+        }
         
         TextView section = (TextView) convertView.findViewById(R.id.fragment_kii_drawer_favorites_section_title);
         TableLayout list = (TableLayout) convertView.findViewById(R.id.fragment_kii_drawer_favorites_section_list);
+        
+        list.removeAllViews();
         
         section.setText(title);
         
@@ -163,33 +155,9 @@ public class BookFavoriteAdapter {
             }).run();
             
             row.addView(ll, new TableRow.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
-            if ((i + 1) % NUM_HORIZONTAL_BOOKS == 0) {
-                list.addView(row);
-                row = new TableRow(context);
-            }
         }
         list.addView(row);
         
         return convertView;
-    }
-    
-    private class BookImageRetriver extends AsyncTask<BookFavoriteItem, BookFavoriteItem, Void> {
-        
-        @Override
-        protected Void doInBackground( BookFavoriteItem... params ) {
-        
-            return null;
-        }
-        
-        @Override
-        protected void onProgressUpdate( BookFavoriteItem... progress ) {
-        
-        }
-        
-        @Override
-        public void onPostExecute( Void result ) {
-        
-        }
-        
     }
 }

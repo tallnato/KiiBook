@@ -6,7 +6,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.ThumbnailUtils;
 import android.net.Uri;
+import android.provider.MediaStore;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -47,7 +49,7 @@ public class FileManagerAdapter extends ArrayAdapter<File> {
     
         View view = convertView;
         TextView text;
-        ImageView icon;
+        final ImageView icon;
         
         if (view == null) {
             view = ((Activity) getContext()).getLayoutInflater().inflate(R.layout.fragment_kii_drawer_menu_item, parent, false);
@@ -56,7 +58,7 @@ public class FileManagerAdapter extends ArrayAdapter<File> {
         text = (TextView) view.findViewById(R.id.fragment_kii_drawer_menu_item_text);
         icon = (ImageView) view.findViewById(R.id.fragment_kii_drawer_menu_item_icon);
         
-        File item = getItem(position);
+        final File item = getItem(position);
         String extension = MimeTypeMap.getFileExtensionFromUrl(item.getAbsolutePath()).toLowerCase();
         String mimetype = MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension);
         
@@ -68,12 +70,23 @@ public class FileManagerAdapter extends ArrayAdapter<File> {
             if (item.isDirectory()) {
                 icon.setImageResource(R.drawable.ic_drawer_folder);
             } else if (mimetype != null && mimetype.contains("image")) {
-                Bitmap b = getPreview(item.toURI());
-                if (b != null) {
-                    icon.setImageBitmap(b);
-                } else {
-                    icon.setImageResource(android.R.drawable.ic_input_add);
-                }
+                new Thread(new Runnable() {
+                    
+                    @Override
+                    public void run() {
+                    
+                        Bitmap b = getPreview(item.toURI());
+                        if (b != null) {
+                            icon.setImageBitmap(b);
+                        } else {
+                            icon.setImageResource(R.drawable.ic_drawer_music);
+                        }
+                    }
+                }).start();
+            } else if (mimetype != null && mimetype.contains("video")) {
+                Bitmap bMap = ThumbnailUtils.createVideoThumbnail(item.getAbsolutePath(), MediaStore.Video.Thumbnails.MICRO_KIND);
+                icon.setImageBitmap(bMap);
+                
             } else {
                 icon.setImageResource(android.R.drawable.ic_input_get);
             }

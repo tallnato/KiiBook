@@ -181,6 +181,27 @@ public class DrawerActivity extends FragmentActivity implements ListCallbacks {
     }
     
     @Override
+    public void onBackPressed() {
+    
+        if (currentMenu.getFragment() instanceof PicturesFragment) {
+            PicturesFragment pf = (PicturesFragment) currentMenu.getFragment();
+            if (!pf.goUp()) {
+                super.onBackPressed();
+                overridePendingTransition(android.R.anim.fade_in, R.anim.slide_out_up);
+            }
+        } else if (currentMenu.getFragment() instanceof MoviesFragment) {
+            MoviesFragment pf = (MoviesFragment) currentMenu.getFragment();
+            if (!pf.goUp()) {
+                super.onBackPressed();
+                overridePendingTransition(android.R.anim.fade_in, R.anim.slide_out_up);
+            }
+        } else {
+            super.onBackPressed();
+            overridePendingTransition(android.R.anim.fade_in, R.anim.slide_out_up);
+        }
+    }
+    
+    @Override
     public void closeDrawer() {
     
         finish();

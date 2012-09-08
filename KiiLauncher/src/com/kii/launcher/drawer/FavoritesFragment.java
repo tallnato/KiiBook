@@ -36,6 +36,7 @@ public class FavoritesFragment extends Fragment implements IDrawerFragment {
         final ListView list = (ListView) rootView.findViewById(R.id.fragment_kii_drawer_favorites_list);
         mAdapter = new FavoritesAdapter(getActivity());
         list.setAdapter(mAdapter);
+        list.setEmptyView(rootView.findViewById(R.id.fragment_kii_drawer_favorites_list_empty));
         
         return rootView;
     }

@@ -1,21 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_width="fill_parent"
-	android:layout_height="fill_parent"
-	android:orientation="vertical" >
-
-<TextView 
     android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-	android:text="Under Construction"
-	android:textStyle="bold"
-	android:textSize="50dip"
-	android:gravity="center" />
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
 
-    <ImageView
-        android:id="@+id/imageView1"
+    <TextView
+        android:id="@+id/fragment_kii_drawer_downloads_path"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:src="@drawable/android_under_construction" />
-      
+        android:layout_margin="3dip"
+        android:textSize="15sp"
+        android:textStyle="bold" />
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dip"
+        android:layout_margin="2dip"
+        android:background="#500f" />
+
+    <ListView
+        android:id="@+id/fragment_kii_drawer_downloads_list"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center" />
+
 </LinearLayout>
