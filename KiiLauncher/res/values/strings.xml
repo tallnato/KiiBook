@@ -19,10 +19,12 @@
     <string name="drawer_menu_favorites">Favoritos</string>
     <string name="drawer_menu_favorites_empty">Não tem nenhum favorito, arraste uma aplicação ou um livro.</string>
     <string name="drawer_menu_movies">Videos</string>
-    <string name="drawer_menu_pictures">Fotos</string>
-    <string name="drawer_menu_music">Musica</string>
+    <string name="drawer_menu_pictures">Imagens</string>
+    <string name="drawer_menu_music">Música</string>
     <string name="drawer_menu_downloads">Transferências</string>
+    <string name="drawer_menu_search">Procurar</string>
     <string name="drawer_menu_under_development">Em desenvolvimento</string>
+    <string name="drawer_menu_empty_folder">Pasta sem conteúdo&#8230;</string>
     
     <string name="drawer_menu_manager_back">Voltar</string>
     

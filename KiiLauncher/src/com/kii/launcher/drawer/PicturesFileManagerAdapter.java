@@ -76,7 +76,7 @@ public class PicturesFileManagerAdapter extends ArrayAdapter<File> {
             if (map.containsKey(item)) {
                 icon.setImageBitmap(map.get(item));
             } else {
-                icon.setImageResource(R.drawable.ic_drawer_pictures);
+                icon.setImageResource(R.drawable.ic_drawer_pictures_small);
             }
         }
         
@@ -108,9 +108,8 @@ public class PicturesFileManagerAdapter extends ArrayAdapter<File> {
                 
                 Intent i = new Intent();
                 i.setAction(android.content.Intent.ACTION_VIEW);
-                i.setDataAndType(Uri.fromFile(item), "video/*");
+                i.setDataAndType(Uri.fromFile(item), "image/*");
                 getContext().startActivity(i);
-                
             }
         });
         

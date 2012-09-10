@@ -4,6 +4,7 @@ package com.kii.launcher.drawer;
 import android.app.Activity;
 import android.content.ClipData;
 import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 import android.view.View.DragShadowBuilder;
 import android.view.View.OnClickListener;
@@ -12,7 +13,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.kii.launcher.R;
 import com.kii.launcher.drawer.util.LibraryItem;
@@ -52,7 +52,12 @@ public class LibraryAdapter extends ArrayAdapter<LibraryItem> {
             
                 LibraryItem li = (LibraryItem) view.getTag();
                 
-                Toast.makeText(getContext(), "abrir o livro " + li.getName() + " ...", Toast.LENGTH_SHORT).show();
+                Intent i = new Intent("KIIREADER_OPEN_BOOK");
+                i.putExtra("NAME", li.getName());
+                i.putExtra("PAGE", 0);
+                i.putExtra("ONTOP", true);
+                getContext().sendBroadcast(i);
+                
             }
         });
         

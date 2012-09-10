@@ -5,19 +5,24 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.ThumbnailUtils;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.provider.MediaStore;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.webkit.MimeTypeMap;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.kii.launcher.R;
 
 import java.io.File;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -36,14 +41,14 @@ public class DownloadsFileManagerAdapter extends ArrayAdapter<File> {
         this.helper = helper;
         this.path = path;
         this.map = map;
-        rootName = context.getResources().getString(R.string.drawer_menu_movies);
+        rootName = context.getResources().getString(R.string.drawer_menu_downloads);
         
         addAll(helper.getCurrentPath().listFiles());
         sort(comparator);
         
         path.setText(getCurrentPath());
         
-        new VideoGetter().execute();
+        new DownloadGetter().execute();
     }
     
     @Override
@@ -57,18 +62,18 @@ public class DownloadsFileManagerAdapter extends ArrayAdapter<File> {
             view = ((Activity) getContext()).getLayoutInflater().inflate(R.layout.fragment_kii_drawer_downloads_item, parent, false);
         }
         
-        text = (TextView) view.findViewById(R.id.fragment_kii_drawer_downloads_item_icon);
-        icon = (ImageView) view.findViewById(R.id.fragment_kii_drawer_downloads_item_text);
+        text = (TextView) view.findViewById(R.id.fragment_kii_drawer_downloads_item_text);
+        icon = (ImageView) view.findViewById(R.id.fragment_kii_drawer_downloads_item_icon);
         
         final File item = getItem(position);
         
         if (item.isDirectory()) {
-            icon.setImageResource(R.drawable.ic_drawer_folder);
+            icon.setImageResource(R.drawable.ic_drawer_folder_small);
         } else {
             if (map.containsKey(item)) {
                 icon.setImageBitmap(map.get(item));
             } else {
-                icon.setImageResource(R.drawable.ic_drawer_downloads);
+                icon.setImageResource(R.drawable.ic_drawer_file);
             }
         }
         
@@ -90,7 +95,7 @@ public class DownloadsFileManagerAdapter extends ArrayAdapter<File> {
                     sort(comparator);
                     path.setText(getCurrentPath());
                     
-                    new VideoGetter().execute();
+                    new DownloadGetter().execute();
                     notifyDataSetChanged();
                     
                     ((Activity) getContext()).invalidateOptionsMenu();
@@ -98,10 +103,17 @@ public class DownloadsFileManagerAdapter extends ArrayAdapter<File> {
                     return;
                 }
                 
-                Intent i = new Intent();
-                i.setAction(android.content.Intent.ACTION_VIEW);
-                // i.setDataAndType(Uri.fromFile(item), "video/*");
-                getContext().startActivity(i);
+                String extension = MimeTypeMap.getFileExtensionFromUrl(item.getAbsolutePath()).toLowerCase();
+                String mimetype = MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension);
+                
+                if (mimetype != null) {
+                    Intent i = new Intent();
+                    i.setAction(android.content.Intent.ACTION_VIEW);
+                    i.setDataAndType(Uri.fromFile(item), mimetype);
+                    getContext().startActivity(i);
+                } else {
+                    Toast.makeText(getContext(), "Ficheiro não reconhecido...", Toast.LENGTH_SHORT).show();
+                }
             }
         });
         
@@ -131,14 +143,14 @@ public class DownloadsFileManagerAdapter extends ArrayAdapter<File> {
             sort(comparator);
             path.setText(getCurrentPath());
             
-            new VideoGetter().execute();
+            new DownloadGetter().execute();
             notifyDataSetChanged();
             
             ((Activity) getContext()).invalidateOptionsMenu();
         }
     }
     
-    private class VideoGetter extends AsyncTask<Void, Void, Void> {
+    private class DownloadGetter extends AsyncTask<Void, Void, Void> {
         
         @Override
         protected Void doInBackground( Void... params ) {
@@ -150,10 +162,21 @@ public class DownloadsFileManagerAdapter extends ArrayAdapter<File> {
                     continue;
                 }
                 
-                Bitmap b = ThumbnailUtils.createVideoThumbnail(item.getAbsolutePath(), MediaStore.Video.Thumbnails.MINI_KIND);
-                if (b != null) {
-                    map.put(item, b);
+                String extension = MimeTypeMap.getFileExtensionFromUrl(item.getAbsolutePath()).toLowerCase();
+                String mimetype = MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension);
+                
+                if (mimetype != null && mimetype.contains("video")) {
+                    Bitmap b = ThumbnailUtils.createVideoThumbnail(item.getAbsolutePath(), MediaStore.Video.Thumbnails.MINI_KIND);
+                    if (b != null) {
+                        map.put(item, b);
+                    }
+                } else if (mimetype != null && mimetype.contains("image")) {
+                    Bitmap b = getPreview(item.toURI());
+                    if (b != null) {
+                        map.put(item, b);
+                    }
                 }
+                
                 publishProgress();
             }
             return null;
@@ -164,6 +187,22 @@ public class DownloadsFileManagerAdapter extends ArrayAdapter<File> {
         
             notifyDataSetChanged();
         }
+    }
+    
+    private Bitmap getPreview( URI uri ) {
+    
+        File image = new File(uri);
+        
+        BitmapFactory.Options bounds = new BitmapFactory.Options();
+        bounds.inJustDecodeBounds = true;
+        BitmapFactory.decodeFile(image.getPath(), bounds);
+        if (bounds.outWidth == -1 || bounds.outHeight == -1) {
+            return null;
+        }
+        
+        BitmapFactory.Options opts = new BitmapFactory.Options();
+        opts.inSampleSize = 4;
+        return BitmapFactory.decodeFile(image.getPath(), opts);
     }
     
     private static final Comparator<File> comparator = new Comparator<File>() {

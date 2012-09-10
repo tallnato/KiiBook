@@ -3,9 +3,9 @@
 
     <item 
         android:state_pressed="true"
-        android:drawable="@android:color/holo_green_light" />
+        android:drawable="@color/kii_drawer_menu_selected_menu" />
 
     <item 
-        android:drawable="@drawable/activity_kii_launcher_wall_profile_background" />
+        android:drawable="@null" />
 
 </selector>

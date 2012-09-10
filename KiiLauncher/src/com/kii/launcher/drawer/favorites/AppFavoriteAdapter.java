@@ -124,7 +124,7 @@ public class AppFavoriteAdapter {
                 }
             });
             
-            row.addView(ll, new TableRow.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+            row.addView(ll, new TableRow.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
         }
         list.addView(row);
         

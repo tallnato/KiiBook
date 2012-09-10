@@ -162,4 +162,10 @@ public class AppsFragment extends Fragment implements IDrawerFragment {
     
         return R.drawable.ic_drawer_applications;
     }
+    
+    @Override
+    public boolean goUp() {
+    
+        return false;
+    }
 }

@@ -32,7 +32,6 @@ public class DownloadsFragment extends Fragment implements IDrawerFragment {
         super.onCreate(savedInstanceState);
         
         setHasOptionsMenu(true);
-        
     }
     
     @Override
@@ -47,8 +46,9 @@ public class DownloadsFragment extends Fragment implements IDrawerFragment {
         View rootView = inflater.inflate(R.layout.fragment_kii_drawer_downloads, container, false);
         TextView path = (TextView) rootView.findViewById(R.id.fragment_kii_drawer_downloads_path);
         
-        ListView grid = (ListView) rootView.findViewById(R.id.fragment_kii_drawer_downloads_list);
-        grid.setAdapter(mAdapter = new DownloadsFileManagerAdapter(getActivity(), helper, path, map));
+        ListView list = (ListView) rootView.findViewById(R.id.fragment_kii_drawer_downloads_list);
+        list.setAdapter(mAdapter = new DownloadsFileManagerAdapter(getActivity(), helper, path, map));
+        list.setEmptyView(rootView.findViewById(R.id.fragment_kii_drawer_downloads_list_empty));
         
         return rootView;
     }
@@ -81,6 +81,7 @@ public class DownloadsFragment extends Fragment implements IDrawerFragment {
         }
     }
     
+    @Override
     public boolean goUp() {
     
         if (mAdapter == null || mAdapter.isRoot()) {

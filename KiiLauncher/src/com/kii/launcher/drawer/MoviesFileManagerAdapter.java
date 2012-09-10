@@ -77,7 +77,7 @@ public class MoviesFileManagerAdapter extends ArrayAdapter<File> {
             if (map.containsKey(item)) {
                 icon.setImageBitmap(map.get(item));
             } else {
-                icon.setImageResource(R.drawable.ic_drawer_movies);
+                icon.setImageResource(R.drawable.ic_drawer_movies_small);
             }
         }
         

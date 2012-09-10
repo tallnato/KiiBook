@@ -79,7 +79,7 @@ public class FileManagerAdapter extends ArrayAdapter<File> {
                         if (b != null) {
                             icon.setImageBitmap(b);
                         } else {
-                            icon.setImageResource(R.drawable.ic_drawer_music);
+                            icon.setImageResource(R.drawable.ic_drawer_music_small);
                         }
                     }
                 }).start();
@@ -149,10 +149,11 @@ public class FileManagerAdapter extends ArrayAdapter<File> {
             return null;
         }
         
-        int originalSize = bounds.outHeight > bounds.outWidth ? bounds.outHeight : bounds.outWidth;
+        // int originalSize = bounds.outHeight > bounds.outWidth ?
+        // bounds.outHeight : bounds.outWidth;
         
         BitmapFactory.Options opts = new BitmapFactory.Options();
-        opts.inSampleSize = originalSize / 50;
+        opts.inSampleSize = 4;
         return BitmapFactory.decodeFile(image.getPath(), opts);
     }
     

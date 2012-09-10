@@ -15,10 +15,6 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
-        android:maxLength="12"
-        android:textColor="#fff"
-        android:shadowColor="#000"
-        android:shadowDx="1"
-        android:shadowDy="1"
-        android:shadowRadius="3"/>
+        android:maxLength="20"
+        android:textColor="#000"/>
 </LinearLayout>

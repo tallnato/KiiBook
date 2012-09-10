@@ -74,6 +74,8 @@ public class MenuFragment extends ListFragment {
         list.add(new MenuItem(new PicturesFragment()));
         list.add(new MenuItem(new MusicFragment()));
         list.add(new MenuItem(new DownloadsFragment()));
+        // list.add(new MenuItem(R.string.activity_kii_wall_search,
+        // R.drawable.ic_drawer_search, new UnderConstructionFragment()));
         
         return list;
     }

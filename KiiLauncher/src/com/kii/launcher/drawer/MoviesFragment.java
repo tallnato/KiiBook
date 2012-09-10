@@ -32,7 +32,6 @@ public class MoviesFragment extends Fragment implements IDrawerFragment {
         super.onCreate(savedInstanceState);
         
         setHasOptionsMenu(true);
-        
     }
     
     @Override
@@ -49,6 +48,7 @@ public class MoviesFragment extends Fragment implements IDrawerFragment {
         
         GridView grid = (GridView) rootView.findViewById(R.id.fragment_kii_drawer_videos_grid);
         grid.setAdapter(mAdapter = new MoviesFileManagerAdapter(getActivity(), helper, path, map));
+        grid.setEmptyView(rootView.findViewById(R.id.fragment_kii_drawer_videos_grid_empty));
         
         return rootView;
     }

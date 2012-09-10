@@ -20,6 +20,7 @@ import com.kii.launcher.PackagePermissions;
 import com.kii.launcher.R;
 import com.kii.launcher.drawer.MenuFragment.ListCallbacks;
 import com.kii.launcher.drawer.favorites.FavoriteItem;
+import com.kii.launcher.drawer.util.IDrawerFragment;
 import com.kii.launcher.drawer.util.MenuItem;
 
 public class DrawerActivity extends FragmentActivity implements ListCallbacks {
@@ -183,19 +184,7 @@ public class DrawerActivity extends FragmentActivity implements ListCallbacks {
     @Override
     public void onBackPressed() {
     
-        if (currentMenu.getFragment() instanceof PicturesFragment) {
-            PicturesFragment pf = (PicturesFragment) currentMenu.getFragment();
-            if (!pf.goUp()) {
-                super.onBackPressed();
-                overridePendingTransition(android.R.anim.fade_in, R.anim.slide_out_up);
-            }
-        } else if (currentMenu.getFragment() instanceof MoviesFragment) {
-            MoviesFragment pf = (MoviesFragment) currentMenu.getFragment();
-            if (!pf.goUp()) {
-                super.onBackPressed();
-                overridePendingTransition(android.R.anim.fade_in, R.anim.slide_out_up);
-            }
-        } else {
+        if (currentMenu.getFragment() instanceof IDrawerFragment && !((IDrawerFragment) currentMenu.getFragment()).goUp()) {
             super.onBackPressed();
             overridePendingTransition(android.R.anim.fade_in, R.anim.slide_out_up);
         }

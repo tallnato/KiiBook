@@ -47,6 +47,7 @@ public class PicturesFragment extends Fragment implements IDrawerFragment {
         
         GridView grid = (GridView) rootView.findViewById(R.id.fragment_kii_drawer_pictures_grid);
         grid.setAdapter(mAdapter = new PicturesFileManagerAdapter(getActivity(), helper, path, map));
+        grid.setEmptyView(rootView.findViewById(R.id.fragment_kii_drawer_pictures_grid_empty));
         
         return rootView;
     }

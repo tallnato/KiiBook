@@ -4,6 +4,7 @@ package com.kii.launcher.drawer.favorites;
 import android.app.Activity;
 import android.content.ClipData;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.view.View.DragShadowBuilder;
@@ -16,7 +17,6 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TableRow.LayoutParams;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.kii.launcher.R;
 import com.kii.launcher.drawer.favorites.database.BookFavoriteDataSource;
@@ -111,7 +111,11 @@ public class BookFavoriteAdapter {
                 
                     BookFavoriteItem li = (BookFavoriteItem) view.getTag();
                     
-                    Toast.makeText(context, "abrir o livro " + li.getLibraryItem().getName() + " ...", Toast.LENGTH_SHORT).show();
+                    Intent i = new Intent("KIIREADER_OPEN_BOOK");
+                    i.putExtra("NAME", li.getLibraryItem().getName());
+                    i.putExtra("PAGE", 0);
+                    i.putExtra("ONTOP", true);
+                    context.sendBroadcast(i);
                 }
             });
             

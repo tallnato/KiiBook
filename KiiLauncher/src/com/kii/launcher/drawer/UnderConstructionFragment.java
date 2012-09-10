@@ -36,4 +36,10 @@ public class UnderConstructionFragment extends Fragment implements IDrawerFragme
     
         return android.R.drawable.ic_dialog_alert;
     }
+    
+    @Override
+    public boolean goUp() {
+    
+        return false;
+    }
 }

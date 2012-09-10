@@ -81,4 +81,10 @@ public class FavoritesFragment extends Fragment implements IDrawerFragment {
     
         return R.drawable.ic_drawer_favorites;
     }
+    
+    @Override
+    public boolean goUp() {
+    
+        return false;
+    }
 }

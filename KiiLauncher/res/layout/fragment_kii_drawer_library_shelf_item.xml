@@ -1,36 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" 
+    android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="8dip">
-    
-	<TextView 
-	    android:id="@+id/fragment_kii_drawer_library_item_text"
+    android:padding="8dip" >
+
+    <TextView
+        android:id="@+id/fragment_kii_drawer_library_item_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="left"
         android:layout_gravity="center_horizontal|bottom"
         android:layout_marginTop="4dip"
+        android:gravity="left"
         android:maxLength="24"
         android:maxLines="1"
-        android:textStyle="bold"
         android:textColor="#000"
         android:textSize="14dip"
-        android:shadowColor="#fff"
-        android:shadowDx="0"
-        android:shadowDy="0"
-        android:shadowRadius="7"/>
-	
+        android:textStyle="bold" />
+
     <View
         android:layout_width="fill_parent"
         android:layout_height="2dip"
         android:background="#500f" />
-    
-    <ImageView 
+
+    <ImageView
         android:id="@+id/fragment_kii_drawer_library_item_image"
         android:layout_width="150dip"
         android:layout_height="170dip"
         android:layout_gravity="center"
-        android:layout_marginTop="10dip"/>
+        android:layout_marginTop="10dip" />
+
 </LinearLayout>

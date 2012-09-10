@@ -213,4 +213,10 @@ public class LibraryFragment extends Fragment implements IDrawerFragment {
     
         return R.drawable.ic_drawer_library;
     }
+    
+    @Override
+    public boolean goUp() {
+    
+        return false;
+    }
 }
