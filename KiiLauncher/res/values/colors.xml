@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="wall_activated_button">#00ff00</color>
+    
+    <color name="kii_drawer_menu_selected_menu">#4b9cf2</color>    
+    
+    <color name="kii_drawer_title">#1A3f66</color>
+</resources>

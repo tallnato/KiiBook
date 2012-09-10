@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" 
+    android:padding="3dip">
+
+    <TextView
+        android:id="@+id/fragment_kii_drawer_videos_path"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:textSize="15sp"
+        android:layout_margin="3dip" />
+    
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dip"
+        android:background="#500f"
+        android:layout_margin="2dip" />
+
+    <GridView
+        android:id="@+id/fragment_kii_drawer_videos_grid"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:numColumns="@integer/drawer_videos_horizontal_count" />
+    
+    <TextView
+        android:id="@+id/fragment_kii_drawer_videos_grid_empty"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:textStyle="bold"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:textSize="25sp"
+        android:layout_margin="3dip"
+        android:text="@string/drawer_menu_empty_folder" />
+</LinearLayout>

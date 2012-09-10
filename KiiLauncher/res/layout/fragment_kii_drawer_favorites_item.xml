@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="10dip" >
+
+    <TextView
+        android:id="@+id/fragment_kii_drawer_favorites_section_title"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="2dip"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="2dip"
+        android:background="#500f" />
+
+    <HorizontalScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none" >
+        <TableLayout
+            android:id="@+id/fragment_kii_drawer_favorites_section_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </HorizontalScrollView>
+
+</LinearLayout>

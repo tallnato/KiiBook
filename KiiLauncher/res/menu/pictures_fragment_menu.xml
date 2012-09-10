@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/pictures_fragment_menu"
+              android:title="@string/fragment_music_back"
+              android:icon="@drawable/ic_arrow_up"
+              android:showAsAction="always|withText"/>
+</menu>

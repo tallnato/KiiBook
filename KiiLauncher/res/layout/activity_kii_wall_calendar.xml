@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/activity_kii_launcher_wall_popup_background"
+    android:orientation="vertical" >
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dip"
+        android:layout_marginTop="15dip"
+        android:clickable="true"
+        android:gravity="center"
+        android:text="@string/activity_kii_wall_calendar"
+        android:textSize="17dip"
+        android:textStyle="bold" />
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="2dip"
+        android:layout_marginBottom="3dip"
+        android:layout_marginLeft="15dip"
+        android:layout_marginRight="15dip"
+        android:layout_marginTop="3dip"
+        android:background="#55FFFFFF" />
+
+    <CalendarView
+        android:id="@+id/activity_kii_wall_calendar_view"
+        android:layout_width="fill_parent"
+        android:layout_height="0dip"
+        android:layout_weight="1" />
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="2dip"
+        android:layout_marginBottom="3dip"
+        android:layout_marginLeft="15dip"
+        android:layout_marginRight="15dip"
+        android:layout_marginTop="3dip"
+        android:background="#55FFFFFF" />
+
+    <TextView
+        android:id="@+id/activity_kii_wall_calendar_agenda"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dip"
+        android:clickable="true"
+        android:gravity="center"
+        android:text="@string/activity_kii_wall_calendar_agenda" />
+
+</LinearLayout>

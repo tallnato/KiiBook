@@ -1,0 +1,48 @@
+<resources>
+
+    <string name="app_name">KiiLauncher</string>
+    <string name="drawer_title">O meu KiiBook</string>
+    <string name="title_activity_kii_laucher">KiiLaucher</string>
+    
+    
+    <string name="kiimarket">KiiMarket</string>
+    <string name="drawer_menu_apps">Aplicações</string>
+    <string name="drawer_menu_apps_widgets">Widgets</string>
+    <string name="drawer_menu_apps_all">Todas</string>
+    <string name="drawer_menu_apps_kii">Aplicações Kii</string>
+    
+    <string name="drawer_menu_library">Biblioteca</string>
+    <string name="drawer_menu_library_books">Livros</string>
+    <string name="drawer_menu_library_notes">Apontamentos</string>
+    <string name="drawer_menu_library_documents">Documentos</string>
+    
+    <string name="drawer_menu_favorites">Favoritos</string>
+    <string name="drawer_menu_favorites_empty">Não tem nenhum favorito, arraste uma aplicação ou um livro.</string>
+    <string name="drawer_menu_movies">Videos</string>
+    <string name="drawer_menu_pictures">Imagens</string>
+    <string name="drawer_menu_music">Música</string>
+    <string name="drawer_menu_downloads">Transferências</string>
+    <string name="drawer_menu_search">Procurar</string>
+    <string name="drawer_menu_under_development">Em desenvolvimento</string>
+    <string name="drawer_menu_empty_folder">Pasta sem conteúdo&#8230;</string>
+    
+    <string name="drawer_menu_manager_back">Voltar</string>
+    
+    <string name="activity_kii_wall_calendar_agenda">Abrir agenda</string>
+    <string name="activity_kii_wall_calendar">Calendário</string>
+    
+    <string name="activity_kii_wall_messages">Mensagens</string>
+    <string name="activity_kii_wall_messages_show_all">Mostrar todas</string>
+    
+    <string name="activity_kii_wall_homework">Trabalhos para casa</string>
+    <string name="activity_kii_wall_homework_show_all">Mostrar todos</string>
+    
+    <string name="activity_kii_wall_news">Notícias</string>
+    <string name="activity_kii_wall_news_show_all">Mostrar todas</string>
+    
+    
+    <string name="activity_kii_wall_search">Procurar</string>
+    
+    
+    <string name="fragment_music_back">Voltar</string>
+</resources>
