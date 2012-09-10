@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="KiiTheme" parent="@android:style/Theme.Holo.Light.DarkActionBar">
+        <!--<item name="android:actionBarTabBarStyle">@style/MyActionBarTabStyle</item> -->
+    </style>
+
+    
+    <style name="MyActionBarTabStyle" parent="android:Theme.Holo.Light.DarkActionBar">
+        <item name="android:background">@drawable/actionbar_tab_background</item>
+    </style>
+    
+    <!-- style for the action bar tab text -->
+    <style name="CustomTabText" parent="android:Theme.Holo.Light.DarkActionBar">
+        <item name="android:background">#00FF00</item>
+    </style>
+  
+</resources>

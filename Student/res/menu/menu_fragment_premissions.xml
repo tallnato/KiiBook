@@ -1,0 +1,12 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/fragment_permissions_menu_search"
+          android:title="Procurar"
+          android:icon="@android:drawable/ic_menu_search"
+          android:showAsAction="ifRoom|collapseActionView"
+          android:actionViewClass="android.widget.SearchView" />
+    
+    <item android:id="@+id/fragment_permissions_menu_save"
+          android:icon="@android:drawable/ic_menu_save"
+          android:title="Guardar"
+          android:showAsAction="ifRoom" />
+</menu>

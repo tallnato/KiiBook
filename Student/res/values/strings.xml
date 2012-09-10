@@ -1,0 +1,37 @@
+<resources>
+
+    <string name="app_name">KiiStudent</string>
+    <string name="menu_settings">Settings</string>
+    <string name="menu_falcon_eye">Olho Falcão - ON</string>
+    <string name="menu_falcon_eye_off">Olho Falcão - OFF</string>
+    <string name="title_activity_main">KiiStudent</string>
+    <string name="title_activity_external">Parental Control</string>
+    <string name="title_activity_classmode">Modo de Aula</string>
+    <string name="title_activity_friend">Friend</string>
+    <string name="title_activity_password">Introduza a password</string>
+    <string name="title_activity_password_bt_ok">Desbloquear</string>
+    <string name="title_activity_password_bt_cancel">Cancelar</string>
+
+    <string-array name="list_boxes">
+        <item name="title_section1">Caixa de entraga</item>
+        <item name="title_section2">Enviada</item>
+        <item name="title_section3">Rascunhos</item>
+        <item name="title_section4">Spam</item>
+        <item name="title_section5">Lixo</item>
+    </string-array>
+    <string-array name="list_messages">
+        <item name="title_section1">Novo Email</item>
+        <item name="title_section2">Noticias da turma 5ºA</item>
+        <item name="title_section3">Director da escola- Programa 2012</item>
+        <item name="title_section4">Professor Jose Lima - Boas Vindas!</item>
+        <item name="title_section5">Aluno Paulo Nabo - Duvidas</item>
+        <item name="title_section6">Aluno Rita Torres - Apontamentos</item>
+    </string-array>
+
+    <string name="item_one">Menu Item One</string>
+    <string name="item_two">Menu Item Two</string>
+    <string name="item_three">Menu Item Three</string>
+    <string name="item_four">Menu Item Four</string>
+    <string name="menubutton">If you do not happen to have an ActionBar, click here to activate the SlideMenu!</string>
+
+</resources>
