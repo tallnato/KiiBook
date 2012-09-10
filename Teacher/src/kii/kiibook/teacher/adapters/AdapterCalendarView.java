@@ -9,11 +9,12 @@ import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import objects.HourCalendarListView;
+import objects.TextElem;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import kii.kiibook.managerclass.objects.TextElem;
-import kii.kiibook.managerclass.utils.HourCalendarListView;
 import kii.kiibook.teacher.R;
 
 public class AdapterCalendarView extends BaseAdapter {
@@ -29,25 +30,21 @@ public class AdapterCalendarView extends BaseAdapter {
         mInflater = LayoutInflater.from(context);
     }
     
-
     public int getCount() {
     
         return itens.size();
     }
     
-
     public HourCalendarListView getItem( int position ) {
     
         return itens.get(position);
     }
     
-
     public long getItemId( int position ) {
     
         return position;
     }
     
-
     public View getView( int position, View view, ViewGroup parent ) {
     
         HourCalendarListView item = itens.get(position);
@@ -67,7 +64,8 @@ public class AdapterCalendarView extends BaseAdapter {
         
         view = mInflater.inflate(R.layout.hour_item_calendar, null);
         listElem = (LinearLayout) view.findViewById(R.id._calendar_hour_elements);
-        ((TextView) view.findViewById(R.id.text_hour)).setText(item.getHour());
+        // ((TextView)
+        // view.findViewById(R.id.text_hour)).setText(item.getHour());
         
         Iterator<TextElem> it = item.getElemInHour().iterator();
         if (item.getElemInHour().size() != 0) {

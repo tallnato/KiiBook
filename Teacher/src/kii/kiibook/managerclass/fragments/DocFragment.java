@@ -16,12 +16,13 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
 import java.util.ArrayList;
 
-import kii.kiibook.managerclass.TestObjectsResources.ObjectCreator;
+import kii.kiibook.managerclass.database.DataShared;
 import kii.kiibook.managerclass.utils.FileListView;
 import kii.kiibook.teacher.R;
 import kii.kiibook.teacher.adapters.AdapterListView;
@@ -38,8 +39,10 @@ public class DocFragment extends Fragment implements OnItemClickListener {
     private ListView                listView;
     private File                    currentDir;
     private AdapterListView         adapter;
-    private int classId;
-    private String className;
+    private int                     classId;
+    private String                  className;
+    private final String            title = "Documentos - ";
+    private TextView                titleView;
     
     @Override
     public void onCreate( Bundle savedInstanceState ) {
@@ -57,8 +60,9 @@ public class DocFragment extends Fragment implements OnItemClickListener {
         setHasOptionsMenu(true);
         registerForContextMenu(container);
         
+        titleView = (TextView) view.findViewById(R.id.doc_title);
         classId = getArguments().getInt(FRAG);
-        className = ObjectCreator.getInstance().getClasses().get(classId).getName();
+        className = DataShared.getInstance().getClasses().get(classId).getName();
         
         checkExternalMedia();
         checkFilesList(null);
@@ -80,7 +84,6 @@ public class DocFragment extends Fragment implements OnItemClickListener {
         builder.setTitle("Ficheiro");
         builder.setItems(items, new DialogInterface.OnClickListener() {
             
-      
             public void onClick( DialogInterface dialog, int item ) {
             
                 switch (item) {
@@ -104,7 +107,6 @@ public class DocFragment extends Fragment implements OnItemClickListener {
         
         builder.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
             
-         
             public void onClick( DialogInterface dialog, int id ) {
             
                 if (file.delete()) {
@@ -120,7 +122,6 @@ public class DocFragment extends Fragment implements OnItemClickListener {
         });
         builder.setNegativeButton("Não", new DialogInterface.OnClickListener() {
             
-           
             public void onClick( DialogInterface dialog, int id ) {
             
                 dialog.cancel();
@@ -164,20 +165,23 @@ public class DocFragment extends Fragment implements OnItemClickListener {
         File dir;
         
         if (path == null) {
-            File root = new File(android.os.Environment.getExternalStorageDirectory().getAbsolutePath()+"/KiiDocs/"+className);
+            File root = new File(android.os.Environment.getExternalStorageDirectory().getAbsolutePath() + "/KiiDocs/");
             Log.d(TAG, "\nExternal file system root: " + root);
             
-            dir = new File(root.getAbsolutePath()); // + "/KiiDocs"
+            dir = new File(root.getAbsolutePath() + "/" + className); // +
+                                                                      // "/KiiDocs"
+            if (!dir.mkdirs()) {
+                Log.d(TAG, "mkdir failed");
+            }
             
         } else {
             Log.d(TAG, "change path");
             dir = new File(path.getAbsolutePath());
+            dir.mkdirs();
         }
+        currentDir = new File(dir.getAbsolutePath());
         
-        currentDir = dir;
-        
-        dir.mkdirs();
-        File[] listFiles = dir.listFiles();
+        File[] listFiles = currentDir.listFiles();
         
         for (File file : listFiles) {
             if (!file.isDirectory()) {
@@ -186,9 +190,10 @@ public class DocFragment extends Fragment implements OnItemClickListener {
                 files.add(new FileListView(file, R.drawable.folder, true));
             }
         }
+        
+        titleView.setText(title + currentDir.getAbsolutePath());
     }
     
- 
     public void onItemClick( AdapterView<?> arg0, View arg1, int arg2, long arg3 ) {
     
         Log.d(TAG, "onItemClick");
@@ -206,7 +211,6 @@ public class DocFragment extends Fragment implements OnItemClickListener {
     @Override
     public void onCreateOptionsMenu( Menu menu, MenuInflater inflater ) {
     
-        Log.d(TAG, "onCreateOptionsMenu");
         inflater.inflate(R.menu.doc_return, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }

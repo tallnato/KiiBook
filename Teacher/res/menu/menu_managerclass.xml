@@ -7,4 +7,5 @@
         android:title="@string/menu_managerclass_changeClass"
         android:orderInCategory="100"
         android:showAsAction="never" />
+    
 </menu>

@@ -22,13 +22,9 @@ public class ProfileWidget extends AppWidgetProvider {
     public final static int     FRAG_MENSSAGE               = 3;
     public static final String  VALUE                       = "frag_selected";
     
-    private boolean             isPortrait;
     private Intent              intent;
     private PendingIntent       pendingIntent;
     private RemoteViews         remoteViews;
-    private AppWidgetManager    appWidgetManager;
-    private int[]               appWidgetIds;
-    private int                 i                           = 0;
     
     @Override
     public void onUpdate( Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds ) {
@@ -65,7 +61,6 @@ public class ProfileWidget extends AppWidgetProvider {
         super.onReceive(context, intent);
         if (intent.getAction().equals(ACTION_WIDGET_RECEIVER_UP)) {
             Log.d(TAG, "onReceive");
-            i++;
         }
         
     }

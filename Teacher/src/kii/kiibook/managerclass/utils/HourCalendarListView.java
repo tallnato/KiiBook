@@ -1,8 +1,9 @@
+
 package kii.kiibook.managerclass.utils;
 
-import java.util.ArrayList;
+import objects.TextElem;
 
-import kii.kiibook.managerclass.objects.TextElem;
+import java.util.ArrayList;
 
 public class HourCalendarListView {
     

@@ -1,5 +1,4 @@
 
-
 package kii.kiibook.teacher.fragments;
 
 import android.app.Activity;
@@ -25,13 +24,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import objects.ClassPeople;
+import objects.ObjectCreator;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 
 import kii.kiibook.managerclass.ManagerClassActivity;
-import kii.kiibook.managerclass.TestObjectsResources.ObjectCreator;
-import kii.kiibook.managerclass.objects.ClassPeople;
+import kii.kiibook.managerclass.database.DataShared;
 import kii.kiibook.managerclass.utils.ItemListView;
 import kii.kiibook.teacher.R;
 import kii.kiibook.teacher.adapters.AdapterListView;
@@ -74,7 +74,7 @@ public class ClassesFragment extends Fragment implements OnItemClickListener {
     
         itens = new ArrayList<ItemListView>();
         
-        Iterator<ClassPeople> it = ObjectCreator.getInstance().getClasses().iterator();
+        Iterator<ClassPeople> it = DataShared.getInstance().getClasses().iterator();
         
         while (it.hasNext()) {
             
@@ -156,6 +156,7 @@ public class ClassesFragment extends Fragment implements OnItemClickListener {
         dialog.setTitle(R.string.menu_newClass);
         dialog.setCancelable(true);
         
+        // TODO here ObjectCreator
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(myActivity, android.R.layout.simple_dropdown_item_1line,
                                         ObjectCreator.getClassType());
         final AutoCompleteTextView textView = (AutoCompleteTextView) dialog.findViewById(R.id.newclass_autoComplete);
@@ -169,7 +170,7 @@ public class ClassesFragment extends Fragment implements OnItemClickListener {
             public void onClick( View v ) {
             
                 ClassPeople newClass = new ClassPeople(nameClass.getText().toString(), textView.getText().toString());
-                ObjectCreator.getInstance().getClasses().add(newClass);
+                DataShared.getInstance().getClasses().add(newClass);
                 createListView();
                 dialog.dismiss();
             }

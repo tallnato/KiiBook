@@ -1,6 +1,7 @@
+
 package kii.kiibook.managerclass.utils;
 
-import kii.kiibook.managerclass.objects.Student;
+import objects.Student;
 
 public class ItemFalconEye {
     

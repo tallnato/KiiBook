@@ -1,17 +1,14 @@
 
-
 package kii.kiibook.teacher.adapters;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import kii.kiibook.managerclass.fragments.CalendarFragment;
 import kii.kiibook.teacher.R;
 import kii.kiibook.teacher.fragments.ClassesFragment;
 import kii.kiibook.teacher.fragments.MenssageFragment;
 import kii.kiibook.teacher.fragments.ProfileFragment;
-
 
 /**
  * A {@link FragmentPagerAdapter} that returns a fragment corresponding to one
@@ -40,7 +37,7 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
                 break;
             case 2:
                 
-                fragment = new CalendarFragment();
+                fragment = new ClassesFragment();
                 break;
             case 3:
                 

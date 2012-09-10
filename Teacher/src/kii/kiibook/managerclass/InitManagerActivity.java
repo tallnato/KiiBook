@@ -1,3 +1,4 @@
+
 package kii.kiibook.managerclass;
 
 import android.app.Activity;
@@ -8,12 +9,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
 
+import objects.ClassPeople;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import kii.kiibook.managerclass.TestObjectsResources.ObjectCreator;
-import kii.kiibook.managerclass.objects.ClassPeople;
+import kii.kiibook.managerclass.database.DataShared;
 import kii.kiibook.teacher.R;
 import kii.kiibook.teacher.fragments.ClassesFragment;
 
@@ -27,7 +28,7 @@ public class InitManagerActivity extends Activity implements OnKeyListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.manager_init_dialog_class);
         
-        ArrayList<ClassPeople> list = ObjectCreator.getInstance().getClasses();
+        ArrayList<ClassPeople> list = DataShared.getInstance().getClasses();
         Iterator<ClassPeople> it = list.iterator();
         String[] items = new String[list.size()];
         int pointer = 0;

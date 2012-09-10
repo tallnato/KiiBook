@@ -32,5 +32,7 @@ Gostava de um dia ser médico ou advogado para poder ajudar as pessoas que mais 
         <item name="title_section5">Aluno Paulo Nabo - Duvidas</item>
         <item name="title_section6">Aluno Rita Torres - Apontamentos</item>
     </string-array>
+        <string name="second_tab">Second Tab</string>
+        <string name="first_tab">First Tab</string>
 
 </resources>

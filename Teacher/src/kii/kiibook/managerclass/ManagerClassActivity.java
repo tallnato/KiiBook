@@ -1,3 +1,4 @@
+
 package kii.kiibook.managerclass;
 
 import android.app.ActionBar;
@@ -6,17 +7,21 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnMultiChoiceClickListener;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import objects.ClassPeople;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import kii.kiibook.managerclass.TestObjectsResources.ObjectCreator;
-import kii.kiibook.managerclass.objects.ClassPeople;
+import kii.kiibook.managerclass.adapters.AdapterSummary;
+import kii.kiibook.managerclass.database.DataShared;
+import kii.kiibook.managerclass.fragments.SummariesFragment;
 import kii.kiibook.teacher.R;
 import kii.kiibook.teacher.fragments.ClassesFragment;
 import kii.kiibook.teacher.listeners.MyTabListener;
@@ -39,6 +44,9 @@ public class ManagerClassActivity extends FragmentActivity {
     private MyTabListener       mTabListener;
     private ClassPeople         classPeople;
     private final boolean[]     checkedItems                   = { false, false };
+    private Intent              service;
+    private SummariesFragment   fragmentSummary;
+    private AdapterSummary      adapter;
     
     @Override
     public void onCreate( Bundle savedInstanceState ) {
@@ -48,7 +56,7 @@ public class ManagerClassActivity extends FragmentActivity {
         
         Bundle bundle = getIntent().getExtras();
         classId = bundle.getInt(ClassesFragment.CLASS);
-        classPeople = ObjectCreator.getInstance().getClasses().get(classId);
+        classPeople = DataShared.getInstance().getClasses().get(classId);
         
         // Create the adapter that will return a fragment for each section
         mSectionsPagerAdapter = new PagerAdapter(getSupportFragmentManager(), classId);
@@ -63,21 +71,32 @@ public class ManagerClassActivity extends FragmentActivity {
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.manage_pager);
         mViewPager.setAdapter(mSectionsPagerAdapter);
-        
+        mViewPager.setDrawingCacheEnabled(false);
         mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             
             @Override
             public void onPageSelected( int position ) {
             
+                // adapter.notifyDataSetChanged();
                 actionBar.setSelectedNavigationItem(position);
+                
             }
         });
         
         mTabListener = new MyTabListener(mViewPager);
         
         for (int i = 0; i < mSectionsPagerAdapter.getCount(); i++) {
-            actionBar.addTab(actionBar.newTab().setTabListener(mTabListener).setIcon(mSectionsPagerAdapter.getFragmentIcon(i)));
+            actionBar.addTab(actionBar.newTab().setTabListener(mTabListener).setText(mSectionsPagerAdapter.getFragmentTitle(i)));
         }
+    }
+    
+    @Override
+    public void onAttachFragment( Fragment fragment ) {
+    
+        if (fragment instanceof SummariesFragment) {
+            fragmentSummary = (SummariesFragment) fragment;
+        }
+        super.onAttachFragment(fragment);
     }
     
     @Override
@@ -85,6 +104,13 @@ public class ManagerClassActivity extends FragmentActivity {
     
         getMenuInflater().inflate(R.menu.menu_managerclass, menu);
         return true;
+    }
+    
+    @Override
+    public void onBackPressed() {
+    
+        // TODO Auto-generated method stub
+        super.onBackPressed();
     }
     
     @Override
@@ -108,7 +134,7 @@ public class ManagerClassActivity extends FragmentActivity {
     
     private void showDialogChangeClass() {
     
-        ArrayList<ClassPeople> list = ObjectCreator.getInstance().getClasses();
+        ArrayList<ClassPeople> list = DataShared.getInstance().getClasses();
         Iterator<ClassPeople> it = list.iterator();
         String[] items = new String[list.size()];
         int pointer = 0;
@@ -155,7 +181,6 @@ public class ManagerClassActivity extends FragmentActivity {
                 } else {
                     checkedItems[which] = false;
                 }
-                
             }
             
         });

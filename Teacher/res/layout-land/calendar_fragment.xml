@@ -30,5 +30,10 @@
             android:layout_height="wrap_content" >
         </ListView>
     </LinearLayout>
+    <FrameLayout
+        android:id="@+id/pager_calendar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
 
+    </FrameLayout>
 </LinearLayout>
