@@ -402,7 +402,7 @@ public class KiiLaucher extends Activity {
                     return;
             }
             
-            playNotify();
+            // playNotify();
         }
     }
     
