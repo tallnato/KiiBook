@@ -5,6 +5,7 @@ import android.app.ActivityManager;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
@@ -13,8 +14,6 @@ import android.util.Log;
 import android.widget.Toast;
 
 import java.util.Set;
-
-import kii.kiibook.Student.database.DataShared;
 
 public class FalconEyeService extends Service implements ParentalConstants {
     
@@ -88,30 +87,25 @@ public class FalconEyeService extends Service implements ParentalConstants {
     
     private void updateBlockedApps() {
     
-        blockedApps = DataShared.getInstance().getBlockedApps();
+        // blockedApps = DataShared.getInstance().getBlockedApps();
         
-        Log.d("cenas", "num apps: " + blockedApps.size());
+        SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
+        blockedApps = settings.getStringSet(PREFS_NAME_BLOCKED_APPS, null);
+        
+        if (blockedApps != null) {
+            Log.d("cenas", "num apps: " + blockedApps.size());
+        } else {
+            Log.d("cenas", "cenascenascenascenascenascenascenascenascenascenascenascenascenascenascenascenas");
+        }
     }
     
     private boolean isAppBlocked( String packge ) {
     
-        if (blockedApps == null) {
+        if (blockedApps == null || blockedApps.isEmpty()) {
             return false;
         }
-        System.out.println("packge: " + packge);
         
-        for (String s : blockedApps) {
-            /*if (s.equalsIgnoreCase(packge)) {
-                return true;
-            }*/
-            
-            System.out.println(s.hashCode() + " " + packge.hashCode());
-            if (s.hashCode() == packge.hashCode()) {
-                return true;
-            }
-        }
-        
-        return false;
+        return blockedApps.contains(packge);
     }
     
     private void checkOnTop() {
@@ -137,6 +131,8 @@ public class FalconEyeService extends Service implements ParentalConstants {
     public void onDestroy() {
     
         super.onDestroy();
+        
+        Log.d("MyService", "Service Started.");
         
         Toast.makeText(getApplicationContext(), "Ending service...", Toast.LENGTH_LONG).show();
         

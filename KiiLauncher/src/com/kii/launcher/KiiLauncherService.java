@@ -73,8 +73,6 @@ public class KiiLauncherService extends Service {
         
         System.out.println("onCreate...");
         
-        startService(new Intent(this, KiiLauncherService.class));
-        
         Intent broadcast = new Intent("kii.falconeye.start");
         broadcast.addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
         sendBroadcast(broadcast);
@@ -150,7 +148,10 @@ public class KiiLauncherService extends Service {
         @Override
         public void onReceive( Context context, Intent intent ) {
         
-            int i = intent.getExtras().getInt(NotificationCount, 0);
+            int i = 1;
+            if (intent.getExtras() != null && intent.getExtras().containsKey(NotificationCount)) {
+                i = intent.getExtras().getInt(NotificationCount, 0);
+            }
             String action = intent.getAction();
             if (action.equals(CalendarBroadcast)) {
                 calendarNotification += i;

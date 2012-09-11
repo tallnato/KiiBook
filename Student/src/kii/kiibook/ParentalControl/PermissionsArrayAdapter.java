@@ -94,7 +94,7 @@ public class PermissionsArrayAdapter extends ArrayAdapter<PackagePermissions> {
             public void onCheckedChanged( CompoundButton buttonView, boolean isChecked ) {
             
                 PackagePermissions item = (PackagePermissions) ((View) buttonView.getParent()).getTag();
-                item.setBlocked(true);
+                item.setBlocked(isChecked);
             }
         });
         

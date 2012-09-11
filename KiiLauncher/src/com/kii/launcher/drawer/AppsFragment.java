@@ -3,7 +3,7 @@ package com.kii.launcher.drawer;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.PagerAdapter;
@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
+import android.widget.Toast;
 
 import com.kii.launcher.PackagePermissions;
 import com.kii.launcher.R;
@@ -94,7 +95,15 @@ public class AppsFragment extends Fragment implements IDrawerFragment {
         switch (item.getItemId()) {
             case R.id.apps_fragment_menu_kiimarket:
                 
-                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details")));
+                Intent i;
+                PackageManager manager = getActivity().getPackageManager();
+                i = manager.getLaunchIntentForPackage("kii.kiibook.kiimarket");
+                if (i == null) {
+                    Toast.makeText(getActivity(), "Market not installed...", Toast.LENGTH_SHORT).show();
+                    return true;
+                }
+                i.addCategory(Intent.CATEGORY_LAUNCHER);
+                startActivity(i);
                 
                 return true;
                 

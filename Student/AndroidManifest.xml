@@ -90,6 +90,7 @@
 
         <service
             android:name="kii.kiibook.ParentalControl.FalconEyeService"
+            android:process=":myProcess"
             android:exported="false" >
             <intent-filter>
                 <action android:name="kii.kiibook.ParentalControl.FalconEyeService" />

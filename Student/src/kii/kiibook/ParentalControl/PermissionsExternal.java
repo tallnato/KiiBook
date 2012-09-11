@@ -4,6 +4,7 @@ package kii.kiibook.ParentalControl;
 import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.os.Bundle;
@@ -87,6 +88,11 @@ public class PermissionsExternal extends ListActivity implements ParentalConstan
                 DataShared.getInstance().setBlockedApps(mAdapter.getBlockedApps());
                 
                 Messenger mService = mConnection.getService();
+                
+                SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
+                SharedPreferences.Editor editor = settings.edit();
+                editor.putStringSet(PREFS_NAME_BLOCKED_APPS, mAdapter.getBlockedApps());
+                editor.commit();
                 
                 try {
                     Message msg = Message.obtain(null, FalconEyeService.MSG_UPDATE_BLOCKED_APPS);

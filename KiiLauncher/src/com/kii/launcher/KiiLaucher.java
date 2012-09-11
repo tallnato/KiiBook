@@ -153,7 +153,15 @@ public class KiiLaucher extends Activity {
             @Override
             public void onClick( View v ) {
             
-                Toast.makeText(getApplicationContext(), "mostrar calendário...", Toast.LENGTH_SHORT).show();
+                Intent i;
+                PackageManager manager = getPackageManager();
+                i = manager.getLaunchIntentForPackage("kii.kiibook.Student");
+                if (i == null) {
+                    Toast.makeText(getApplicationContext(), "Agenda não instalada...", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                i.addCategory(Intent.CATEGORY_LAUNCHER);
+                startActivity(i);
             }
         });
         
@@ -170,7 +178,15 @@ public class KiiLaucher extends Activity {
                 v.setVisibility(View.GONE);
                 ((TextView) v.findViewById(R.id.activity_kii_launcher_calendar_notification_count)).setText("0");
                 
-                Toast.makeText(getApplicationContext(), "mostrar calendário notif...", Toast.LENGTH_SHORT).show();
+                Intent i;
+                PackageManager manager = getPackageManager();
+                i = manager.getLaunchIntentForPackage("kii.kiibook.Student");
+                if (i == null) {
+                    Toast.makeText(getApplicationContext(), "Agenda não instalada...", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                i.addCategory(Intent.CATEGORY_LAUNCHER);
+                startActivity(i);
             }
         });
         
@@ -204,7 +220,15 @@ public class KiiLaucher extends Activity {
             @Override
             public void onClick( View v ) {
             
-                Toast.makeText(getApplicationContext(), "mostrar tpc...", Toast.LENGTH_SHORT).show();
+                Intent i;
+                PackageManager manager = getPackageManager();
+                i = manager.getLaunchIntentForPackage("kii.kiibook.Student");
+                if (i == null) {
+                    Toast.makeText(getApplicationContext(), "Agenda não instalada...", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                i.addCategory(Intent.CATEGORY_LAUNCHER);
+                startActivity(i);
             }
         });
         
@@ -218,7 +242,15 @@ public class KiiLaucher extends Activity {
                 v.setVisibility(View.GONE);
                 ((TextView) v.findViewById(R.id.activity_kii_launcher_homework_notification_count)).setText("0");
                 
-                Toast.makeText(getApplicationContext(), "mostrar tpc notif...", Toast.LENGTH_SHORT).show();
+                Intent i;
+                PackageManager manager = getPackageManager();
+                i = manager.getLaunchIntentForPackage("kii.kiibook.Student");
+                if (i == null) {
+                    Toast.makeText(getApplicationContext(), "Agenda não instalada...", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                i.addCategory(Intent.CATEGORY_LAUNCHER);
+                startActivity(i);
             }
         });
         
@@ -323,6 +355,12 @@ public class KiiLaucher extends Activity {
             
                 case KiiLauncherService.MSG_NEW_CALENDAR_NOTIFICATION: {
                     
+                    if (msg.arg1 == 0) {
+                        findViewById(R.id.activity_kii_launcher_calendar_notification).setVisibility(View.GONE);
+                        findViewById(R.id.activity_kii_launcher_calendar).setVisibility(View.VISIBLE);
+                        break;
+                    }
+                    
                     findViewById(R.id.activity_kii_launcher_calendar_notification).setVisibility(View.VISIBLE);
                     TextView tv = (TextView) findViewById(R.id.activity_kii_launcher_calendar_notification_count);
                     
@@ -337,6 +375,12 @@ public class KiiLaucher extends Activity {
                     break;
                 }
                 case KiiLauncherService.MSG_NEW_MESSAGES_NOTIFICATION: {
+                    
+                    if (msg.arg1 == 0) {
+                        findViewById(R.id.activity_kii_launcher_messages_notification).setVisibility(View.GONE);
+                        findViewById(R.id.activity_kii_launcher_messages).setVisibility(View.VISIBLE);
+                        break;
+                    }
                     
                     findViewById(R.id.activity_kii_launcher_messages_notification).setVisibility(View.VISIBLE);
                     TextView tv = (TextView) findViewById(R.id.activity_kii_launcher_messages_notification_count);
@@ -358,6 +402,13 @@ public class KiiLaucher extends Activity {
                     break;
                 }
                 case KiiLauncherService.MSG_NEW_HOMEWORK_NOTIFICATION: {
+                    
+                    if (msg.arg1 == 0) {
+                        findViewById(R.id.activity_kii_launcher_homework_notification).setVisibility(View.GONE);
+                        findViewById(R.id.activity_kii_launcher_homework).setVisibility(View.VISIBLE);
+                        break;
+                    }
+                    
                     findViewById(R.id.activity_kii_launcher_homework_notification).setVisibility(View.VISIBLE);
                     TextView tv = (TextView) findViewById(R.id.activity_kii_launcher_homework_notification_count);
                     int count;
@@ -377,6 +428,12 @@ public class KiiLaucher extends Activity {
                     break;
                 }
                 case KiiLauncherService.MSG_NEW_NEWS_NOTIFICATION: {
+                    
+                    if (msg.arg1 == 0) {
+                        findViewById(R.id.activity_kii_launcher_news_notification).setVisibility(View.GONE);
+                        findViewById(R.id.activity_kii_launcher_news).setVisibility(View.VISIBLE);
+                        break;
+                    }
                     
                     findViewById(R.id.activity_kii_launcher_news_notification).setVisibility(View.VISIBLE);
                     TextView tv = (TextView) findViewById(R.id.activity_kii_launcher_news_notification_count);

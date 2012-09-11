@@ -22,6 +22,7 @@ public class ServiceCon implements ServiceConnection {
     
         // This is called when the connection with the service has been
         // unexpectedly disconnected - process crashed.
+        mService = null;
         Log.e("ServiceCon", "" + className);
     }
     
