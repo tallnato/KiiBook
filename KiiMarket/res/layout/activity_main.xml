@@ -3,107 +3,122 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <LinearLayout
+    <View
         android:layout_width="fill_parent"
-        android:layout_height="200dp"
-        android:layout_marginTop="10dp"
-        android:background="@android:color/darker_gray"
-        android:gravity="center"
-        android:orientation="horizontal" >
+        android:layout_height="3dp"
+        android:background="@android:color/holo_green_dark" />
 
-        <TextView
-            android:layout_width="200dp"
-            android:layout_height="150dp"
-            android:layout_margin="25dp"
-            android:background="#0000ee"
-            android:clickable="true"
-            android:gravity="center"
-            android:text="JOGOS"
-            android:textColor="@android:color/background_light"
-            android:textSize="30dp"
-            android:textStyle="bold"
-            android:typeface="sans" />
-
-        <TextView
-            android:layout_width="200dp"
-            android:layout_height="150dp"
-            android:layout_margin="25dp"
-            android:background="#00ee00"
-            android:clickable="true"
-            android:gravity="center"
-            android:text="LIVROS"
-            android:textColor="@android:color/background_light"
-            android:textSize="30dp"
-            android:textStyle="bold"
-            android:typeface="sans" />
-
-        <TextView
-            android:layout_width="200dp"
-            android:layout_height="150dp"
-            android:layout_margin="25dp"
-            android:background="#ee0000"
-            android:clickable="true"
-            android:gravity="center"
-            android:text="SOCIAL"
-            android:textColor="@android:color/background_light"
-            android:textSize="30dp"
-            android:textStyle="bold"
-            android:typeface="sans" />
-    </LinearLayout>
-
-    <TabHost
-        android:id="@+id/tabhost_fragments"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp" >
+    <HorizontalScrollView
+        android:id="@+id/horizontalScrollView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:textColor="@android:color/holo_blue_light" >
+            android:layout_width="fill_parent"
+            android:layout_height="200dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/shape_color_bar"
+            android:gravity="center"
+            android:orientation="horizontal" >
 
-            <TabWidget
-                android:id="@android:id/tabs"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:divider="@android:color/holo_green_dark" >
-            </TabWidget>
+            <Button
+                android:id="@+id/button_games"
+                android:layout_width="200dp"
+                android:layout_height="150dp"
+                android:layout_marginBottom="25dp"
+                android:layout_marginLeft="50dp"
+                android:layout_marginRight="25dp"
+                android:layout_marginTop="25dp"
+                android:background="@drawable/shape_color"
+                android:clickable="true"
+                android:gravity="center"
+                android:text="MANUAIS"
+                android:textColor="@android:color/background_light"
+                android:textSize="30dp"
+                android:textStyle="bold"
+                android:typeface="sans" />
 
-            <FrameLayout
-                android:id="@android:id/tabcontent"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" >
+            <Button
+                android:id="@+id/button_books"
+                android:layout_width="200dp"
+                android:layout_height="150dp"
+                android:layout_margin="25dp"
+                android:background="@drawable/shape_color"
+                android:clickable="true"
+                android:gravity="center"
+                android:text="LIVROS"
+                android:textColor="@android:color/background_light"
+                android:textSize="30dp"
+                android:textStyle="bold"
+                android:typeface="sans" />
 
-                <View
-                    android:id="@+id/tab0"
-                    android:layout_width="1dp"
-                    android:layout_height="1dp" />
+            <Button
+                android:id="@+id/button_social"
+                android:layout_width="200dp"
+                android:layout_height="150dp"
+                android:layout_margin="25dp"
+                android:background="@drawable/shape_color"
+                android:clickable="true"
+                android:gravity="center"
+                android:text="SOCIAL"
+                android:textColor="@android:color/background_light"
+                android:textSize="30dp"
+                android:textStyle="bold"
+                android:typeface="sans" />
 
-                <View
-                    android:id="@+id/tab1"
-                    android:layout_width="1dp"
-                    android:layout_height="1dp" />
+            <Button
+                android:id="@+id/button_health"
+                android:layout_width="200dp"
+                android:layout_height="150dp"
+                android:layout_margin="25dp"
+                android:background="@drawable/shape_color"
+                android:clickable="true"
+                android:gravity="center"
+                android:text="SAÚDE E FITNESS"
+                android:textColor="@android:color/background_light"
+                android:textSize="30dp"
+                android:textStyle="bold"
+                android:typeface="sans" />
 
-                <View
-                    android:id="@+id/tab2"
-                    android:layout_width="1dp"
-                    android:layout_height="1dp" />
+            <Button
+                android:id="@+id/button_musica"
+                android:layout_width="200dp"
+                android:layout_height="150dp"
+                android:layout_margin="25dp"
+                android:background="@drawable/shape_color"
+                android:clickable="true"
+                android:gravity="center"
+                android:text="MUSICA"
+                android:textColor="@android:color/background_light"
+                android:textSize="30dp"
+                android:textStyle="bold"
+                android:typeface="sans" />
 
-                <View
-                    android:id="@+id/tab3"
-                    android:layout_width="1dp"
-                    android:layout_height="1dp" />
-            </FrameLayout>
+            <Button
+                android:id="@+id/button_sport"
+                android:layout_width="200dp"
+                android:layout_height="150dp"
+                android:layout_margin="25dp"
+                android:background="@drawable/shape_color"
+                android:clickable="true"
+                android:gravity="center"
+                android:text="DESPORTO"
+                android:textColor="@android:color/background_light"
+                android:textSize="30dp"
+                android:textStyle="bold"
+                android:typeface="sans" />
         </LinearLayout>
-    </TabHost>
+    </HorizontalScrollView>
 
-    <android.support.v4.view.ViewPager
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/pager"
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="3dp"
+        android:background="@android:color/holo_green_dark" />
+
+    <FrameLayout
+        android:id="@+id/container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".MainActivity" />
+        android:layout_height="match_parent" >
+    </FrameLayout>
 
 </LinearLayout>
