@@ -2,17 +2,17 @@
 package kii.kiibook.kiimarket;
 
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.view.ViewPager;
-import android.widget.TabHost;
-import android.widget.TabHost.OnTabChangeListener;
-import android.widget.TabHost.TabSpec;
+import android.support.v4.app.FragmentTransaction;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 
-public class MainActivity extends FragmentActivity implements OnTabChangeListener {
+public class MainActivity extends FragmentActivity implements OnClickListener {
     
-    private ViewPager    mViewPager;
-    private TabHost      mTabHost;
-    private PagerAdapter pager;
+    private Fragment            fragment;
+    private FragmentTransaction transaction;
     
     @Override
     public void onCreate( Bundle savedInstanceState ) {
@@ -20,67 +20,36 @@ public class MainActivity extends FragmentActivity implements OnTabChangeListene
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         
-        pager = new PagerAdapter(getSupportFragmentManager());
+        Button btnGames = (Button) findViewById(R.id.button_games);
+        Button btnBooks = (Button) findViewById(R.id.button_books);
         
-        // Set up the ViewPager with the sections adapter.
-        mViewPager = (ViewPager) findViewById(R.id.pager);
-        mViewPager.setAdapter(pager);
-        mViewPager.setDrawingCacheEnabled(false);
-        mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
-            
-            @Override
-            public void onPageSelected( int position ) {
-            
-                mTabHost.setCurrentTab(position);
+        btnGames.setOnClickListener(this);
+        btnBooks.setOnClickListener(this);
+        
+        transaction = getSupportFragmentManager().beginTransaction();
+        fragment = new GamesFragment();
+        transaction.add(R.id.container, fragment, "frag");
+        transaction.commit();
+    }
+    
+    public void onClick( View v ) {
+    
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.detach(fragment);
+        transaction.remove(fragment);
+        
+        switch (v.getId()) {
+            case R.id.button_games:
+                fragment = new GamesFragment();
                 
-            }
-        });
-        createTabs();
-        
-    }
-    
-    private void createTabs() {
-    
-        mTabHost = (TabHost) findViewById(R.id.tabhost_fragments);
-        mTabHost.setOnTabChangedListener(this);
-        mTabHost.setup();
-        
-        TabSpec tspec = mTabHost.newTabSpec("tab0");
-        tspec.setIndicator("em destaque");
-        tspec.setContent(R.id.tab0);
-        mTabHost.addTab(tspec);
-        
-        tspec = mTabHost.newTabSpec("tab1");
-        tspec.setIndicator("novidades");
-        tspec.setContent(R.id.tab1);
-        mTabHost.addTab(tspec);
-        
-        tspec = mTabHost.newTabSpec("tab2");
-        tspec.setIndicator("populares pagas");
-        tspec.setContent(R.id.tab2);
-        mTabHost.addTab(tspec);
-        
-        tspec = mTabHost.newTabSpec("tab3");
-        tspec.setIndicator("populares grátis");
-        tspec.setContent(R.id.tab3);
-        mTabHost.addTab(tspec);
-        
-        mTabHost.setCurrentTab(0);
-        mTabHost.setOnTabChangedListener(this);
-        
-    }
-    
-    public void onTabChanged( String tabId ) {
-    
-        if (tabId.equalsIgnoreCase("tab0")) {
-            mViewPager.setCurrentItem(0, true);
-        } else if (tabId.equalsIgnoreCase("tab1")) {
-            mViewPager.setCurrentItem(1, true);
-        } else if (tabId.equalsIgnoreCase("tab2")) {
-            mViewPager.setCurrentItem(2, true);
-        } else if (tabId.equalsIgnoreCase("tab3")) {
-            mViewPager.setCurrentItem(3, true);
+                break;
+            case R.id.button_books:
+                fragment = new BooksFragment();
+                break;
         }
         
+        transaction.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
+        transaction.add(R.id.container, fragment, "frag");
+        transaction.commit();
     }
 }
