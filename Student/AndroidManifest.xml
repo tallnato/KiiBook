@@ -81,6 +81,12 @@
             android:label="@string/title_activity_password"
             android:noHistory="true"
             android:theme="@android:style/Theme.DeviceDefault.Dialog" />
+        
+        <activity
+            android:name="kii.kiibook.ParentalControl.NotifDialog"
+            android:label="Aplicação bloqueada!"
+            android:noHistory="true"
+            android:theme="@android:style/Theme.DeviceDefault.Dialog" />
 
         <service
             android:name="kii.kiibook.ParentalControl.FalconEyeService"

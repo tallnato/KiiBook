@@ -79,20 +79,11 @@ public class FalconEyeService extends Service implements ParentalConstants {
     
     private void startHome( Context context, String topActivity ) {
     
-        /*
-         * Intent intent = new Intent();
-         * intent.setAction("android.intent.action.MAIN");
-         * intent.addCategory("android.intent.category.HOME");
-         * intent.addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS |
-         * Intent.FLAG_ACTIVITY_FORWARD_RESULT | Intent.FLAG_ACTIVITY_NEW_TASK |
-         * Intent.FLAG_ACTIVITY_PREVIOUS_IS_TOP |
-         * Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
-         */
+        Intent i = new Intent(context, NotifDialog.class);
+        i.addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS | Intent.FLAG_ACTIVITY_FORWARD_RESULT | Intent.FLAG_ACTIVITY_NEW_TASK
+                                        | Intent.FLAG_ACTIVITY_PREVIOUS_IS_TOP | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+        startActivity(i);
         
-        Intent intent = new Intent(getApplicationContext(), PasswordDialog.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.putExtra(TOP_ACTIVITY_BUNDLE, topActivity);
-        context.startActivity(intent);
     }
     
     private void updateBlockedApps() {
@@ -107,6 +98,7 @@ public class FalconEyeService extends Service implements ParentalConstants {
         if (blockedApps == null) {
             return false;
         }
+        System.out.println("packge: " + packge);
         
         for (String s : blockedApps) {
             if (s.equalsIgnoreCase(packge)) {
@@ -124,7 +116,7 @@ public class FalconEyeService extends Service implements ParentalConstants {
         String onTop = getOnTop();
         if (isAppBlocked(onTop)) {
             startHome(getApplicationContext(), onTop);
-            
+            System.out.println(onTop);
             try {
                 Thread.sleep(2 * 1000);
             }
@@ -152,8 +144,6 @@ public class FalconEyeService extends Service implements ParentalConstants {
     
     private class IncomingHandler extends Handler { // Handler of incoming
     
-        // messages from clients.
-        
         @Override
         public void handleMessage( Message msg ) {
         

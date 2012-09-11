@@ -4,7 +4,8 @@ package kii.kiibook.ParentalControl;
 import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.os.Bundle;
 import android.os.Message;
 import android.os.Messenger;
@@ -16,6 +17,7 @@ import android.widget.SearchView;
 import android.widget.SearchView.OnQueryTextListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -40,7 +42,7 @@ public class PermissionsExternal extends ListActivity implements ParentalConstan
         
         Set<String> blocked = DataShared.getInstance().getBlockedApps();
         
-        mAdapter = new PermissionsArrayAdapter(this, R.layout.fragment_permissions_item_list, getPackages(), blocked);
+        mAdapter = new PermissionsArrayAdapter(this, R.layout.fragment_permissions_item_list, getInstalledApps(), blocked);
         setListAdapter(mAdapter);
         
         registerForContextMenu(getListView());
@@ -89,12 +91,10 @@ public class PermissionsExternal extends ListActivity implements ParentalConstan
                 try {
                     Message msg = Message.obtain(null, FalconEyeService.MSG_UPDATE_BLOCKED_APPS);
                     mService.send(msg);
-                    
                 }
                 catch (RemoteException e) {
                     e.printStackTrace();
                 }
-                
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -112,27 +112,26 @@ public class PermissionsExternal extends ListActivity implements ParentalConstan
         }
     }
     
-    private ArrayList<PackagePermissions> getPackages() {
+    private ArrayList<PackagePermissions> getInstalledApps() {
     
-        ArrayList<PackagePermissions> apps = getInstalledApps(false);
-        
-        return apps;
-    }
-    
-    private ArrayList<PackagePermissions> getInstalledApps( boolean getSysPackages ) {
-    
+        PackageManager pm = getPackageManager();
         ArrayList<PackagePermissions> res = new ArrayList<PackagePermissions>();
-        List<PackageInfo> packs = getPackageManager().getInstalledPackages(0);
-        for (int i = 0; i < packs.size(); i++) {
-            PackageInfo p = packs.get(i);
-            if (!getSysPackages && p.versionName == null) {
-                continue;
-            }
-            PackagePermissions newInfo = new PackagePermissions(p.applicationInfo.loadLabel(getPackageManager()).toString(), p.packageName,
-                                            p.applicationInfo.loadIcon(getPackageManager()));
+        
+        Intent mainIntent = new Intent(Intent.ACTION_MAIN, null);
+        mainIntent.addCategory(Intent.CATEGORY_LAUNCHER);
+        
+        List<ResolveInfo> pkgAppsList = pm.queryIntentActivities(mainIntent, 0);
+        
+        for (ResolveInfo ri : pkgAppsList) {
+            
+            PackagePermissions newInfo = new PackagePermissions(ri.loadLabel(pm).toString(), ri.activityInfo.packageName, ri.loadIcon(pm));
+            newInfo.setBlocked(false);
             
             res.add(newInfo);
         }
+        
+        Collections.sort(res);
+        
         return res;
     }
     
@@ -142,9 +141,6 @@ public class PermissionsExternal extends ListActivity implements ParentalConstan
         super.onDestroy();
         
         unbindService(mConnection);
-        
-        // Intent i = new Intent("falconeye.FalconEyeService");
-        // getActivity().stopService(i);
     }
     
 }

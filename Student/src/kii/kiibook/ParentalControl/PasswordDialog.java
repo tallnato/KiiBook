@@ -14,9 +14,10 @@ import android.widget.Toast;
 
 import kii.kiibook.Student.R;
 
-public class PasswordDialog extends Activity {
+public class PasswordDialog extends Activity implements ParentalConstants {
     
     private PasswordDialog me;
+    private String         topActivity;
     
     @Override
     public void onCreate( Bundle savedInstanceState ) {
@@ -26,6 +27,8 @@ public class PasswordDialog extends Activity {
         setContentView(R.layout.password_activity);
         
         setFinishOnTouchOutside(false);
+        
+        topActivity = getIntent().getStringExtra(TOP_ACTIVITY_BUNDLE);
         
         me = this;
         
@@ -69,7 +72,6 @@ public class PasswordDialog extends Activity {
         EditText pass = (EditText) v.getRootView().findViewById(R.id.password_activity_password);
         if (pass.getText().toString().equals("1234")) {
             setResult(RESULT_OK);
-            
             me.finish();
             
             return true;
