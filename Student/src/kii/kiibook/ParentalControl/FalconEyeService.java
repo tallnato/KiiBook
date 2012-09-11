@@ -101,7 +101,12 @@ public class FalconEyeService extends Service implements ParentalConstants {
         System.out.println("packge: " + packge);
         
         for (String s : blockedApps) {
-            if (s.equalsIgnoreCase(packge)) {
+            /*if (s.equalsIgnoreCase(packge)) {
+                return true;
+            }*/
+            
+            System.out.println(s.hashCode() + " " + packge.hashCode());
+            if (s.hashCode() == packge.hashCode()) {
                 return true;
             }
         }

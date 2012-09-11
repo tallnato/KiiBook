@@ -124,8 +124,11 @@ public class PermissionsExternal extends ListActivity implements ParentalConstan
         
         for (ResolveInfo ri : pkgAppsList) {
             
+            if (ri.loadLabel(pm).toString().contains("KiiLauncher") || ri.loadLabel(pm).toString().contains("Parental Control")) {
+                continue;
+            }
             PackagePermissions newInfo = new PackagePermissions(ri.loadLabel(pm).toString(), ri.activityInfo.packageName, ri.loadIcon(pm));
-            newInfo.setBlocked(false);
+            newInfo.setBlocked(true);
             
             res.add(newInfo);
         }

@@ -10,6 +10,7 @@ import objects.Summary;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashSet;
 import java.util.Set;
 
 public class DataShared {
@@ -18,7 +19,7 @@ public class DataShared {
     private final Student                myProfile;
     private ArrayList<Student>           listFriendsOnline = new ArrayList<Student>();
     private ArrayList<MyCalendar>        myCalendar;
-    private Set<String>                  blockedApps       = null;
+    private final Set<String>            blockedApps       = new HashSet<String>();
     private final ArrayList<Summary>     listSummaries     = new ArrayList<Summary>();
     private final ObjectCreator          creator;
     private final ArrayList<ClassPeople> classes;
@@ -72,6 +73,7 @@ public class DataShared {
     
         if (instance == null) {
             instance = new DataShared();
+            System.out.println("cenas construtor");
         }
         return instance;
     }
@@ -88,12 +90,15 @@ public class DataShared {
     
     public Set<String> getBlockedApps() {
     
+        System.out.println("count " + blockedApps);
         return blockedApps;
     }
     
     public void setBlockedApps( Set<String> blockedApps ) {
     
-        this.blockedApps = blockedApps;
+        this.blockedApps.clear();
+        this.blockedApps.addAll(blockedApps);
+        System.out.println("count " + this.blockedApps);
     }
     
     public void setMyCalendar( ArrayList<MyCalendar> myCalendar ) {
