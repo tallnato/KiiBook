@@ -161,7 +161,10 @@ public class KiiLaucher extends Activity {
                     return;
                 }
                 i.addCategory(Intent.CATEGORY_LAUNCHER);
-                startActivity(i);
+                Bundle bundle = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.slide_in_up, android.R.anim.fade_out)
+                                                .toBundle();
+                
+                startActivity(i, bundle);
             }
         });
         
@@ -178,6 +181,10 @@ public class KiiLaucher extends Activity {
                 v.setVisibility(View.GONE);
                 ((TextView) v.findViewById(R.id.activity_kii_launcher_calendar_notification_count)).setText("0");
                 
+                Intent broadcast = new Intent();
+                broadcast.setAction(KiiLauncherService.CalendarBroadcastClear);
+                sendBroadcast(broadcast);
+                
                 Intent i;
                 PackageManager manager = getPackageManager();
                 i = manager.getLaunchIntentForPackage("kii.kiibook.Student");
@@ -186,7 +193,10 @@ public class KiiLaucher extends Activity {
                     return;
                 }
                 i.addCategory(Intent.CATEGORY_LAUNCHER);
-                startActivity(i);
+                Bundle bundle = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.slide_in_up, android.R.anim.fade_out)
+                                                .toBundle();
+                
+                startActivity(i, bundle);
             }
         });
         
@@ -211,6 +221,10 @@ public class KiiLaucher extends Activity {
                 ((TextView) v.findViewById(R.id.activity_kii_launcher_messages_notification_count)).setText("0");
                 
                 Toast.makeText(getApplicationContext(), "mostrar mensagens notif...", Toast.LENGTH_SHORT).show();
+                
+                Intent broadcast = new Intent();
+                broadcast.setAction(KiiLauncherService.MesssageBroadcastClear);
+                sendBroadcast(broadcast);
             }
         });
         
@@ -228,7 +242,10 @@ public class KiiLaucher extends Activity {
                     return;
                 }
                 i.addCategory(Intent.CATEGORY_LAUNCHER);
-                startActivity(i);
+                Bundle bundle = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.slide_in_up, android.R.anim.fade_out)
+                                                .toBundle();
+                
+                startActivity(i, bundle);
             }
         });
         
@@ -250,7 +267,14 @@ public class KiiLaucher extends Activity {
                     return;
                 }
                 i.addCategory(Intent.CATEGORY_LAUNCHER);
-                startActivity(i);
+                Bundle bundle = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.slide_in_up, android.R.anim.fade_out)
+                                                .toBundle();
+                
+                startActivity(i, bundle);
+                
+                Intent broadcast = new Intent();
+                broadcast.setAction(KiiLauncherService.HomeworkBroadcastClear);
+                sendBroadcast(broadcast);
             }
         });
         
@@ -275,6 +299,10 @@ public class KiiLaucher extends Activity {
                 ((TextView) v.findViewById(R.id.activity_kii_launcher_news_notification_count)).setText("0");
                 
                 Toast.makeText(getApplicationContext(), "mostrar news notif...", Toast.LENGTH_SHORT).show();
+                
+                Intent broadcast = new Intent();
+                broadcast.setAction(KiiLauncherService.NewsBroadcastClear);
+                sendBroadcast(broadcast);
             }
         });
     }
@@ -371,7 +399,7 @@ public class KiiLaucher extends Activity {
                     }
                     
                     findViewById(R.id.activity_kii_launcher_calendar).setVisibility(View.GONE);
-                    
+                    playNotify();
                     break;
                 }
                 case KiiLauncherService.MSG_NEW_MESSAGES_NOTIFICATION: {
@@ -398,7 +426,7 @@ public class KiiLaucher extends Activity {
                     }
                     
                     findViewById(R.id.activity_kii_launcher_messages).setVisibility(View.GONE);
-                    
+                    playNotify();
                     break;
                 }
                 case KiiLauncherService.MSG_NEW_HOMEWORK_NOTIFICATION: {
@@ -425,6 +453,7 @@ public class KiiLaucher extends Activity {
                     }
                     
                     findViewById(R.id.activity_kii_launcher_homework).setVisibility(View.GONE);
+                    playNotify();
                     break;
                 }
                 case KiiLauncherService.MSG_NEW_NEWS_NOTIFICATION: {
@@ -451,15 +480,13 @@ public class KiiLaucher extends Activity {
                     }
                     
                     findViewById(R.id.activity_kii_launcher_news).setVisibility(View.GONE);
-                    
+                    playNotify();
                     break;
                 }
                 default:
                     super.handleMessage(msg);
                     return;
             }
-            
-            // playNotify();
         }
     }
     

@@ -106,10 +106,12 @@ public class KiiLauncherService extends Service {
                     catch (RemoteException e) {
                         e.printStackTrace();
                     }
+                    
                     break;
                 case MSG_GET_CALENDAR_NOTIFICATION_COUNT:
                     try {
                         msg.replyTo.send(Message.obtain(null, MSG_NEW_CALENDAR_NOTIFICATION, calendarNotification, 0));
+                        
                     }
                     catch (RemoteException e) {
                         e.printStackTrace();
@@ -118,6 +120,7 @@ public class KiiLauncherService extends Service {
                 case MSG_GET_MESSAGES_NOTIFICATION_COUNT:
                     try {
                         msg.replyTo.send(Message.obtain(null, MSG_NEW_MESSAGES_NOTIFICATION, messagesNotification, 0));
+                        
                     }
                     catch (RemoteException e) {
                         e.printStackTrace();
@@ -126,6 +129,7 @@ public class KiiLauncherService extends Service {
                 case MSG_GET_HOMEWORK_NOTIFICATION_COUNT:
                     try {
                         msg.replyTo.send(Message.obtain(null, MSG_NEW_HOMEWORK_NOTIFICATION, homeworkNotification, 0));
+                        
                     }
                     catch (RemoteException e) {
                         e.printStackTrace();
@@ -134,6 +138,7 @@ public class KiiLauncherService extends Service {
                 case MSG_GET_NEWS_NOTIFICATION_COUNT:
                     try {
                         msg.replyTo.send(Message.obtain(null, MSG_NEW_NEWS_NOTIFICATION, newsNotification, 0));
+                        
                     }
                     catch (RemoteException e) {
                         e.printStackTrace();
