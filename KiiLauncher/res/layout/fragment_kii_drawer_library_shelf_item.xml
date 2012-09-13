@@ -5,7 +5,7 @@
     android:orientation="vertical"
     android:padding="8dip" >
 
-    <TextView
+    <com.kii.launcher.KiiTextView 
         android:id="@+id/fragment_kii_drawer_library_item_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

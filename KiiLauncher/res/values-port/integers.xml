@@ -9,4 +9,6 @@
     <integer name="drawer_pictures_horizontal_count">3</integer>
     
     <integer name="drawer_videos_horizontal_count">3</integer>
+    
+    <integer name="homescreen_horizontal_count">4</integer>
 </resources>

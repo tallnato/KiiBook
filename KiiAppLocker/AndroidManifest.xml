@@ -39,7 +39,7 @@
         <service
             android:name=".AppLockerService"
             android:process=":process"
-            android:exported="false" />
+            android:exported="true" />
     </application>
 
 </manifest>

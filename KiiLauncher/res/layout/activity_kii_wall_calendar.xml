@@ -5,7 +5,7 @@
     android:background="@drawable/activity_kii_launcher_wall_popup_background"
     android:orientation="vertical" >
 
-    <TextView
+    <com.kii.launcher.KiiTextView 
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="5dip"
@@ -40,7 +40,7 @@
         android:layout_marginTop="3dip"
         android:background="#55FFFFFF" />
 
-    <TextView
+    <com.kii.launcher.KiiTextView 
         android:id="@+id/activity_kii_wall_calendar_agenda"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"

@@ -8,5 +8,4 @@
     android:gravity="center"
     android:numColumns="@integer/drawer_books_horizontal_count"
     android:padding="0dip"
-    android:stretchMode="columnWidth" >
-</GridView>
+    android:stretchMode="columnWidth" />

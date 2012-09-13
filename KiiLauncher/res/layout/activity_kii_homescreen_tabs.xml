@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GridView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/activity_kii_drawer_apps_gridview"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:gravity="center"
+    android:numColumns="@integer/homescreen_horizontal_count"
+    android:padding="20dip"
+    android:stretchMode="columnWidth"
+    android:horizontalSpacing="15dp"
+    android:verticalSpacing="15dp"
+    android:focusableInTouchMode="false" />

@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical" >
 
-        <TextView
+        <com.kii.launcher.KiiTextView 
             android:id="@+id/activity_kii_wall_messages_item_from_to"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -35,7 +35,7 @@
 	       android:layout_marginBottom="3dip"
 	       android:background="#55FFFFFF" />
 
-        <TextView
+        <com.kii.launcher.KiiTextView 
             android:id="@+id/activity_kii_wall_messages_item_message"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"

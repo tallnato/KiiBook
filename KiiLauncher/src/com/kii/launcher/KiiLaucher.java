@@ -10,9 +10,6 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
-import android.media.Ringtone;
-import android.media.RingtoneManager;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -34,7 +31,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.kii.launcher.drawer.DrawerActivity;
-import com.kii.launcher.drawer.apps.AppsFragmentIconAdapter;
 import com.kii.launcher.drawer.apps.database.AppsListDataSource;
 import com.viewpagerindicator.CirclePageIndicator;
 
@@ -47,13 +43,15 @@ public class KiiLaucher extends Activity {
     private ViewPager                            mViewPager;
     private PageViewAdapter                      mPagerAdapter;
     private CirclePageIndicator                  circleIndicator;
-    private boolean                              mIsBound;
+    private static boolean                       mIsBound;
     
     private static ArrayList<PackagePermissions> homeScreen;
     
     private static Messenger                     mService = null;
     private static Messenger                     mMessenger;
     private static LauncherServiceConnection     mConnection;
+    
+    private ProgressDialog                       dialog;
     
     public KiiLaucher() {
     
@@ -85,6 +83,8 @@ public class KiiLaucher extends Activity {
         setButtons();
         
         new InstalledAppsWorker().execute(this);
+        
+        startService(new Intent("com.kii.applocker.AppLockerService"));
         
         /*AppWidgetManager awm = AppWidgetManager.getInstance(getApplicationContext());
         List<AppWidgetProviderInfo> list = awm.getInstalledProviders();
@@ -140,7 +140,18 @@ public class KiiLaucher extends Activity {
             @Override
             public void onClick( View v ) {
             
-                Toast.makeText(getApplicationContext(), "mostrar prefil...", Toast.LENGTH_SHORT).show();
+                Intent i;
+                PackageManager manager = getPackageManager();
+                i = manager.getLaunchIntentForPackage("kii.profile");
+                if (i == null) {
+                    Toast.makeText(getApplicationContext(), "Perfil não instalado...", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                i.addCategory(Intent.CATEGORY_LAUNCHER);
+                Bundle bundle = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.slide_in_up, android.R.anim.fade_out)
+                                                .toBundle();
+                
+                startActivity(i, bundle);
             }
         });
         
@@ -357,16 +368,24 @@ public class KiiLaucher extends Activity {
         }
     }
     
+    @Override
+    protected void onStop() {
+    
+        super.onStop();
+        
+        dialog = null;
+    }
+    
     private void playNotify() {
     
-        try {
+        /*try {
             Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
             Ringtone r = RingtoneManager.getRingtone(getApplicationContext(), notification);
             r.play();
         }
         catch (Exception e) {
             e.printStackTrace();
-        }
+        }*/
     }
     
     @Override
@@ -536,6 +555,8 @@ public class KiiLaucher extends Activity {
     
     private class PageViewAdapter extends PagerAdapter {
         
+        int num = getResources().getInteger(R.integer.homescreen_horizontal_count);
+        
         @Override
         public int getCount() {
         
@@ -546,11 +567,11 @@ public class KiiLaucher extends Activity {
         public Object instantiateItem( View collection, int position ) {
         
             LayoutInflater li = getLayoutInflater();
-            GridView gridview = (GridView) li.inflate(R.layout.fragment_kii_drawer_apps_tabs, (ViewGroup) collection, false);
+            GridView gridview = (GridView) li.inflate(R.layout.activity_kii_homescreen_tabs, (ViewGroup) collection, false);
             gridview.setStackFromBottom(true);
-            gridview.setAdapter(new AppsFragmentIconAdapter(KiiLaucher.this, R.layout.activity_kii_homescreen_iconlayout, homeScreen
-                                            .subList(position * 8, (position + 1) * 8)));
-            gridview.setNumColumns(8);
+            System.out.println(num);
+            gridview.setAdapter(new DesktopIconAdapter(KiiLaucher.this, R.layout.activity_kii_homescreen_iconlayout, homeScreen.subList(
+                                            position * 8, (position + 1) * 8)));
             
             ((ViewPager) collection).addView(gridview);
             
@@ -578,8 +599,6 @@ public class KiiLaucher extends Activity {
     
     private class InstalledAppsWorker extends AsyncTask<Context, Void, Void> {
         
-        private ProgressDialog dialog;
-        
         @Override
         protected void onPreExecute() {
         
@@ -605,7 +624,9 @@ public class KiiLaucher extends Activity {
         @Override
         protected void onPostExecute( Void result ) {
         
-            dialog.dismiss();
+            if (dialog != null) {
+                dialog.dismiss();
+            }
             setHomeScreen();
         }
     }

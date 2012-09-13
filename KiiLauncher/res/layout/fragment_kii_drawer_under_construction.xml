@@ -4,7 +4,7 @@
         android:layout_height="fill_parent"
         android:orientation="vertical" >
 
-		<TextView 
+		<com.kii.launcher.KiiTextView 
 		    android:layout_width="fill_parent"
 		    android:layout_height="wrap_content"
 			android:text="Under Construction"
