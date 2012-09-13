@@ -14,7 +14,7 @@
         android:layout_gravity="center"
         android:layout_marginTop="10dip" />
     
-	<TextView 
+	<com.kii.launcher.KiiTextView 
 	    android:id="@+id/fragment_kii_drawer_favorites_library_iconlayout_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

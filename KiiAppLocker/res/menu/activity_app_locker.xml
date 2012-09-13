@@ -1,0 +1,14 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/menu_select_all"
+        android:orderInCategory="100"
+        android:showAsAction="never"
+        android:title="Marcar todas"/>
+    <item
+        android:id="@+id/menu_unselect_all"
+        android:orderInCategory="100"
+        android:showAsAction="never"
+        android:title="Desmarcar todas"/>
+
+</menu>

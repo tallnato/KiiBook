@@ -16,7 +16,7 @@
         android:focusableInTouchMode="false"
         android:listSelector="@android:color/transparent" />
 
-    <TextView
+    <com.kii.launcher.KiiTextView 
         android:id="@+id/fragment_kii_drawer_favorites_list_empty"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"

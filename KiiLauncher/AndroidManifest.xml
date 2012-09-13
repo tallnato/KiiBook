@@ -43,7 +43,7 @@
 
         <service
             android:name="com.kii.launcher.KiiLauncherService"
-            android:process=":my_process" >
+            android:process=":KiiLauncherService" >
         </service>
 
         <receiver android:name="com.kii.broadcastreceivers.AppWatcher" >

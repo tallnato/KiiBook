@@ -5,7 +5,7 @@
     android:orientation="horizontal" 
     android:padding="5dip">
 
-    <TextView
+    <com.kii.launcher.KiiTextView 
         android:id="@+id/activity_kii_wall_homework_item_date"
         android:layout_width="wrap_content"
         android:layout_height="fill_parent"
@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical" >
 
-        <TextView
+        <com.kii.launcher.KiiTextView 
             android:id="@+id/activity_kii_wall_homework_item_course"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -36,7 +36,7 @@
 	       android:layout_marginBottom="3dip"
 	       android:background="#55FFFFFF" />
 
-        <TextView
+        <com.kii.launcher.KiiTextView 
             android:id="@+id/activity_kii_wall_homework_item_homework"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"

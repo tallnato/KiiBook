@@ -11,7 +11,7 @@
         android:layout_gravity="center"
         android:padding="5dip" />
 
-    <TextView
+    <com.kii.launcher.KiiTextView 
         android:id="@+id/fragment_kii_drawer_downloads_item_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

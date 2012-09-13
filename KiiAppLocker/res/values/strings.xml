@@ -1,0 +1,11 @@
+<resources>
+
+    <string name="app_name">KiiAppLocker</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="menu_settings">Settings</string>
+    <string name="title_activity_app_locker">AppLocker</string>
+
+    <string name="title_activity_password">Introduza a password</string>
+    <string name="title_activity_password_bt_ok">Desbloquear</string>
+    <string name="title_activity_password_bt_cancel">Cancelar</string>
+</resources>

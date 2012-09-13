@@ -4,7 +4,7 @@
     android:layout_height="fill_parent"
     android:orientation="vertical" >
 
-    <TextView
+    <com.kii.launcher.KiiTextView 
         android:id="@+id/fragment_kii_drawer_music_path"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -25,7 +25,7 @@
         android:layout_gravity="center"
         android:gravity="center" />
 
-    <TextView
+    <com.kii.launcher.KiiTextView 
         android:id="@+id/fragment_kii_drawer_music_list_empty"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"

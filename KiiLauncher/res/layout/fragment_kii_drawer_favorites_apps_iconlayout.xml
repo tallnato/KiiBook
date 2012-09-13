@@ -3,9 +3,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:paddingTop="15dip"
+    android:paddingLeft="5dip"
     android:paddingRight="20dip"
-    android:paddingLeft="5dip" >
+    android:paddingTop="15dip" >
 
     <ImageView
         android:id="@+id/fragment_kii_drawer_favorites_apps_iconlayout_icon"
@@ -13,11 +13,12 @@
         android:layout_height="55dip"
         android:layout_gravity="center_horizontal" />
 
-    <TextView
+    <com.kii.launcher.KiiTextView
         android:id="@+id/fragment_kii_drawer_favorites_apps_iconlayout_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:maxLength="18"
         android:textColor="#000" />
+
 </LinearLayout>
