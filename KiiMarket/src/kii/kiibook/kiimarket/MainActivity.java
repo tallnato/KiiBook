@@ -13,6 +13,8 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
     
     private Fragment            fragment;
     private FragmentTransaction transaction;
+    private Button              btnGames;
+    private Button              btnBooks;
     
     @Override
     public void onCreate( Bundle savedInstanceState ) {
@@ -20,8 +22,8 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         
-        Button btnGames = (Button) findViewById(R.id.button_games);
-        Button btnBooks = (Button) findViewById(R.id.button_books);
+        btnGames = (Button) findViewById(R.id.button_games);
+        btnBooks = (Button) findViewById(R.id.button_books);
         
         btnGames.setOnClickListener(this);
         btnBooks.setOnClickListener(this);
@@ -41,10 +43,13 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
         switch (v.getId()) {
             case R.id.button_games:
                 fragment = new GamesFragment();
-                
+                btnBooks.setBackground(getResources().getDrawable(R.drawable.shape_color));
+                btnGames.setBackground(getResources().getDrawable(R.drawable.shape_color_selected));
                 break;
             case R.id.button_books:
                 fragment = new BooksFragment();
+                btnGames.setBackground(getResources().getDrawable(R.drawable.shape_color));
+                btnBooks.setBackground(getResources().getDrawable(R.drawable.shape_color_selected));
                 break;
         }
         

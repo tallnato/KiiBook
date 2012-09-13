@@ -29,7 +29,7 @@
                 android:layout_marginLeft="50dp"
                 android:layout_marginRight="25dp"
                 android:layout_marginTop="25dp"
-                android:background="@drawable/shape_color"
+                android:background="@drawable/shape_color_selected"
                 android:clickable="true"
                 android:gravity="center"
                 android:text="MANUAIS"
