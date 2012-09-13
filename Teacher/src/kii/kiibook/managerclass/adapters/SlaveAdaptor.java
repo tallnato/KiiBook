@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Handler;
 import android.os.IBinder;
@@ -27,6 +28,7 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import objects.Student;
 
@@ -82,6 +84,7 @@ public class SlaveAdaptor extends ArrayAdapter<Student> implements OnClickListen
         name.setText(slave.getName());
         status.setText("Online");
         status.setTextColor(Color.GREEN);
+        image.setImageDrawable(row.getResources().getDrawable(slave.getPic()));
         image.setOnClickListener(this);
         return row;
     }
@@ -104,7 +107,7 @@ public class SlaveAdaptor extends ArrayAdapter<Student> implements OnClickListen
     
     private void showDialogItem( final Student student ) {
     
-        String[] items = { "Ver Perfil", "Aplicações Bloqueadas", "Desligar" };
+        String[] items = { "Ver Perfil", "Aplicações Bloqueadas" };
         
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setItems(items, new DialogInterface.OnClickListener() {
@@ -131,17 +134,26 @@ public class SlaveAdaptor extends ArrayAdapter<Student> implements OnClickListen
     
     private void showDialogProfile( Student student ) {
     
-        // set up dialog
-        Dialog dialog = new Dialog(getContext());
-        dialog.setContentView(R.layout.profile_student);
-        dialog.setTitle(student.getName());
-        dialog.setCancelable(true);
+        Intent i;
+        PackageManager manager = context.getPackageManager();
         
-        // now that the dialog is set up, it's time to show it
-        dialog.show();
+        i = manager.getLaunchIntentForPackage("kii.profile");
+        
+        if (i == null) {
+            
+            Toast.makeText(context.getApplicationContext(), "Perfil não instalado...", Toast.LENGTH_SHORT).show();
+            
+            return;
+            
+        }
+        
+        i.addCategory(Intent.CATEGORY_LAUNCHER);
+        
+        context.startActivity(i);
+        
     }
     
-    private void showPermissions( Student student ) {
+    private void showPermissions( final Student student ) {
     
         dialog = new Dialog(getContext());
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -160,7 +172,8 @@ public class SlaveAdaptor extends ArrayAdapter<Student> implements OnClickListen
             
             public void onClick( View v ) {
             
-                // TODO Auto-generated method stub
+                student.setPackages(mAdapter.getBlockedApps());
+                
                 dialog.dismiss();
                 sendMsgtoService();
                 

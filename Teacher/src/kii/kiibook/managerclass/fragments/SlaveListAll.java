@@ -53,7 +53,7 @@ public class SlaveListAll extends ListFragment implements OnClickListener {
     
     private void showDialogItem( final Student student ) {
     
-        String[] items = { "Ver Perfil", "Aplicações Bloqueadas", "Desligar" };
+        String[] items = { "Ver Perfil", "Aplicações Bloqueadas" };
         
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setItems(items, new DialogInterface.OnClickListener() {

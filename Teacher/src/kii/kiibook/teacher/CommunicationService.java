@@ -27,10 +27,12 @@ import messages.tcp.network.ApplicationList_Response;
 import messages.tcp.network.ApplicationList_Response_ACK;
 import messages.tcp.network.CloseConnectionAck;
 import messages.tcp.network.CloseConnectionNetwork;
+import messages.tcp.network.NewEventNetwork;
 import messages.tcp.network.SummaryNetwork;
 import messages.udp.Connect;
 import messages.udp.Discover;
 import messages.udp.UdpMessage;
+import objects.NewEvent;
 import objects.PackagePermissions;
 import objects.Student;
 import objects.Summary;
@@ -41,42 +43,41 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import kii.kiibook.managerclass.callbacks.MasterActivityCallback;
 import kii.kiibook.managerclass.callbacks.SlaveDetailsCallback;
 import kii.kiibook.managerclass.database.DataShared;
 
-public class CommunicationService extends Service implements Constants, MasterActivityCallback {
+public class CommunicationService extends Service implements Constants {
     
-    private ComunicationManager mComManager;
-    private MyHandler           mHandler;
-    private String              myIp;
-    private DataShared          dataShared;
     public static final int     MSG_REGISTER_CLIENT   = 1;
     public static final int     MSG_UNREGISTER_CLIENT = 2;
     public static final int     MSG_UPDATE_LIST       = 3;
     public static final int     MSG_SEND_SUMMARY      = 4;
     public static final int     MSG_DISCONNECT_SLAVES = 5;
     public static final int     MSG_RECEIVE_APPS      = 6;
+    public static final int     MSG_SEND_NEW_EVENT    = 7;
+    
     ArrayList<Messenger>        mClients              = new ArrayList<Messenger>();
     final Messenger             mMessenger            = new Messenger(new ServiceActivityHandler());
+    private ComunicationManager mComManager;
+    private MyHandler           mHandler;
+    private String              myIp;
+    private DataShared          dataShared;
     protected Messenger         mService;
     protected Toast             textStatus;
     public Student              stdCurrentAdded;
+    private boolean             enable;
     private static boolean      isRunning             = false;
     
     @Override
     public IBinder onBind( Intent intent ) {
     
-        Toast.makeText(this, "Communication Service onBind", Toast.LENGTH_LONG).show();
-        
+        enable = true;
         return mMessenger.getBinder();
     }
     
     @Override
     public void onCreate() {
     
-        Toast.makeText(this, "Communication Service created\nStarting UDP & TCP listener...", Toast.LENGTH_LONG).show();
-        
         WifiManager wifi = (WifiManager) getSystemService(Context.WIFI_SERVICE);
         WifiInfo wifiInfo = wifi.getConnectionInfo();
         myIp = Formatter.formatIpAddress(wifiInfo.getIpAddress());
@@ -105,26 +106,10 @@ public class CommunicationService extends Service implements Constants, MasterAc
     }
     
     @Override
-    public boolean onUnbind( Intent intent ) {
-    
-        return super.onUnbind(intent);
-    }
-    
-    @Override
-    public void onStart( Intent intent, int startid ) {
-    
-        Toast.makeText(this, "Communication Service started", Toast.LENGTH_LONG).show();
-    }
-    
-    @Override
     public void onRebind( Intent intent ) {
     
-        Toast.makeText(this, "onRebind Service", Toast.LENGTH_LONG).show();
+        enable = true;
         super.onRebind(intent);
-    }
-    
-    public void onItemSelected( int position ) {
-    
     }
     
     public SlaveDetailsCallback getSlaveDetailsCallback() {
@@ -134,8 +119,6 @@ public class CommunicationService extends Service implements Constants, MasterAc
     
     public void getPackages( Student slave ) {
     
-        Toast.makeText(this, "getting permissions", Toast.LENGTH_SHORT).show();
-        
         ApplicationList msg = new ApplicationList();
         mComManager.sendTCPMessage(new GetSlaveApplicationList(slave.getComChannel(), msg));
         
@@ -172,9 +155,22 @@ public class CommunicationService extends Service implements Constants, MasterAc
         }
     }
     
+    private void handleNewEventSend( NewEvent event ) {
+    
+        NewEventNetwork msg = new NewEventNetwork(event);
+        Iterator<Student> it = DataShared.getInstance().getListOnline().iterator();
+        while (it.hasNext()) {
+            Student slave = it.next();
+            if (slave.getStatus() == SlaveStatus.CONNECTED) {
+                mComManager.sendTCPMessage(new GetSlaveApplicationList(slave.getComChannel(), msg));
+            }
+        }
+    }
+    
     private Student checkDefaultPermissions( Student std, boolean unlock ) {
     
         List<PackagePermissions> list = std.getPackages();
+        
         Iterator<PackagePermissions> it = list.iterator();
         if (unlock) {
             while (it.hasNext()) {
@@ -184,10 +180,12 @@ public class CommunicationService extends Service implements Constants, MasterAc
         } else {
             while (it.hasNext()) {
                 PackagePermissions app = it.next();
-                if (!app.getAppName().equalsIgnoreCase("kiiStudent")) {
+                Log.d("APPS", app.getAppName() + " # " + app.getPackageName());
+                if (!(app.getPackageName().equalsIgnoreCase("kii.kiibook.Student"))) {
+                    Log.w("APPS", "blocked");
                     app.setBlocked(true);
                 } else {
-                    
+                    app.setBlocked(false);
                 }
             }
         }
@@ -197,6 +195,7 @@ public class CommunicationService extends Service implements Constants, MasterAc
     
     private void sendApplicationsList( Student slave ) {
     
+        Log.w(TAG, slave.getPackages().toString() + "");
         ApplicationList_Response_ACK msg = new ApplicationList_Response_ACK(slave.getPackages());
         
         if (slave.getStatus() == SlaveStatus.CONNECTED) {
@@ -229,7 +228,6 @@ public class CommunicationService extends Service implements Constants, MasterAc
                     break;
                 
                 default:
-                    Toast.makeText(getApplicationContext(), "nothing... " + msg.obj.toString(), Toast.LENGTH_SHORT).show();
                     super.handleMessage(msg);
             }
         }
@@ -238,33 +236,28 @@ public class CommunicationService extends Service implements Constants, MasterAc
         
             if (msg instanceof Discover) {
                 final Discover d = (Discover) msg;
-                Toast.makeText(getApplicationContext(), "found " + d.getStudent().getName() + " @ " + d.getStudent().getIpAdrress(),
-                                                Toast.LENGTH_SHORT).show();
-                
-                if (!dataShared.existConnectedStudents(d.getStudent().getIpAdrress())) {
-                    
-                    Toast.makeText(getApplicationContext(), "send UDP message connect", Toast.LENGTH_SHORT).show();
-                    stdCurrentAdded = d.getStudent();
-                    
-                    // stdCurrentAdded.setStatus(SlaveStatus.CONNECTED);
-                    for (int index = 0; index < dataShared.getListOffline().size(); index++) {
-                        if (dataShared.getListOffline().get(index).getName().equals(stdCurrentAdded.getName())) {
-                            
-                            Student std = dataShared.getListOffline().get(index);
-                            dataShared.getListOffline().remove(index);
-                            ArrayList<Student> lists = dataShared.getListOnline();
-                            
-                            lists.add(stdCurrentAdded);
-                            sendMessageToUIUpdate();
+                if (enable) {
+                    if (!dataShared.existConnectedStudents(d.getStudent().getIpAdrress())) {
+                        
+                        stdCurrentAdded = d.getStudent();
+                        
+                        // stdCurrentAdded.setStatus(SlaveStatus.CONNECTED);
+                        for (int index = 0; index < dataShared.getListOffline().size(); index++) {
+                            if (dataShared.getListOffline().get(index).getName().equals(stdCurrentAdded.getName())) {
+                                
+                                Student std = dataShared.getListOffline().get(index);
+                                dataShared.getListOffline().remove(index);
+                                ArrayList<Student> lists = dataShared.getListOnline();
+                                
+                                lists.add(stdCurrentAdded);
+                                sendMessageToUIUpdate();
+                            }
                         }
+                        
                     }
-                    
+                    mComManager.sendUdpMessage(new Connect(myIp, "Master of puppets :D", mComManager.getTcpPort(), d.getStudent()
+                                                    .getIpAdrress()));
                 }
-                mComManager.sendUdpMessage(new Connect(myIp, "Master of puppets :D", mComManager.getTcpPort(), d.getStudent()
-                                                .getIpAdrress()));
-                
-            } else {
-                Toast.makeText(getApplicationContext(), "Wrong class... " + msg.toString(), Toast.LENGTH_SHORT).show();
             }
         }
         
@@ -283,9 +276,7 @@ public class CommunicationService extends Service implements Constants, MasterAc
                 
                 getPackages(stdCurrentAdded);
                 
-            } else {
-                Toast.makeText(getApplicationContext(), "Wrong class... " + msg.toString(), Toast.LENGTH_SHORT).show();
-            }
+            } else {}
         }
         
         private void handleNetworkTcpMessage( NewTcpMessage msg ) {
@@ -306,11 +297,9 @@ public class CommunicationService extends Service implements Constants, MasterAc
                 dataShared.getListOnline().remove(s);
                 dataShared.clearAllLists();
                 Toast.makeText(getApplicationContext(), "Student removed ", Toast.LENGTH_SHORT).show();
-                
+                enable = false;
                 sendMessageToUIUpdate();
                 
-            } else {
-                Toast.makeText(getApplicationContext(), "Wrong class... " + msg.toString(), Toast.LENGTH_SHORT).show();
             }
             sendMessageToUIUpdate();
         }
@@ -323,6 +312,7 @@ public class CommunicationService extends Service implements Constants, MasterAc
         
             switch (msg.what) {
                 case MSG_REGISTER_CLIENT:
+                    enable = true;
                     mClients.add(msg.replyTo);
                     break;
                 
@@ -345,7 +335,10 @@ public class CommunicationService extends Service implements Constants, MasterAc
                     
                     sendApplicationsList(DataShared.getInstance().getListOnline().get(msg.arg1));
                     break;
-                
+                case MSG_SEND_NEW_EVENT:
+                    
+                    handleNewEventSend((NewEvent) msg.obj);
+                    break;
                 default:
                     super.handleMessage(msg);
             }

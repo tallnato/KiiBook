@@ -4,6 +4,8 @@ package kii.kiibook.managerclass.adapters;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -61,13 +63,14 @@ public class SlaveAdaptorAll extends ArrayAdapter<Student> implements OnClickLis
         
         name.setText(slave.getName());
         if (slave.getStatus().equals(SlaveStatus.CONNECTED)) {
-            Toast.makeText(getContext(), "Online carai", Toast.LENGTH_SHORT).show();
             status.setText("Online");
             status.setTextColor(Color.GREEN);
+            image.setBackgroundResource(slave.getPic());
             check.setChecked(true);
         } else {
             status.setText("Offline");
             status.setTextColor(Color.RED);
+            image.setBackgroundResource(slave.getPic());
             check.setChecked(false);
         }
         
@@ -99,14 +102,22 @@ public class SlaveAdaptorAll extends ArrayAdapter<Student> implements OnClickLis
     
     private void showDialogProfile( Student student ) {
     
-        // set up dialog
-        Dialog dialog = new Dialog(getContext());
-        dialog.setContentView(R.layout.profile_student);
-        dialog.setTitle(student.getName());
-        dialog.setCancelable(true);
+        Intent i;
+        PackageManager manager = context.getPackageManager();
         
-        // now that the dialog is set up, it's time to show it
-        dialog.show();
+        i = manager.getLaunchIntentForPackage("kii.profile");
+        
+        if (i == null) {
+            
+            Toast.makeText(context.getApplicationContext(), "Perfil não instalado...", Toast.LENGTH_SHORT).show();
+            
+            return;
+            
+        }
+        
+        i.addCategory(Intent.CATEGORY_LAUNCHER);
+        
+        context.startActivity(i);
     }
     
 }

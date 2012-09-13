@@ -63,10 +63,11 @@ public class ManagerClassActivity extends FragmentActivity {
         
         // Set up the action bar.
         final ActionBar actionBar = getActionBar();
+        actionBar.setBackgroundDrawable(getResources().getDrawable(R.drawable.shape_actionbar_manager));
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
         actionBar.setDisplayShowTitleEnabled(true);
+        actionBar.setDisplayShowHomeEnabled(false);
         actionBar.setTitle(classPeople.getName());
-        actionBar.setDisplayHomeAsUpEnabled(true);
         
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.manage_pager);
@@ -119,9 +120,7 @@ public class ManagerClassActivity extends FragmentActivity {
         Log.d(TAG, "onOptionsItemSelected");
         
         switch (item.getItemId()) {
-            case R.id.menu_namagerclass_settings:
-                showDialogSettings();
-                return true;
+        
             case R.id.menu_managerclass_changeClass:
                 showDialogChangeClass();
                 return true;

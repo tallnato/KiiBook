@@ -4,14 +4,6 @@
     android:layout_height="fill_parent"
     android:orientation="vertical" >
 
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="Estatisticas"
-        android:textSize="20dp" />
-
     <TabHost
         android:id="@+id/tabhost_stats"
         android:layout_width="match_parent"
@@ -34,379 +26,68 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" >
 
-                <!-- Table with all notes -->
+                <!-- Tab avaliations diary -->
 
                 <LinearLayout
                     android:id="@+id/stats_tab1"
                     android:layout_width="fill_parent"
-                    android:layout_height="match_parent"
-                    android:background="#606060"
+                    android:layout_height="fill_parent"
+                    android:background="@android:color/background_light"
                     android:orientation="vertical" >
 
-                    <TableLayout
-                        android:layout_width="fill_parent"
+                    <ImageView
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginRight="5dp" >
-
-                        <TableRow
-                            android:id="@+id/table_titles"
-                            android:layout_width="fill_parent"
-                            android:layout_height="wrap_content"
-                            android:clickable="true" >
-
-                            <TextView
-                                android:id="@+id/table_name"
-                                android:layout_width="390dp"
-                                android:layout_height="match_parent"
-                                android:background="@drawable/cell_shape"
-                                android:gravity="center"
-                                android:padding="5dp"
-                                android:text="Nome"
-                                android:textAppearance="?android:attr/textAppearanceMedium"
-                                android:textColor="#fff" >
-                            </TextView>
-
-                            <TableLayout
-                                android:id="@+id/table_att"
-                                android:layout_width="fill_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_toRightOf="@id/table_name" >
-
-                                <TextView
-                                    android:layout_width="fill_parent"
-                                    android:layout_height="fill_parent"
-                                    android:background="@drawable/cell_shape"
-                                    android:gravity="center"
-                                    android:padding="5dp"
-                                    android:text="Atitudes"
-                                    android:textAppearance="?android:attr/textAppearanceMedium"
-                                    android:textColor="#fff" >
-                                </TextView>
-
-                                <TableRow
-                                    android:id="@+id/table_att_titles"
-                                    android:layout_width="fill_parent"
-                                    android:layout_height="wrap_content" >
-
-                                    <TextView
-                                        android:layout_width="100dp"
-                                        android:layout_height="25dp"
-                                        android:background="@drawable/cell_shape"
-                                        android:gravity="center"
-                                        android:padding="5dp"
-                                        android:text="Assiduidade"
-                                        android:textColor="#fff"
-                                        android:textSize="14dp" >
-                                    </TextView>
-
-                                    <TextView
-                                        android:layout_width="100dp"
-                                        android:layout_height="25dp"
-                                        android:background="@drawable/cell_shape"
-                                        android:gravity="center"
-                                        android:padding="5dp"
-                                        android:text="Pontualidade"
-                                        android:textColor="#fff"
-                                        android:textSize="14dp" >
-                                    </TextView>
-
-                                    <TextView
-                                        android:layout_width="100dp"
-                                        android:layout_height="25dp"
-                                        android:background="@drawable/cell_shape"
-                                        android:gravity="center"
-                                        android:padding="5dp"
-                                        android:text="Comportamento"
-                                        android:textColor="#fff"
-                                        android:textSize="14dp" >
-                                    </TextView>
-
-                                    <TextView
-                                        android:layout_width="100dp"
-                                        android:layout_height="25dp"
-                                        android:background="@drawable/cell_shape"
-                                        android:gravity="center"
-                                        android:padding="5dp"
-                                        android:text="Participação"
-                                        android:textColor="#fff"
-                                        android:textSize="14dp" >
-                                    </TextView>
-                                </TableRow>
-                            </TableLayout>
-                        </TableRow>
-                    </TableLayout>
-
-                    <ScrollView
-                        android:id="@+id/scrollView_table"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" >
-
-                        <LinearLayout
-                            android:layout_width="fill_parent"
-                            android:layout_height="match_parent"
-                            android:background="#606060"
-                            android:orientation="vertical" >
-
-                            <TableLayout
-                                android:id="@+id/table_body"
-                                android:layout_width="fill_parent"
-                                android:layout_height="fill_parent"
-                                android:layout_marginLeft="5dp"
-                                android:layout_marginRight="5dp" >
-                            </TableLayout>
-                        </LinearLayout>
-                    </ScrollView>
-                </LinearLayout>
-
-                <!-- Tab works -->
-
-                <LinearLayout
-                    android:id="@+id/stats_tab2"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="#606060"
-                    android:orientation="vertical" >
-
-                    <TableLayout
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginRight="5dp" >
-
-                        <TableRow
-                            android:id="@+id/table_titles"
-                            android:layout_width="fill_parent"
-                            android:layout_height="wrap_content"
-                            android:clickable="true" >
-
-                            <TextView
-                                android:id="@+id/table_name"
-                                android:layout_width="390dp"
-                                android:layout_height="match_parent"
-                                android:background="@drawable/cell_shape"
-                                android:gravity="center"
-                                android:padding="5dp"
-                                android:text="Nome"
-                                android:textAppearance="?android:attr/textAppearanceMedium"
-                                android:textColor="#fff" >
-                            </TextView>
-
-                            <TableLayout
-                                android:id="@+id/table_att"
-                                android:layout_width="fill_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_toRightOf="@id/table_name" >
-
-                                <TextView
-                                    android:layout_width="fill_parent"
-                                    android:layout_height="fill_parent"
-                                    android:background="@drawable/cell_shape"
-                                    android:gravity="center"
-                                    android:padding="5dp"
-                                    android:text="Trabalhos"
-                                    android:textAppearance="?android:attr/textAppearanceMedium"
-                                    android:textColor="#fff" >
-                                </TextView>
-
-                                <TableRow
-                                    android:id="@+id/table_att_titles"
-                                    android:layout_width="fill_parent"
-                                    android:layout_height="wrap_content" >
-
-                                    <TextView
-                                        android:layout_width="100dp"
-                                        android:layout_height="25dp"
-                                        android:background="@drawable/cell_shape"
-                                        android:gravity="center"
-                                        android:padding="5dp"
-                                        android:text="TPC"
-                                        android:textColor="#fff"
-                                        android:textSize="14dp" >
-                                    </TextView>
-
-                                    <TextView
-                                        android:layout_width="100dp"
-                                        android:layout_height="25dp"
-                                        android:background="@drawable/cell_shape"
-                                        android:gravity="center"
-                                        android:padding="5dp"
-                                        android:text="Individuais"
-                                        android:textColor="#fff"
-                                        android:textSize="14dp" >
-                                    </TextView>
-
-                                    <TextView
-                                        android:layout_width="100dp"
-                                        android:layout_height="25dp"
-                                        android:background="@drawable/cell_shape"
-                                        android:gravity="center"
-                                        android:padding="5dp"
-                                        android:text="Grupo"
-                                        android:textColor="#fff"
-                                        android:textSize="14dp" >
-                                    </TextView>
-
-                                    <TextView
-                                        android:layout_width="100dp"
-                                        android:layout_height="25dp"
-                                        android:background="@drawable/cell_shape"
-                                        android:gravity="center"
-                                        android:padding="5dp"
-                                        android:text="Projecto"
-                                        android:textColor="#fff"
-                                        android:textSize="14dp" >
-                                    </TextView>
-                                </TableRow>
-                            </TableLayout>
-                        </TableRow>
-                    </TableLayout>
-
-                    <ScrollView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" >
-
-                        <LinearLayout
-                            android:layout_width="fill_parent"
-                            android:layout_height="match_parent"
-                            android:background="#606060"
-                            android:orientation="vertical" >
-
-                            <TableLayout
-                                android:id="@+id/table_body_works"
-                                android:layout_width="fill_parent"
-                                android:layout_height="fill_parent"
-                                android:layout_marginLeft="5dp"
-                                android:layout_marginRight="5dp" >
-                            </TableLayout>
-                        </LinearLayout>
-                    </ScrollView>
+                        android:layout_marginTop="-50dp"
+                        android:src="@drawable/diarias" />
                 </LinearLayout>
 
                 <!-- Tab tests -->
 
                 <LinearLayout
+                    android:id="@+id/stats_tab2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@android:color/background_light"
+                    android:orientation="vertical" >
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="-50dp"
+                        android:src="@drawable/testes" />
+                </LinearLayout>
+
+                <!-- Tab works -->
+
+                <LinearLayout
                     android:id="@+id/stats_tab3"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="#606060"
+                    android:background="@android:color/background_light"
                     android:orientation="vertical" >
 
-                    <TableLayout
-                        android:layout_width="fill_parent"
+                    <ImageView
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginRight="5dp" >
-
-                        <TableRow
-                            android:id="@+id/table_titles"
-                            android:layout_width="fill_parent"
-                            android:layout_height="wrap_content"
-                            android:clickable="true" >
-
-                            <TextView
-                                android:id="@+id/table_name"
-                                android:layout_width="390dp"
-                                android:layout_height="match_parent"
-                                android:background="@drawable/cell_shape"
-                                android:gravity="center"
-                                android:padding="5dp"
-                                android:text="Nome"
-                                android:textAppearance="?android:attr/textAppearanceMedium"
-                                android:textColor="#fff" >
-                            </TextView>
-
-                            <TableLayout
-                                android:id="@+id/table_att"
-                                android:layout_width="fill_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_toRightOf="@id/table_name" >
-
-                                <TableRow
-                                    android:id="@+id/table_att_titles"
-                                    android:layout_width="fill_parent"
-                                    android:layout_height="wrap_content" >
-
-                                    <TextView
-                                        android:layout_width="100dp"
-                                        android:layout_height="40dp"
-                                        android:background="@drawable/cell_shape"
-                                        android:gravity="center"
-                                        android:padding="5dp"
-                                        android:text="Teste 1"
-                                        android:textColor="#fff"
-                                        android:textSize="14dp" >
-                                    </TextView>
-
-                                    <TextView
-                                        android:layout_width="100dp"
-                                        android:layout_height="40dp"
-                                        android:background="@drawable/cell_shape"
-                                        android:gravity="center"
-                                        android:padding="5dp"
-                                        android:text="Teste 2"
-                                        android:textAppearance="?android:attr/textAppearanceMedium"
-                                        android:textColor="#fff"
-                                        android:textSize="14dp" >
-                                    </TextView>
-
-                                    <TextView
-                                        android:layout_width="100dp"
-                                        android:layout_height="40dp"
-                                        android:background="@drawable/cell_shape"
-                                        android:gravity="center"
-                                        android:padding="5dp"
-                                        android:text="Teste 3"
-                                        android:textAppearance="?android:attr/textAppearanceMedium"
-                                        android:textColor="#fff"
-                                        android:textSize="14dp" >
-                                    </TextView>
-
-                                    <TextView
-                                        android:layout_width="100dp"
-                                        android:layout_height="40dp"
-                                        android:background="@drawable/cell_shape"
-                                        android:gravity="center"
-                                        android:padding="5dp"
-                                        android:text="Outra..."
-                                        android:textAppearance="?android:attr/textAppearanceMedium"
-                                        android:textColor="#fff"
-                                        android:textSize="14dp" >
-                                    </TextView>
-                                </TableRow>
-                            </TableLayout>
-                        </TableRow>
-                    </TableLayout>
-
-                    <ScrollView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" >
-
-                        <LinearLayout
-                            android:layout_width="fill_parent"
-                            android:layout_height="match_parent"
-                            android:background="#606060"
-                            android:orientation="vertical" >
-
-                            <TableLayout
-                                android:id="@+id/table_body_tests"
-                                android:layout_width="fill_parent"
-                                android:layout_height="fill_parent"
-                                android:layout_marginLeft="5dp"
-                                android:layout_marginRight="5dp" >
-                            </TableLayout>
-                        </LinearLayout>
-                    </ScrollView>
+                        android:layout_marginTop="-50dp"
+                        android:src="@drawable/trabalhos" />
                 </LinearLayout>
 
-                <!-- Tab graphs -->
+                <!-- Tab tcps -->
 
                 <LinearLayout
                     android:id="@+id/stats_tab4"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="#606060"
+                    android:background="@android:color/background_light"
                     android:orientation="vertical" >
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="-50dp"
+                        android:src="@drawable/tpc" />
                 </LinearLayout>
             </FrameLayout>
         </LinearLayout>

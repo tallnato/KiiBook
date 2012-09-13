@@ -2,8 +2,9 @@
 package kii.kiibook.managerclass.adapters;
 
 import android.app.Activity;
-import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import objects.Student;
 import util.SlaveStatus;
@@ -54,7 +56,7 @@ public class SlaveAdaptorOff extends ArrayAdapter<Student> implements OnClickLis
         CheckBox check = (CheckBox) row.findViewById(R.id.checkBox_assiduity);
         ImageView image = (ImageView) row.findViewById(R.id.imageView_classmode);
         image.setOnClickListener(this);
-        
+        image.setBackgroundResource(slave.getPic());
         check.setChecked(false);
         name.setText(slave.getName());
         if (slave.getStatus() == SlaveStatus.CONNECTED) {
@@ -89,13 +91,21 @@ public class SlaveAdaptorOff extends ArrayAdapter<Student> implements OnClickLis
     
     private void showDialogProfile( Student student ) {
     
-        // set up dialog
-        Dialog dialog = new Dialog(getContext());
-        dialog.setContentView(R.layout.profile_student);
-        dialog.setTitle(student.getName());
-        dialog.setCancelable(true);
+        Intent i;
+        PackageManager manager = context.getPackageManager();
         
-        // now that the dialog is set up, it's time to show it
-        dialog.show();
+        i = manager.getLaunchIntentForPackage("kii.profile");
+        
+        if (i == null) {
+            
+            Toast.makeText(context.getApplicationContext(), "Perfil não instalado...", Toast.LENGTH_SHORT).show();
+            
+            return;
+            
+        }
+        
+        i.addCategory(Intent.CATEGORY_LAUNCHER);
+        
+        context.startActivity(i);
     }
 }

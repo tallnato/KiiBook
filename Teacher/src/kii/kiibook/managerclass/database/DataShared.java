@@ -15,6 +15,7 @@ import java.util.Calendar;
 import java.util.Iterator;
 
 import kii.kiibook.managerclass.adapters.ItemSummaryListView;
+import kii.kiibook.teacher.R;
 
 public class DataShared {
     
@@ -99,6 +100,14 @@ public class DataShared {
     
     public ArrayList<Student> getListOffline() {
     
+        int[] pics = { R.drawable.pic1, R.drawable.pic2, R.drawable.pic3, R.drawable.pic4, R.drawable.pic5, R.drawable.pic6,
+                                        R.drawable.pic7, R.drawable.pic8 };
+        
+        for (int i = 0; i < students.size(); i++) {
+            
+            students.get(i).setPic(pics[i]);
+        }
+        
         return students;
     }
     

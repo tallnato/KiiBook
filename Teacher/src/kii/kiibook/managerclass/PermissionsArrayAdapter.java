@@ -15,7 +15,6 @@ import android.widget.TextView;
 import objects.PackagePermissions;
 
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -79,16 +78,8 @@ public class PermissionsArrayAdapter extends ArrayAdapter<PackagePermissions> {
         return row;
     }
     
-    public Set<String> getBlockedApps() {
+    public List<PackagePermissions> getBlockedApps() {
     
-        HashSet<String> set = new HashSet<String>();
-        
-        for (PackagePermissions pp : list) {
-            if (pp.isBlocked()) {
-                set.add(pp.getPackageName());
-            }
-        }
-        
-        return set;
+        return list;
     }
 }

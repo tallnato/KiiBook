@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 import kii.kiibook.managerclass.fragments.ClassModeFragment;
 import kii.kiibook.managerclass.fragments.DocFragment;
+import kii.kiibook.managerclass.fragments.SkillsFragment;
 import kii.kiibook.managerclass.fragments.StatsFragment;
 import kii.kiibook.managerclass.fragments.SummariesFragment;
 
@@ -47,6 +48,12 @@ public class PagerAdapter extends FragmentPagerAdapter {
                 break;
             
             case 3:
+                fragment = new SkillsFragment();
+                args.putInt(StatsFragment.FRAG, classId);
+                fragment.setArguments(args);
+                break;
+            
+            case 4:
                 fragment = new DocFragment();
                 args.putInt(DocFragment.FRAG, classId);
                 fragment.setArguments(args);
@@ -60,7 +67,7 @@ public class PagerAdapter extends FragmentPagerAdapter {
     @Override
     public int getCount() {
     
-        return 4;
+        return 5;
     }
     
     public int getFragmentIcon( int i ) {
@@ -98,6 +105,9 @@ public class PagerAdapter extends FragmentPagerAdapter {
                 return "Avaliações";
                 
             case 3:
+                return "Competencias";
+                
+            case 4:
                 return "Documentos";
                 
         }

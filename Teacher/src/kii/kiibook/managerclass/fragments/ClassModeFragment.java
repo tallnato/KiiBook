@@ -26,6 +26,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
@@ -39,7 +40,6 @@ import android.widget.TabHost;
 import android.widget.TabHost.OnTabChangeListener;
 import android.widget.TabHost.TabSpec;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import falconeye.tcp.server.ComunicationManager;
 import objects.MediaBook;
@@ -130,7 +130,8 @@ public class ClassModeFragment extends Fragment implements OnItemClickListener, 
     
         // Inflate the layout for this fragment
         mRoot = inflater.inflate(R.layout.class_mode_frame, container, false);
-        Bundle bundle = getArguments();
+        
+        mRoot.requestFocus();
         
         Log.d(TAG, "onCreateView");
         mSlaveAdaptorOn = new SlaveAdaptor(getActivity(), R.layout.item_class_mode, DataShared.getInstance().getListOnline());
@@ -229,6 +230,11 @@ public class ClassModeFragment extends Fragment implements OnItemClickListener, 
         mTabHost.setOnTabChangedListener(this);
         mTabHost.setup();
         
+        TabSpec tspecAll = mTabHost.newTabSpec(ALL);
+        tspecAll.setIndicator("Todos");
+        tspecAll.setContent(R.id.tab_all);
+        mTabHost.addTab(tspecAll);
+        
         TabSpec tspecOn = mTabHost.newTabSpec(ON);
         tspecOn.setIndicator("Online");
         tspecOn.setContent(R.id.tab_on);
@@ -238,11 +244,6 @@ public class ClassModeFragment extends Fragment implements OnItemClickListener, 
         tspecOff.setIndicator("Offline");
         tspecOff.setContent(R.id.tab_off);
         mTabHost.addTab(tspecOff);
-        
-        TabSpec tspecAll = mTabHost.newTabSpec(ALL);
-        tspecAll.setIndicator("Todos");
-        tspecAll.setContent(R.id.tab_all);
-        mTabHost.addTab(tspecAll);
         
         mTabHost.setCurrentTab(0);
     }
@@ -307,7 +308,6 @@ public class ClassModeFragment extends Fragment implements OnItemClickListener, 
     
     public void onItemClick( AdapterView<?> arg0, View arg1, int arg2, long arg3 ) {
     
-        Toast.makeText(this.getActivity(), "Click", Toast.LENGTH_SHORT).show();
         listMediaBooks.remove(arg2);
         links.remove(arg2);
         adapterListLinks.notifyDataSetChanged();
@@ -362,7 +362,6 @@ public class ClassModeFragment extends Fragment implements OnItemClickListener, 
     @Override
     public void onDestroy() {
     
-        Log.d(TAG, "unbindService");
         doUnbindService();
         super.onDestroy();
     }
@@ -370,7 +369,6 @@ public class ClassModeFragment extends Fragment implements OnItemClickListener, 
     @Override
     public void onPrepareOptionsMenu( Menu menu ) {
     
-        Log.d(TAG, "onPrepareOptionsMenu");
         super.onPrepareOptionsMenu(menu);
         
         mSlaveAdaptorOn.notifyDataSetChanged();
@@ -390,8 +388,19 @@ public class ClassModeFragment extends Fragment implements OnItemClickListener, 
             case R.id.menu_class_send_summary:
                 catchSummary();
                 break;
+            case R.id.menu_new_event:
+                newEvent();
+                break;
         }
         return super.onOptionsItemSelected(item);
+    }
+    
+    private void newEvent() {
+    
+        DialogNewEvent dialog = new DialogNewEvent(this.getActivity(), mService);
+        dialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
+        dialog.show();
+        
     }
     
     private void catchSummary() {
@@ -450,6 +459,7 @@ public class ClassModeFragment extends Fragment implements OnItemClickListener, 
         this.menu = menu;
         Log.d(TAG, "onCreateOptionsMenu");
         inflater.inflate(R.menu.turn_off_falcon_eye, menu);
+        inflater.inflate(R.menu.menu_new_event, menu);
         if (!portrait) {
             inflater.inflate(R.menu.send_summary, menu);
         }

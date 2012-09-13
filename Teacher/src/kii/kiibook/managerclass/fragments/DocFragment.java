@@ -3,6 +3,7 @@ package kii.kiibook.managerclass.fragments;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.Fragment;
@@ -29,10 +30,10 @@ import kii.kiibook.teacher.adapters.AdapterListView;
 
 public class DocFragment extends Fragment implements OnItemClickListener {
     
-    public static final String      TAG   = "DocFragment";
-    public static final String      FRAG  = "fragment";
+    public static final String      TAG      = "DocFragment";
+    public static final String      FRAG     = "fragment";
     
-    private final CharSequence[]    items = { "Partilhar", "Eliminar", "Cancelar" };
+    private final CharSequence[]    items    = { "Partilhar", "Eliminar", "Cancelar" };
     
     private View                    view;
     private ArrayList<FileListView> files;
@@ -41,8 +42,9 @@ public class DocFragment extends Fragment implements OnItemClickListener {
     private AdapterListView         adapter;
     private int                     classId;
     private String                  className;
-    private final String            title = "Documentos - ";
+    private final String            title    = "Documentos - ";
     private TextView                titleView;
+    private boolean                 portrait = false;
     
     @Override
     public void onCreate( Bundle savedInstanceState ) {
@@ -75,6 +77,9 @@ public class DocFragment extends Fragment implements OnItemClickListener {
         
         listView.setOnItemClickListener(this);
         
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+            portrait = true;
+        }
         return view;
     }
     
@@ -191,7 +196,7 @@ public class DocFragment extends Fragment implements OnItemClickListener {
             }
         }
         
-        titleView.setText(title + currentDir.getAbsolutePath());
+        titleView.setText(title + "KiiDocs/" + className);
     }
     
     public void onItemClick( AdapterView<?> arg0, View arg1, int arg2, long arg3 ) {
@@ -211,7 +216,13 @@ public class DocFragment extends Fragment implements OnItemClickListener {
     @Override
     public void onCreateOptionsMenu( Menu menu, MenuInflater inflater ) {
     
-        inflater.inflate(R.menu.doc_return, menu);
+        if (portrait) {
+            
+            inflater.inflate(R.menu.doc_return_portrait, menu);
+        } else {
+            
+            inflater.inflate(R.menu.doc_return, menu);
+        }
         super.onCreateOptionsMenu(menu, inflater);
     }
     

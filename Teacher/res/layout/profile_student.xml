@@ -44,8 +44,7 @@
             android:layout_height="150dip"
             android:layout_marginLeft="5dp"
             android:background="@drawable/topblock_image_background"
-            android:padding="5dip"
-            android:src="@drawable/troll" />
+            android:padding="5dip" />
     </RelativeLayout>
 
     <LinearLayout

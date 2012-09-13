@@ -201,8 +201,7 @@
                 android:id="@+id/imageView_classmode"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:layout_margin="5dp"
-                android:src="@drawable/troll" />
+                android:layout_margin="5dp" />
         </LinearLayout>
     </RelativeLayout>
 
