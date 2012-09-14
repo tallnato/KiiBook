@@ -6,8 +6,7 @@
     <string name="menu_falcon_eye_off">Olho Falcão - OFF</string>
     <string name="title_activity_main">KiiStudent</string>
     <string name="title_activity_external">Parental Control</string>
-    <string name="title_activity_classmode">Modo de Aula</string>
-    <string name="title_activity_friend">Friend</string>
+    <string name="title_activity_classmode">Area das Disciplinas</string>
     <string name="title_activity_password">Introduza a password</string>
     <string name="title_activity_password_bt_ok">Desbloquear</string>
     <string name="title_activity_password_bt_cancel">Cancelar</string>

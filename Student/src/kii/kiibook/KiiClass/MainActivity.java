@@ -9,6 +9,7 @@ import android.widget.ListView;
 import android.widget.TabHost;
 import android.widget.TabHost.OnTabChangeListener;
 import android.widget.TabHost.TabSpec;
+import android.widget.TabWidget;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -39,6 +40,8 @@ public class MainActivity extends FragmentActivity implements OnTabChangeListene
         // TODO Auto-generated method stub
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_classmode);
+        
+        getActionBar().setBackgroundDrawable(getResources().getDrawable(R.drawable.shape_actionbar_manager));
         
         pager = new PagerAdapter(getSupportFragmentManager());
         
@@ -77,6 +80,7 @@ public class MainActivity extends FragmentActivity implements OnTabChangeListene
         tabHost.addTab(tspecEvent);
         
         tabHost.setCurrentTab(0);
+        initTabsAppearance(tabHost.getTabWidget());
         
         mTabHost = (TabHost) findViewById(R.id.tabhost_fragments);
         mTabHost.setOnTabChangedListener(this);
@@ -99,12 +103,22 @@ public class MainActivity extends FragmentActivity implements OnTabChangeListene
         
         tspec = mTabHost.newTabSpec("tab3");
         tspec.setIndicator("documentos");
-        tspec.setContent(R.id.tab5);
+        tspec.setContent(R.id.tab3);
         mTabHost.addTab(tspec);
         
         mTabHost.setCurrentTab(0);
         mTabHost.setOnTabChangedListener(this);
+        initTabsAppearance(mTabHost.getTabWidget());
         
+    }
+    
+    private void initTabsAppearance( TabWidget tabWidget ) {
+    
+        // tabWidget.setStripEnabled(false);
+        //
+        // for (int i = 0; i < tabWidget.getChildCount(); i++)
+        // tabWidget.getChildAt(i)
+        //
     }
     
     public void onTabChanged( String tabId ) {

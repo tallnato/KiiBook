@@ -6,6 +6,7 @@ import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -15,23 +16,25 @@ import android.view.View.OnLongClickListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
+import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import objects.Data;
 import objects.EventType;
 import objects.HourCalendarListView;
 import objects.MyCalendar;
+import objects.NewEvent;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Iterator;
 
 import kii.kiibook.Student.R;
 import kii.kiibook.Student.database.DataShared;
@@ -66,15 +69,26 @@ public class FragmentWeek extends Fragment implements OnLongClickListener, OnCli
         super.onCreate(savedInstanceState);
     }
     
-    private int getWeek() {
+    private int getDay( long time ) {
     
-        cal = Calendar.getInstance();
+        Calendar cal = Calendar.getInstance();
         cal.setFirstDayOfWeek(cal.MONDAY);
-        cal.setTimeInMillis(timeStamp);
+        cal.setTimeInMillis(time);
         Date date = cal.getTime();
         cal = Calendar.getInstance();
         cal.setTime(date);
-        return cal.get(Calendar.WEEK_OF_YEAR);
+        return cal.get(Calendar.DAY_OF_MONTH);
+    }
+    
+    private int getFirstDayofWeek( long time ) {
+    
+        Calendar calendar = Calendar.getInstance();
+        calendar.clear();
+        calendar.setTimeInMillis(time);
+        while (calendar.get(Calendar.DAY_OF_WEEK) > calendar.getFirstDayOfWeek()) {
+            calendar.add(Calendar.DATE, -1);
+        }
+        return calendar.get(Calendar.DAY_OF_MONTH);
     }
     
     @Override
@@ -82,6 +96,8 @@ public class FragmentWeek extends Fragment implements OnLongClickListener, OnCli
     
         view = inflater.inflate(R.layout.fragment_week, container, false);
         timeStamp = getArguments().getLong("time");
+        
+        view.requestFocus();
         
         final ScrollView scroll = (ScrollView) view.findViewById(R.id.scrollView_calendar);
         
@@ -148,23 +164,26 @@ public class FragmentWeek extends Fragment implements OnLongClickListener, OnCli
     private void createTable() {
     
         TableRow row;
-        TextView textView = (TextView) view.findViewById(R.id.textView_weekNum);
-        textView.setText("" + getWeek());
+        TextView textView;
         
         for (int hour = 0; hour < 24; hour++) {
             row = new TableRow(getActivity());
+            row.setId(200 + hour);
             for (int day = 0; day < 8; day++) {
                 if (day == 0) {
                     cell = new LinearLayout(getActivity());
                     cell.setBackgroundResource(R.drawable.cell_black_cell);
                     textView = new TextView(getActivity());
-                    textView.setTextColor(Color.WHITE);
-                    textView.setTextSize(25);
+                    textView.setTextColor(Color.BLACK);
+                    textView.setTextSize(18);
+                    textView.setPadding(5, 4, 0, 0);
                     textView.setText(hour + "h");
                     cell.addView(textView);
                     
                 } else {
                     cell = new LinearLayout(getActivity());
+                    cell.setId(1000 + day);
+                    cell.setTag("day" + day + "hour" + hour);
                     cell.setClickable(true);
                     cell.setId(idCell++);
                     cell.setOnLongClickListener(this);
@@ -173,13 +192,53 @@ public class FragmentWeek extends Fragment implements OnLongClickListener, OnCli
                     
                 }
                 if (!portrait) {
-                    row.addView(cell, 109, 84);
+                    row.addView(cell, 105, 84);
                 } else {
-                    row.addView(cell, 100, 84);
+                    row.addView(cell, 96, 84);
                 }
             }
             tableLayout.addView(row);
+        }
+        insertEvents();
+    }
+    
+    private void insertEvents() {
+    
+        int indexDay;
+        Iterator<NewEvent> it = DataShared.getInstance().getListEvents().iterator();
+        ArrayList<Events> evList = new ArrayList<Events>();
+        
+        // timeStamp - time selected on calendar
+        int dayOfweekTimeStamp = getFirstDayofWeek(timeStamp) - 1;
+        
+        while (it.hasNext()) {
+            NewEvent event = it.next();
+            long time = event.getDate();
+            int dayOfweek = getFirstDayofWeek(time) - 1;
+            if (dayOfweek == dayOfweekTimeStamp) {
+                Log.w(getTag(), "FOOOOUUUNNNNNDDDDDD");
+                indexDay = getDay(time) - dayOfweekTimeStamp;
+                evList.add(new Events(indexDay, event.getHour(), event));
+            }
+        }
+        
+        Iterator<Events> iterator = evList.iterator();
+        
+        while (iterator.hasNext()) {
+            Events ev = iterator.next();
             
+            Log.w(getTag(), ev.toString());
+            
+            LinearLayout cello = (LinearLayout) view.findViewWithTag("day" + ev.getIndex() + "hour" + ev.getHour());
+            TextView events = new TextView(this.getActivity());
+            events.setText(ev.getEvent().getWhat() + " - " + ev.getEvent().getDescription());
+            events.setOnClickListener(this);
+            events.setTextColor(Color.BLACK);
+            events.setOnLongClickListener(this);
+            events.setGravity(Gravity.CENTER);
+            events.setBackgroundResource(DialogNewEvent.getColor(ev.getEvent().getType()));
+            events.setLayoutParams(new TableLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT, 1f));
+            cello.addView(events);
         }
     }
     
@@ -194,37 +253,37 @@ public class FragmentWeek extends Fragment implements OnLongClickListener, OnCli
     private void createCalendar( int hour, int day ) {
     
         if ((hour == 9) || (hour == 10)) {
-            if ((day == 0) || (day == 2)) {
+            if ((day == 1) || (day == 3)) {
                 String str = EventType.Aula.toString() + "\n" + " de Lingua Portuguesa\nSala 23";
                 TextView event = new TextView(this.getActivity());
                 event.setText(str);
                 event.setOnClickListener(this);
                 event.setGravity(Gravity.CENTER);
-                event.setTextColor(Color.WHITE);
+                event.setTextColor(Color.BLACK);
                 event.setOnLongClickListener(this);
                 event.setBackgroundResource(DialogNewEvent.getColor(EventType.Aula));
                 event.setLayoutParams(new TableLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT, 1f));
                 cell.addView(event);
             }
-            if ((day == 1) || (day == 3)) {
+            if ((day == 2) || (day == 4)) {
                 String str = EventType.Aula.toString() + "\n" + " de Matemática\nSala 23";
                 TextView event = new TextView(this.getActivity());
                 event.setText(str);
                 event.setOnClickListener(this);
                 event.setGravity(Gravity.CENTER);
-                event.setTextColor(Color.WHITE);
+                event.setTextColor(Color.BLACK);
                 event.setOnLongClickListener(this);
                 event.setBackgroundResource(DialogNewEvent.getColor(EventType.Aula));
                 event.setLayoutParams(new TableLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT, 1f));
                 cell.addView(event);
             }
-            if (day == 4) {
+            if (day == 5) {
                 String str = EventType.Aula.toString() + "\n" + " de Inglês\nSala 23";
                 TextView event = new TextView(this.getActivity());
                 event.setText(str);
                 event.setOnClickListener(this);
                 event.setGravity(Gravity.CENTER);
-                event.setTextColor(Color.WHITE);
+                event.setTextColor(Color.BLACK);
                 event.setOnLongClickListener(this);
                 event.setBackgroundResource(DialogNewEvent.getColor(EventType.Aula));
                 event.setLayoutParams(new TableLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT, 1f));
@@ -232,24 +291,12 @@ public class FragmentWeek extends Fragment implements OnLongClickListener, OnCli
             }
         }
         if ((hour == 11) || (hour == 12)) {
-            if ((day == 0) || (day == 3)) {
+            if ((day == 1) || (day == 4)) {
                 String str = EventType.Aula.toString() + "\n" + " de Ciencias\nSala 23";
                 TextView event = new TextView(this.getActivity());
                 event.setText(str);
                 event.setOnClickListener(this);
-                event.setTextColor(Color.WHITE);
-                event.setGravity(Gravity.CENTER);
-                event.setOnLongClickListener(this);
-                event.setBackgroundResource(DialogNewEvent.getColor(EventType.Aula));
-                event.setLayoutParams(new TableLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT, 1f));
-                cell.addView(event);
-            }
-            if (day == 1) {
-                String str = EventType.Aula.toString() + "\n" + " de Historia\nSala 23";
-                TextView event = new TextView(this.getActivity());
-                event.setText(str);
-                event.setOnClickListener(this);
-                event.setTextColor(Color.WHITE);
+                event.setTextColor(Color.BLACK);
                 event.setGravity(Gravity.CENTER);
                 event.setOnLongClickListener(this);
                 event.setBackgroundResource(DialogNewEvent.getColor(EventType.Aula));
@@ -257,23 +304,35 @@ public class FragmentWeek extends Fragment implements OnLongClickListener, OnCli
                 cell.addView(event);
             }
             if (day == 2) {
-                String str = EventType.Aula.toString() + "\n" + " de Inglês\nSala 23";
+                String str = EventType.Aula.toString() + "\n" + " de Historia\nSala 23";
                 TextView event = new TextView(this.getActivity());
                 event.setText(str);
                 event.setOnClickListener(this);
-                event.setTextColor(Color.WHITE);
+                event.setTextColor(Color.BLACK);
                 event.setGravity(Gravity.CENTER);
                 event.setOnLongClickListener(this);
                 event.setBackgroundResource(DialogNewEvent.getColor(EventType.Aula));
                 event.setLayoutParams(new TableLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT, 1f));
                 cell.addView(event);
             }
-            if (day == 4) {
+            if (day == 3) {
+                String str = EventType.Aula.toString() + "\n" + " de Inglês\nSala 23";
+                TextView event = new TextView(this.getActivity());
+                event.setText(str);
+                event.setOnClickListener(this);
+                event.setTextColor(Color.BLACK);
+                event.setGravity(Gravity.CENTER);
+                event.setOnLongClickListener(this);
+                event.setBackgroundResource(DialogNewEvent.getColor(EventType.Aula));
+                event.setLayoutParams(new TableLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT, 1f));
+                cell.addView(event);
+            }
+            if (day == 5) {
                 String str = EventType.Aula.toString() + "\n" + " de Educação Fisica\nSala Ginasio";
                 TextView event = new TextView(this.getActivity());
                 event.setText(str);
                 event.setOnClickListener(this);
-                event.setTextColor(Color.WHITE);
+                event.setTextColor(Color.BLACK);
                 event.setGravity(Gravity.CENTER);
                 event.setOnLongClickListener(this);
                 event.setBackgroundResource(DialogNewEvent.getColor(EventType.Aula));
@@ -282,37 +341,25 @@ public class FragmentWeek extends Fragment implements OnLongClickListener, OnCli
             }
         }
         if (hour == 15) {
-            if (day == 1) {
+            if (day == 2) {
                 String str = EventType.Aula.toString() + "\n" + " de Mural\nSala 23";
                 TextView event = new TextView(this.getActivity());
                 event.setText(str);
                 event.setOnClickListener(this);
-                event.setTextColor(Color.WHITE);
+                event.setTextColor(Color.BLACK);
                 event.setGravity(Gravity.CENTER);
                 event.setOnLongClickListener(this);
                 event.setBackgroundResource(DialogNewEvent.getColor(EventType.Aula));
                 event.setLayoutParams(new TableLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT, 1f));
                 cell.addView(event);
             }
-            if (day == 2) {
+            if (day == 1) {
                 String str = EventType.Aula.toString() + "\n" + " de E. Visual\nSala 23";
                 TextView event = new TextView(this.getActivity());
                 event.setText(str);
                 event.setOnClickListener(this);
                 event.setGravity(Gravity.CENTER);
-                event.setTextColor(Color.WHITE);
-                event.setOnLongClickListener(this);
-                event.setBackgroundResource(DialogNewEvent.getColor(EventType.Aula));
-                event.setLayoutParams(new TableLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT, 1f));
-                cell.addView(event);
-            }
-            if (day == 3) {
-                String str = EventType.Aula.toString() + "\n" + " de História\nSala 23";
-                TextView event = new TextView(this.getActivity());
-                event.setText(str);
-                event.setOnClickListener(this);
-                event.setTextColor(Color.WHITE);
-                event.setGravity(Gravity.CENTER);
+                event.setTextColor(Color.BLACK);
                 event.setOnLongClickListener(this);
                 event.setBackgroundResource(DialogNewEvent.getColor(EventType.Aula));
                 event.setLayoutParams(new TableLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT, 1f));
@@ -323,7 +370,19 @@ public class FragmentWeek extends Fragment implements OnLongClickListener, OnCli
                 TextView event = new TextView(this.getActivity());
                 event.setText(str);
                 event.setOnClickListener(this);
-                event.setTextColor(Color.WHITE);
+                event.setTextColor(Color.BLACK);
+                event.setGravity(Gravity.CENTER);
+                event.setOnLongClickListener(this);
+                event.setBackgroundResource(DialogNewEvent.getColor(EventType.Aula));
+                event.setLayoutParams(new TableLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT, 1f));
+                cell.addView(event);
+            }
+            if (day == 5) {
+                String str = EventType.Aula.toString() + "\n" + " de História\nSala 23";
+                TextView event = new TextView(this.getActivity());
+                event.setText(str);
+                event.setOnClickListener(this);
+                event.setTextColor(Color.BLACK);
                 event.setGravity(Gravity.CENTER);
                 event.setOnLongClickListener(this);
                 event.setBackgroundResource(DialogNewEvent.getColor(EventType.Aula));
@@ -332,24 +391,24 @@ public class FragmentWeek extends Fragment implements OnLongClickListener, OnCli
             }
         }
         if (hour == 16) {
-            if (day == 3) {
+            if (day == 4) {
                 String str = EventType.Aula.toString() + "\n" + " de História\nSala 23";
                 TextView event = new TextView(this.getActivity());
                 event.setText(str);
                 event.setOnClickListener(this);
-                event.setTextColor(Color.WHITE);
+                event.setTextColor(Color.BLACK);
                 event.setGravity(Gravity.CENTER);
                 event.setOnLongClickListener(this);
                 event.setBackgroundResource(DialogNewEvent.getColor(EventType.Aula));
                 event.setLayoutParams(new TableLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT, 1f));
                 cell.addView(event);
             }
-            if (day == 4) {
+            if (day == 5) {
                 String str = EventType.Aula.toString() + "\n" + " de História\nSala 23";
                 TextView event = new TextView(this.getActivity());
                 event.setText(str);
                 event.setOnClickListener(this);
-                event.setTextColor(Color.WHITE);
+                event.setTextColor(Color.BLACK);
                 event.setOnLongClickListener(this);
                 event.setGravity(Gravity.CENTER);
                 event.setBackgroundResource(DialogNewEvent.getColor(EventType.Aula));
@@ -412,16 +471,18 @@ public class FragmentWeek extends Fragment implements OnLongClickListener, OnCli
     
     private void dialogRequestElem( LinearLayout parent ) {
     
-        // hoursElem = search(calendar.getDate());
-        // final HourCalendarListView hourElem = hoursElem.get(parent.getId());
+        view.clearFocus();
         
-        new DialogNewEvent(getActivity(), parent, this, this).show();
+        DialogNewEvent dialog = new DialogNewEvent(getActivity(), parent, this, this);
+        dialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
+        dialog.show();
+        
     }
     
     public boolean onTouch( View v, MotionEvent event ) {
     
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
-            Toast.makeText(getActivity(), "Action UP: " + event.getAction(), Toast.LENGTH_SHORT).show();
+            
         }
         
         return false;

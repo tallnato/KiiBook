@@ -2,13 +2,17 @@
 package kii.kiibook.Agenda;
 
 import android.app.Activity;
-import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnLongClickListener;
 import android.view.ViewGroup.LayoutParams;
+import android.view.Window;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -22,7 +26,7 @@ import android.widget.TimePicker;
 import objects.EventType;
 import kii.kiibook.Student.R;
 
-public class DialogNewEvent extends AlertDialog implements OnCheckedChangeListener {
+public class DialogNewEvent extends Dialog implements OnCheckedChangeListener {
     
     private final LinearLayout                      parent;
     private final Activity                          context;
@@ -34,7 +38,7 @@ public class DialogNewEvent extends AlertDialog implements OnCheckedChangeListen
     private DatePicker                              datePicker;
     private TimePicker                              timePicker;
     private final android.view.View.OnClickListener click;
-    private final AlertDialog                       me;
+    private final Dialog                            me;
     
     public DialogNewEvent( Activity context, LinearLayout parent, OnLongClickListener longClickListener,
                                     android.view.View.OnClickListener clickLiestener ) {
@@ -44,6 +48,8 @@ public class DialogNewEvent extends AlertDialog implements OnCheckedChangeListen
         this.context = context;
         clickListener = longClickListener;
         click = clickLiestener;
+        
+        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
         me = this;
     }
     
@@ -51,32 +57,16 @@ public class DialogNewEvent extends AlertDialog implements OnCheckedChangeListen
     protected void onCreate( Bundle savedInstanceState ) {
     
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.new_event_dialog);
         setTitle("Novo Evento");
         setCancelable(true);
         
         eventName = (EditText) findViewById(R.id.dialog_new_event_edittext);
         eventDesc = (EditText) findViewById(R.id.dialog_new_event_edittext_desc);
-        eventName.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            
-            public void onFocusChange( View v, boolean hasFocus ) {
-            
-                if (hasFocus) {
-                    me.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
-                    
-                }
-            }
-        });
-        eventDesc.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            
-            public void onFocusChange( View v, boolean hasFocus ) {
-            
-                if (hasFocus) {
-                    me.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
-                    
-                }
-            }
-        });
+        
+        InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.showSoftInput(eventName, InputMethodManager.SHOW_FORCED);
         
         radioGroup = (RadioGroup) findViewById(R.id.dialog_new_event_radioGroup);
         datePicker = (DatePicker) findViewById(R.id.datePicker_end);
@@ -90,21 +80,20 @@ public class DialogNewEvent extends AlertDialog implements OnCheckedChangeListen
             
             public void onClick( View v ) {
             
-                // hourElem.getElemInHour().add(new TextElem(colorSelected,
-                // event.getText().toString()));
-                
                 TextView event = new TextView(context);
-                event.setText(typeSelected.toString() + " " + eventName.getText() + " - " + eventDesc.getText() + " - "
-                                                + datePicker.getDayOfMonth() + "/" + datePicker.getMonth() + "/" + datePicker.getYear()
-                                                + " - " + timePicker.getCurrentHour() + "h");
-                event.setOnClickListener(click);
-                event.setTextColor(Color.WHITE);
-                event.setOnLongClickListener(clickListener);
-                event.setBackgroundResource(getColor(typeSelected));
-                
-                event.setLayoutParams(new TableLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT, 1f));
-                parent.addView(event);
-                
+                if ((eventName.getText() != null) || (eventDesc.getText() != null)) {
+                    event.setText(typeSelected.toString() + " " + eventName.getText() + " - " + eventDesc.getText() + " - "
+                                                    + datePicker.getDayOfMonth() + "/" + datePicker.getMonth() + "/" + datePicker.getYear()
+                                                    + " - " + timePicker.getCurrentHour() + "h");
+                    event.setOnClickListener(click);
+                    event.setTextColor(Color.BLACK);
+                    event.setGravity(Gravity.CENTER);
+                    event.setOnLongClickListener(clickListener);
+                    event.setBackgroundResource(getColor(typeSelected));
+                    
+                    event.setLayoutParams(new TableLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT, 1f));
+                    parent.addView(event);
+                }
                 dismiss();
             }
         });
@@ -117,6 +106,7 @@ public class DialogNewEvent extends AlertDialog implements OnCheckedChangeListen
                 dismiss();
             }
         });
+        
     }
     
     public void onCheckedChanged( RadioGroup group, int checkedId ) {
@@ -142,7 +132,7 @@ public class DialogNewEvent extends AlertDialog implements OnCheckedChangeListen
     
         switch (type) {
             case Aula:
-                return R.drawable.cell_green;
+                return R.drawable.cell_blue;
                 
             case Teste:
                 return R.drawable.cell_red;
@@ -154,7 +144,8 @@ public class DialogNewEvent extends AlertDialog implements OnCheckedChangeListen
                 return R.drawable.cell_orange;
                 
             case Escolar:
-                return R.drawable.cell_blue;
+                
+                return R.drawable.cell_green;
         }
         return R.drawable.cell_gray;
     }

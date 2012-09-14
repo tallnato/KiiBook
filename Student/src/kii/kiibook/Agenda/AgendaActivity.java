@@ -8,13 +8,9 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.CalendarView;
 import android.widget.CalendarView.OnDateChangeListener;
 import android.widget.FrameLayout;
@@ -24,21 +20,21 @@ import android.widget.Toast;
 import objects.Data;
 import objects.HourCalendarListView;
 import objects.MyCalendar;
-import objects.TextElem;
+import objects.NewEvent;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Iterator;
 
 import kii.kiibook.Student.CommunicationService;
 import kii.kiibook.Student.MyTabListener;
 import kii.kiibook.Student.R;
-import kii.kiibook.Student.adapters_items.AdapterCalendarView;
 import kii.kiibook.Student.database.DataShared;
 
-public class AgendaActivity extends FragmentActivity implements OnItemLongClickListener, OnDateChangeListener, OnTouchListener {
+public class AgendaActivity extends FragmentActivity implements OnDateChangeListener, OnTouchListener {
     
     private static final String             TAG      = "CalendarMyStudent";
     private CalendarView                    calendar;
@@ -76,7 +72,8 @@ public class AgendaActivity extends FragmentActivity implements OnItemLongClickL
         mIsBound = true;
         
         actionBar = getActionBar();
-        actionBar.setIcon(R.drawable.icon);
+        actionBar.setBackgroundDrawable(getResources().getDrawable(R.drawable.shape_actionbar));
+        actionBar.setIcon(R.drawable.agenda);
         actionBar.setDisplayShowTitleEnabled(true);
         
         myCalendar = DataShared.getInstance().getMyCalendar();
@@ -88,7 +85,7 @@ public class AgendaActivity extends FragmentActivity implements OnItemLongClickL
         listViewDay = (ListView) findViewById(R.id.calendar_listView);
         
         updateList();
-        listViewDay.setOnItemLongClickListener(this);
+        
         calendar.setOnDateChangeListener(this);
         
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -99,47 +96,6 @@ public class AgendaActivity extends FragmentActivity implements OnItemLongClickL
         transaction.add(R.id.pager_calendar, fragment, "frag");
         transaction.commit();
         
-    }
-    
-    @Override
-    protected void onDestroy() {
-    
-        Toast.makeText(this, "Destroy service", Toast.LENGTH_SHORT).show();
-        // stopService(serviceIntent);
-        super.onDestroy();
-    }
-    
-    private int getWeek() {
-    
-        time = calendar.getDate();
-        cal = Calendar.getInstance();
-        cal.setFirstDayOfWeek(cal.MONDAY);
-        cal.setTimeInMillis(time);
-        Date date = cal.getTime();
-        cal = Calendar.getInstance();
-        cal.setTime(date);
-        return cal.get(Calendar.WEEK_OF_YEAR);
-    }
-    
-    @Override
-    public boolean onCreateOptionsMenu( Menu menu ) {
-    
-        getMenuInflater().inflate(R.menu.agenda_menu_views, menu);
-        return true;
-    }
-    
-    @Override
-    public boolean onOptionsItemSelected( MenuItem item ) {
-    
-        switch (item.getItemId()) {
-            case R.id.item_view_week:
-                break;
-            
-            case R.id.item_view_day:
-                break;
-        
-        }
-        return true;
     }
     
     public void onSelectedDayChange( CalendarView view, int year, int month, int dayOfMonth ) {
@@ -180,18 +136,23 @@ public class AgendaActivity extends FragmentActivity implements OnItemLongClickL
         return null;
     }
     
-    public boolean onItemLongClick( AdapterView<?> arg0, View arg1, int arg2, long arg3 ) {
+    private String getDateString( long time ) {
     
-        Toast.makeText(this, "What's up?!", Toast.LENGTH_SHORT).show();
-        return true;
+        Date date = new Date();
+        date.setTime(time);
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        
+        return sdf.format(date);
     }
     
     private void updateList() {
     
-        // hoursElem = search(calendar.getDate());
+        Iterator<NewEvent> it = DataShared.getInstance().getListEvents().iterator();
+        
         ArrayList<NextEventsListView> events = new ArrayList<NextEventsListView>();
-        for (int i = 1; i < 15; i++) {
-            events.add(new NextEventsListView(i + "-Set-2012", new ArrayList<TextElem>()));
+        while (it.hasNext()) {
+            NewEvent ev = it.next();
+            events.add(new NextEventsListView(getDateString(ev.getDate()), ev.getType(), ev.getWhat() + " - " + ev.getDescription()));
         }
         adapter = new AdapterCalendarView(this, events);
         listViewDay.setAdapter(adapter);

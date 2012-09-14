@@ -78,10 +78,10 @@ public class FalconEyeService extends Service implements ParentalConstants {
     
     private void startHome( Context context, String topActivity ) {
     
-        Intent i = new Intent(context, NotifDialog.class);
-        i.addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS | Intent.FLAG_ACTIVITY_FORWARD_RESULT | Intent.FLAG_ACTIVITY_NEW_TASK
-                                        | Intent.FLAG_ACTIVITY_PREVIOUS_IS_TOP | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
-        startActivity(i);
+        /* Intent i = new Intent(context, NotifDialog.class);
+         i.addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS | Intent.FLAG_ACTIVITY_FORWARD_RESULT | Intent.FLAG_ACTIVITY_NEW_TASK
+                                         | Intent.FLAG_ACTIVITY_PREVIOUS_IS_TOP | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+         startActivity(i);*/
         
     }
     

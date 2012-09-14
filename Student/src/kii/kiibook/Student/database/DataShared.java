@@ -4,6 +4,7 @@ package kii.kiibook.Student.database;
 import objects.ClassPeople;
 import objects.MediaBook;
 import objects.MyCalendar;
+import objects.NewEvent;
 import objects.ObjectCreator;
 import objects.Student;
 import objects.Summary;
@@ -21,13 +22,14 @@ public class DataShared {
     private ArrayList<MyCalendar>        myCalendar;
     private Set<String>                  blockedApps       = new HashSet<String>();
     private final ArrayList<Summary>     listSummaries     = new ArrayList<Summary>();
+    private ArrayList<NewEvent>          listEvents        = new ArrayList<NewEvent>();
     private final ObjectCreator          creator;
     private final ArrayList<ClassPeople> classes;
     
     private DataShared() {
     
         creator = new ObjectCreator();
-        myProfile = creator.createStudent(true);
+        myProfile = creator.createStudent(false);
         classes = creator.getClasses();
         myCalendar = creator.getMyCalendar();
         
@@ -67,6 +69,16 @@ public class DataShared {
     public ArrayList<Summary> getListSummaries() {
     
         return listSummaries;
+    }
+    
+    public ArrayList<NewEvent> getListEvents() {
+    
+        return listEvents;
+    }
+    
+    public void setListEvents( ArrayList<NewEvent> listEvents ) {
+    
+        this.listEvents = listEvents;
     }
     
     public static DataShared getInstance() {

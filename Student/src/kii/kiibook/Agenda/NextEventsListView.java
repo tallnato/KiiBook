@@ -1,19 +1,19 @@
 
 package kii.kiibook.Agenda;
 
-import objects.TextElem;
-
-import java.util.ArrayList;
+import objects.EventType;
 
 public class NextEventsListView {
     
-    private final ArrayList<TextElem> elemInHour;
-    private String                    hour;
+    private final String elemInHour;
+    private String       hour;
+    private EventType    eventType;
     
-    public NextEventsListView( String hour, ArrayList<TextElem> elemInHour ) {
+    public NextEventsListView( String hour, EventType eventType, String elemInHour ) {
     
         this.hour = hour;
         this.elemInHour = elemInHour;
+        this.eventType = eventType;
     }
     
     public String getHour() {
@@ -21,12 +21,22 @@ public class NextEventsListView {
         return hour;
     }
     
+    public String getEventType() {
+    
+        return eventType.toString();
+    }
+    
+    public void setEventType( EventType eventType ) {
+    
+        this.eventType = eventType;
+    }
+    
     public void setHour( String hour ) {
     
         this.hour = hour;
     }
     
-    public ArrayList<TextElem> getElemInHour() {
+    public String getElemInHour() {
     
         return elemInHour;
     }

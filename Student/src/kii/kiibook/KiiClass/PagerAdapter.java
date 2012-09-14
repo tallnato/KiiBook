@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import kii.kiibook.KiiClass.fragments.DocFragment;
+import kii.kiibook.KiiClass.fragments.SkillsFragment;
 import kii.kiibook.KiiClass.fragments.StatsFragment;
 import kii.kiibook.KiiClass.fragments.SummariesFragment;
 
@@ -33,7 +34,7 @@ public class PagerAdapter extends FragmentPagerAdapter {
                 break;
             
             case 2:
-                fragment = new DocFragment();
+                fragment = new SkillsFragment();
                 break;
             
             case 3:

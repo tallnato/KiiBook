@@ -13,7 +13,7 @@
         android:gravity="center"
         android:textSize="14dp"
         android:text="12/12/1212"
-        android:textColor="#A80000" />
+        android:textColor="#D84C25" />
 
     <LinearLayout
         android:id="@+id/_calendar_hour_elements"

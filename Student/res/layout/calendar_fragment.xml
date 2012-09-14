@@ -13,6 +13,8 @@
         <LinearLayout
             android:layout_width="470dp"
             android:layout_height="fill_parent"
+            android:layout_margin="5dp"
+            android:background="@drawable/shape_calendar"
             android:orientation="vertical" >
 
             <TextView
@@ -29,29 +31,30 @@
             </ListView>
         </LinearLayout>
 
-        <View
-            android:layout_width="2dp"
-            android:layout_height="fill_parent"
-            android:background="@android:color/holo_blue_light" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:background="@drawable/shape_calendar"
+            android:orientation="vertical" >
 
-        <CalendarView
-            android:id="@+id/calendarView_agenda"
-            android:layout_width="300dp"
-            android:layout_height="300dp"
-            android:layout_margin="10dp"
-            android:showWeekNumber="false" />
+            <CalendarView
+                android:id="@+id/calendarView_agenda"
+                android:layout_width="300dp"
+                android:layout_height="300dp"
+                android:layout_margin="10dp"
+                android:showWeekNumber="false" />
+        </LinearLayout>
     </LinearLayout>
 
-    <View
-        android:layout_width="fill_parent"
-        android:layout_height="2dp"
-        android:background="@android:color/holo_blue_light" />
-  
     <FrameLayout
         android:id="@+id/pager_calendar"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" >
-
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_gravity="center"
+        android:layout_margin="5dp"
+        android:background="@drawable/shape_calendar"
+        android:padding="5dp" >
     </FrameLayout>
 
 </LinearLayout>

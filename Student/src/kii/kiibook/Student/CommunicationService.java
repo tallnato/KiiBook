@@ -9,7 +9,8 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
-import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Handler;
@@ -29,19 +30,20 @@ import messages.tcp.network.ApplicationList_Response;
 import messages.tcp.network.ApplicationList_Response_ACK;
 import messages.tcp.network.CloseConnectionAck;
 import messages.tcp.network.CloseConnectionNetwork;
+import messages.tcp.network.NewEventNetwork;
 import messages.tcp.network.SummaryNetwork;
 import messages.udp.Connect;
 import messages.udp.Discover;
+import objects.NewEvent;
 import objects.PackagePermissions;
 import objects.Student;
 import objects.Summary;
 import util.Constants;
 
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 
 import kii.kiibook.KiiClass.MainActivity;
 import kii.kiibook.ParentalControl.ParentalConstants;
@@ -146,13 +148,12 @@ public class CommunicationService extends Service implements Constants, Parental
     public static void onFalconEye( boolean on ) {
     
         connected = on;
+        
     }
     
     @Override
     public void onCreate() {
     
-        Toast.makeText(this, "Communication Service created", Toast.LENGTH_SHORT).show();
-        
         thisService = true;
         isRunning = true;
         me = DataShared.getInstance().getMyProfile();
@@ -162,7 +163,7 @@ public class CommunicationService extends Service implements Constants, Parental
         WifiInfo wifiInfo = wifi.getConnectionInfo();
         ip = Formatter.formatIpAddress(wifiInfo.getIpAddress());
         ul = new UdpListener(UDP_PORT, ip);
-        myHandler = new MyHandle(getPackages());
+        myHandler = new MyHandle(getInstalledApps());
         ul.setMsgHandler(myHandler);
         ul.start();
         
@@ -180,7 +181,6 @@ public class CommunicationService extends Service implements Constants, Parental
     @Override
     public void onDestroy() {
     
-        Toast.makeText(this, "Communication Service stopped", Toast.LENGTH_SHORT).show();
         ul.close();
         thisService = false;
         handlerService = null;
@@ -201,7 +201,7 @@ public class CommunicationService extends Service implements Constants, Parental
         CharSequence text = "Estas em aula!";
         
         // Set the icon, scrolling text and timestamp
-        notification = new Notification(R.drawable.ic_launcher, text, System.currentTimeMillis());
+        notification = new Notification(R.drawable.area_disciplina, text, System.currentTimeMillis());
         
         // The PendingIntent to launch our activity if the user selects this
         // notification
@@ -222,7 +222,7 @@ public class CommunicationService extends Service implements Constants, Parental
         
         CharSequence text = "Aula acabou!";
         
-        notification = new Notification(R.drawable.ic_launcher, text, System.currentTimeMillis());
+        notification = new Notification(R.drawable.area_disciplina, text, System.currentTimeMillis());
         
         PendingIntent contentIntent = PendingIntent.getActivity(this, 0, new Intent(this, MainActivity.class), 0);
         
@@ -234,10 +234,8 @@ public class CommunicationService extends Service implements Constants, Parental
     
     private void enableFalconEye() {
     
-        Toast.makeText(this, "DASS", Toast.LENGTH_SHORT).show();
         final String broadcast = UdpUtil.getBroadcastAddress(wifi.getDhcpInfo());
         
-        Toast.makeText(getApplicationContext(), broadcast, Toast.LENGTH_SHORT).show();
         t = new Thread(new Runnable() {
             
             public void run() {
@@ -251,39 +249,29 @@ public class CommunicationService extends Service implements Constants, Parental
         
     }
     
-    private ArrayList<PackagePermissions> getPackages() {
+    private ArrayList<PackagePermissions> getInstalledApps() {
     
-        Set<String> blocked = DataShared.getInstance().getBlockedApps();
-        ArrayList<PackagePermissions> objects = getInstalledApps(false);
-        
-        if (blocked != null) {
-            for (String s : blocked) {
-                for (PackagePermissions pp : objects) {
-                    if (pp.getPackageName().equalsIgnoreCase(s)) {
-                        pp.setBlocked(true);
-                        break;
-                    }
-                }
-            }
-        }
-        
-        return objects;
-    }
-    
-    private ArrayList<PackagePermissions> getInstalledApps( boolean getSysPackages ) {
-    
+        PackageManager pm = getPackageManager();
         ArrayList<PackagePermissions> res = new ArrayList<PackagePermissions>();
-        List<PackageInfo> packs = getPackageManager().getInstalledPackages(0);
-        for (int i = 0; i < packs.size(); i++) {
-            PackageInfo p = packs.get(i);
-            if (!getSysPackages && p.versionName == null) {
+        
+        Intent mainIntent = new Intent(Intent.ACTION_MAIN, null);
+        mainIntent.addCategory(Intent.CATEGORY_LAUNCHER);
+        
+        List<ResolveInfo> pkgAppsList = pm.queryIntentActivities(mainIntent, 0);
+        
+        for (ResolveInfo ri : pkgAppsList) {
+            
+            if (ri.loadLabel(pm).toString().contains("KiiLauncher") || ri.loadLabel(pm).toString().contains("Parental Control")) {
                 continue;
             }
-            PackagePermissions newInfo = new PackagePermissions(p.applicationInfo.loadLabel(getPackageManager()).toString(), p.packageName,
-                                            p.applicationInfo.loadIcon(getPackageManager()));
+            PackagePermissions newInfo = new PackagePermissions(ri.loadLabel(pm).toString(), ri.activityInfo.packageName, ri.loadIcon(pm));
+            newInfo.setBlocked(true);
             
             res.add(newInfo);
         }
+        
+        Collections.sort(res);
+        
         return res;
     }
     
@@ -313,7 +301,6 @@ public class CommunicationService extends Service implements Constants, Parental
                         
                         con = new TcpClient(c.getMasterIp(), c.getPort(), this);
                         
-                        Toast.makeText(getApplicationContext(), "received Connect", Toast.LENGTH_SHORT).show();
                         showNotification();
                         
                     }
@@ -323,18 +310,19 @@ public class CommunicationService extends Service implements Constants, Parental
                     
                     if (msg.obj instanceof ApplicationList) {
                         
-                        Toast.makeText(getApplicationContext(), "ApplicationList", Toast.LENGTH_SHORT).show();
-                        
                         ApplicationList_Response resp = new ApplicationList_Response(packages);
                         
                         con.sendMessage(resp);
                         
                     }
                     if (msg.obj instanceof CloseConnectionNetwork) {
-                        Toast.makeText(getApplicationContext(), "CloseConnectionNetwork", Toast.LENGTH_SHORT).show();
                         connected = false;
                         sendMessageTime();
                         sendMessageToUIFalconEyeOff();
+                        
+                        Intent off = new Intent();
+                        off.setAction("com.kii.falconeye.parental");
+                        sendBroadcast(off);
                         
                         CloseConnectionAck resp = new CloseConnectionAck();
                         con.sendMessage(resp);
@@ -344,13 +332,19 @@ public class CommunicationService extends Service implements Constants, Parental
                         Log.d("Service", "receive Summary Network");
                         ApplicationList_Response_ACK app_ack = (ApplicationList_Response_ACK) msg.obj;
                         
-                        HashSet<String> setApps = new HashSet<String>();
+                        ArrayList<String> setApps = new ArrayList<String>();
                         Iterator<PackagePermissions> it = app_ack.getPackages().iterator();
                         while (it.hasNext()) {
-                            setApps.add(it.next().getPackageName());
+                            PackagePermissions pack = it.next();
+                            if (pack.isBlocked()) {
+                                setApps.add(pack.getPackageName());
+                            }
                         }
                         
-                        DataShared.getInstance().setBlockedApps(setApps);
+                        Intent i = new Intent();
+                        i.setAction("com.kii.falconeye.teacher");
+                        i.putStringArrayListExtra("Key:BlockedApps", setApps);
+                        sendBroadcast(i);
                         
                     }
                     if (msg.obj instanceof SummaryNetwork) {
@@ -366,6 +360,32 @@ public class CommunicationService extends Service implements Constants, Parental
                         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent);
+                    }
+                    if (msg.obj instanceof NewEventNetwork) {
+                        Log.d("Service", "receive Summary Network");
+                        NewEventNetwork summary = (NewEventNetwork) msg.obj;
+                        
+                        if (summary.getSummary() == null) {
+                            Log.e(TAG, "dass summary");
+                        }
+                        NewEvent sum = summary.getSummary();
+                        DataShared.getInstance().getListEvents().add(sum);
+                        
+                        Intent i = new Intent();;
+                        
+                        switch (sum.getType()) {
+                            case TPC:
+                                i.setAction("com.kii.broadcast.homework");
+                                break;
+                            case Trabalho:
+                                i.setAction("com.kii.broadcast.homework");
+                                break;
+                            default:
+                                i.setAction("com.kii.broadcast.calendar");
+                                break;
+                        }
+                        sendBroadcast(i);
+                        
                     } else {
                         // Toast.makeText(getApplicationContext(),
                         // "New Messsage: "
@@ -411,7 +431,6 @@ public class CommunicationService extends Service implements Constants, Parental
     
         Log.d("", "sendMessageTime");
         if (!connected) {
-            Toast.makeText(getApplicationContext(), "sendMessageTime - try connect", Toast.LENGTH_SHORT).show();
             
             handlerService = new ServiceActivityHandler();
             handlerService.sendEmptyMessageDelayed(MSG_FALCONEYE_TRY_AGAIN, 10000);
@@ -429,7 +448,7 @@ public class CommunicationService extends Service implements Constants, Parental
             Log.e(TAG, "sendMessageToUIFalconEyeOff - " + i);
             // mClients.get(i).send(Message.obtain(null,
             // MSG_FALCONEYE_TURNOFF, 0, 0));
-            Toast.makeText(getApplicationContext(), "Falcon Eye Turn OFF", Toast.LENGTH_SHORT).show();
+            
         }
         
     }

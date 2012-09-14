@@ -8,9 +8,6 @@ import android.os.Environment;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -25,7 +22,6 @@ import java.util.ArrayList;
 import kii.kiibook.KiiClass.FileListView;
 import kii.kiibook.Student.R;
 import kii.kiibook.Student.adapters_items.AdapterListView;
-import kii.kiibook.Student.database.DataShared;
 
 public class DocFragment extends Fragment implements OnItemClickListener {
     
@@ -62,7 +58,7 @@ public class DocFragment extends Fragment implements OnItemClickListener {
         
         titleView = (TextView) view.findViewById(R.id.doc_title);
         
-        className = DataShared.getInstance().getClasses().get(1).getName();
+        className = "Matemática";// DataShared.getInstance().getClasses().get(1).getName();
         
         checkExternalMedia();
         checkFilesList(null);
@@ -191,7 +187,8 @@ public class DocFragment extends Fragment implements OnItemClickListener {
             }
         }
         
-        titleView.setText(title + currentDir.getAbsolutePath());
+        titleView.setText(title + className);
+        
     }
     
     public void onItemClick( AdapterView<?> arg0, View arg1, int arg2, long arg3 ) {
@@ -206,33 +203,6 @@ public class DocFragment extends Fragment implements OnItemClickListener {
             listView.setAdapter(adapter);
             Log.d(TAG, "is a Directory");
         }
-    }
-    
-    @Override
-    public void onCreateOptionsMenu( Menu menu, MenuInflater inflater ) {
-    
-        inflater.inflate(R.menu.doc_return, menu);
-        super.onCreateOptionsMenu(menu, inflater);
-    }
-    
-    @Override
-    public boolean onOptionsItemSelected( MenuItem item ) {
-    
-        if (item.getItemId() == R.id.menu_doc_return) {
-            Log.d(TAG, "onOptionsItemSelected - get Return");
-            Log.d(TAG, currentDir.getParentFile().getAbsolutePath());
-            if (!currentDir.getParentFile().getAbsolutePath().equals("/mnt")) {
-                checkFilesList(currentDir.getParentFile());
-                
-                adapter = new AdapterListView(getActivity(), files);
-                listView.setAdapter(adapter);
-                return true;
-            }
-            
-        } else {
-            return super.onOptionsItemSelected(item);
-        }
-        return false;
     }
     
 }

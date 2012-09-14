@@ -2,12 +2,12 @@
 <resources>
 
     <style name="KiiTheme" parent="@android:style/Theme.Holo.Light.DarkActionBar">
-        <!--<item name="android:actionBarTabBarStyle">@style/MyActionBarTabStyle</item> -->
+        <item name="android:actionBarTabBarStyle">@style/MyActionBarTabStyle</item>
     </style>
 
     
     <style name="MyActionBarTabStyle" parent="android:Theme.Holo.Light.DarkActionBar">
-        <item name="android:background">@drawable/actionbar_tab_background</item>
+        <item name="android:background">@drawable/shape_actionbar_manager</item>
     </style>
     
     <!-- style for the action bar tab text -->

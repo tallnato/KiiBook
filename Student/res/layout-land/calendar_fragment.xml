@@ -12,14 +12,10 @@
 
         <FrameLayout
             android:id="@+id/pager_calendar"
-            android:layout_width="872dp"
-            android:layout_height="match_parent" >
-        </FrameLayout>
-
-        <View
-            android:layout_width="2dp"
+            android:layout_width="852dp"
             android:layout_height="fill_parent"
-            android:background="@android:color/holo_blue_light" />
+            android:layout_margin="5dp" >
+        </FrameLayout>
 
         <LinearLayout
             android:layout_width="408dp"
@@ -27,21 +23,26 @@
             android:gravity="center"
             android:orientation="vertical" >
 
-            <CalendarView
-                android:id="@+id/calendarView_agenda"
-                android:layout_width="340dp"
-                android:layout_height="300dp"
-                android:layout_margin="10dp"
-                android:showWeekNumber="false" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="@drawable/shape_calendar"
+                android:orientation="vertical" >
 
-            <View
-                android:layout_width="fill_parent"
-                android:layout_height="2dp"
-                android:background="@android:color/holo_blue_light" />
+                <CalendarView
+                    android:id="@+id/calendarView_agenda"
+                    android:layout_width="380dp"
+                    android:layout_height="300dp"
+                    android:layout_margin="10dp"
+                    android:showWeekNumber="false" />
+            </LinearLayout>
 
             <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="350dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="5dp"
+                android:background="@drawable/shape_calendar"
                 android:orientation="vertical" >
 
                 <TextView

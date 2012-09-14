@@ -64,7 +64,7 @@
                     android:layout_height="250dp"
                     android:layout_gravity="center"
                     android:layout_margin="70dp"
-                    android:background="@drawable/shape_list_classes"
+                    android:background="@drawable/shape_list_classes_red"
                     android:orientation="vertical" >
 
                     <TextView
@@ -103,7 +103,7 @@
                     android:layout_height="250dp"
                     android:layout_gravity="center"
                     android:layout_margin="70dp"
-                    android:background="@drawable/shape_list_classes"
+                    android:background="@drawable/shape_list_classes_yellow"
                     android:orientation="vertical" >
 
                     <TextView
@@ -133,7 +133,7 @@
                     android:layout_height="250dp"
                     android:layout_gravity="center"
                     android:layout_margin="70dp"
-                    android:background="@drawable/shape_list_classes"
+                    android:background="@drawable/shape_list_classes_green"
                     android:orientation="vertical" >
 
                     <TextView
@@ -172,7 +172,7 @@
                     android:layout_height="250dp"
                     android:layout_gravity="center"
                     android:layout_margin="70dp"
-                    android:background="@drawable/shape_list_classes"
+                    android:background="@drawable/shape_list_classes_orange"
                     android:orientation="vertical" >
 
                     <TextView
@@ -202,7 +202,7 @@
                     android:layout_height="250dp"
                     android:layout_gravity="center"
                     android:layout_margin="70dp"
-                    android:background="@drawable/shape_list_classes"
+                    android:background="@drawable/shape_list_classes_pink"
                     android:orientation="vertical" >
 
                     <TextView
@@ -251,7 +251,7 @@
                     android:layout_height="250dp"
                     android:layout_gravity="center"
                     android:layout_margin="70dp"
-                    android:background="@drawable/shape_list_classes"
+                    android:background="@drawable/shape_list_classes_brown"
                     android:orientation="vertical" >
 
                     <TextView
@@ -281,7 +281,7 @@
                     android:layout_height="250dp"
                     android:layout_gravity="center"
                     android:layout_margin="70dp"
-                    android:background="@drawable/shape_list_classes"
+                    android:background="@drawable/shape_list_classes_green2"
                     android:orientation="vertical" >
 
                     <TextView
@@ -320,7 +320,7 @@
                     android:layout_height="250dp"
                     android:layout_gravity="center"
                     android:layout_margin="70dp"
-                    android:background="@drawable/shape_list_classes"
+                    android:background="@drawable/shape_list_classes_blue2"
                     android:orientation="vertical" >
 
                     <TextView
@@ -350,7 +350,7 @@
                     android:layout_height="250dp"
                     android:layout_gravity="center"
                     android:layout_margin="70dp"
-                    android:background="@drawable/shape_list_classes"
+                    android:background="@drawable/shape_list_classes_blue3"
                     android:orientation="vertical" >
 
                     <TextView
@@ -389,7 +389,7 @@
                     android:layout_height="250dp"
                     android:layout_gravity="center"
                     android:layout_margin="70dp"
-                    android:background="@drawable/shape_list_classes"
+                    android:background="@drawable/shape_list_classes_green3"
                     android:orientation="vertical" >
 
                     <TextView
@@ -419,7 +419,7 @@
                     android:layout_height="250dp"
                     android:layout_gravity="center"
                     android:layout_margin="70dp"
-                    android:background="@drawable/shape_list_classes"
+                    android:background="@drawable/shape_list_classes_red2"
                     android:orientation="vertical" >
 
                     <TextView
