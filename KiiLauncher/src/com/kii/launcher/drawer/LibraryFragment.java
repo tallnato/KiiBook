@@ -128,11 +128,18 @@ public class LibraryFragment extends Fragment implements IDrawerFragment {
                 File image = new File(f.getAbsolutePath() + "/cover.jpeg");
                 if (!image.exists()) {
                     image = new File(f.getAbsolutePath() + "/cover.jpg");
-                } else if (!image.exists()) {
+                }
+                if (!image.exists()) {
                     image = new File(f.getAbsolutePath() + "/cover.png");
                 }
                 
-                Drawable icon = Drawable.createFromPath(image.getAbsolutePath());
+                Drawable icon;
+                
+                if (image.exists()) {
+                    icon = Drawable.createFromPath(image.getAbsolutePath());
+                } else {
+                    icon = getResources().getDrawable(R.drawable.ic_drawer_library_small);
+                }
                 
                 LibraryItem li = new LibraryItem(f.getName(), f.getAbsolutePath(), icon);
                 

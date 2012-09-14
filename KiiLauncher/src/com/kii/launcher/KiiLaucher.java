@@ -104,7 +104,29 @@ public class KiiLaucher extends Activity {
         
         if (homeScreen == null) {
             homeScreen = new ArrayList<PackagePermissions>();
-            for (int i = 0; i < 8 * 3; i++) {
+            int i = 0;
+            for (; i < 8; i++) {
+                PackagePermissions item = list.get((int) (Math.random() * list.size()));
+                if (!homeScreen.contains(item)) {
+                    homeScreen.add(item);
+                } else {
+                    i--;
+                }
+            }
+            
+            // for (; i < 8 * 2; i++) {
+            
+            for (PackagePermissions pp : list) {
+                if (pp.getPackage().contains("kii")) {
+                    homeScreen.add(pp);
+                    if (i++ > 8 * 2) {
+                        break;
+                    }
+                }
+            }
+            // }
+            
+            for (; i < 8 * 3; i++) {
                 homeScreen.add(list.get((int) (Math.random() * list.size())));
             }
         }
