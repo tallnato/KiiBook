@@ -63,7 +63,7 @@ public class SlaveAdaptor extends ArrayAdapter<Student> implements OnClickListen
     }
     
     @Override
-    public View getView( int position, View convertView, ViewGroup parent ) {
+    public View getView( final int position, View convertView, ViewGroup parent ) {
     
         View row = convertView;
         this.position = position;
@@ -85,7 +85,14 @@ public class SlaveAdaptor extends ArrayAdapter<Student> implements OnClickListen
         status.setText("Online");
         status.setTextColor(Color.GREEN);
         image.setImageDrawable(row.getResources().getDrawable(slave.getPic()));
-        image.setOnClickListener(this);
+        image.setOnClickListener(new OnClickListener() {
+            
+            public void onClick( View v ) {
+            
+                showDialogItem(slave, position);
+                
+            }
+        });
         return row;
     }
     
@@ -101,11 +108,11 @@ public class SlaveAdaptor extends ArrayAdapter<Student> implements OnClickListen
     
     public void onClick( View v ) {
     
-        showDialogItem(slave);
+        showDialogItem(slave, 0);
         
     }
     
-    private void showDialogItem( final Student student ) {
+    private void showDialogItem( final Student student, final int ind ) {
     
         String[] items = { "Ver Perfil", "Aplicações Bloqueadas" };
         
@@ -116,7 +123,7 @@ public class SlaveAdaptor extends ArrayAdapter<Student> implements OnClickListen
             
                 switch (item) {
                     case 0:
-                        showDialogProfile(student);
+                        showDialogProfile(student, ind);
                         break;
                     case 1:
                         showPermissions(student);
@@ -132,7 +139,7 @@ public class SlaveAdaptor extends ArrayAdapter<Student> implements OnClickListen
         alert.show();
     }
     
-    private void showDialogProfile( Student student ) {
+    private void showDialogProfile( Student student, int ind ) {
     
         Intent i;
         PackageManager manager = context.getPackageManager();
@@ -148,7 +155,7 @@ public class SlaveAdaptor extends ArrayAdapter<Student> implements OnClickListen
         }
         
         i.addCategory(Intent.CATEGORY_LAUNCHER);
-        
+        i.putExtra("index", ind);
         context.startActivity(i);
         
     }

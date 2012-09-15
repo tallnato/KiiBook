@@ -11,11 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
-import objects.Summary;
-
-import java.util.ArrayList;
-import java.util.Collections;
-
 import kii.kiibook.KiiClass.AdapterSummary;
 import kii.kiibook.Student.R;
 import kii.kiibook.Student.database.DataShared;
@@ -34,10 +29,7 @@ public class SummariesFragment extends Fragment {
         // Inflate the layout for this fragment
         mRoot = inflater.inflate(R.layout.fragment_summary, container, false);
         
-        ArrayList<Summary> arraylist = DataShared.getInstance().getListSummaries();
-        Collections.reverse(arraylist);
-        
-        adapter = new AdapterSummary(getActivity(), R.layout.layout_item_list_summary, arraylist);
+        adapter = new AdapterSummary(getActivity(), R.layout.layout_item_list_summary, DataShared.getInstance().getListSummaries());
         list = (ListView) mRoot.findViewById(R.id.list_summaries);
         list.setAdapter(adapter);
         return mRoot;

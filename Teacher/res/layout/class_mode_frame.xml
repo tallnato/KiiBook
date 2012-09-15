@@ -44,7 +44,6 @@
                 android:hint="Descrição do sumário."
                 android:textColorHint="@android:color/darker_gray" >
 
-                <requestFocus />
             </EditText>
 
             <Button

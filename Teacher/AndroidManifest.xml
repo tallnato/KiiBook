@@ -24,12 +24,12 @@
 
         <activity
             android:name="kii.kiibook.managerclass.ManagerClassActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name_manager" >
         </activity>
         <activity
             android:name="kii.kiibook.managerclass.InitManagerActivity"
             android:icon="@drawable/area_disciplina"
-            android:label="@string/app_manager_label"
+                    android:label="@string/app_name_manager"
             android:theme="@android:style/Theme.DeviceDefault.Dialog" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

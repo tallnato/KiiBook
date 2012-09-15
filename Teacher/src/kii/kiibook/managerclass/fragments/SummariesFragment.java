@@ -12,11 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
-import objects.Summary;
-
-import java.util.ArrayList;
-import java.util.Collections;
-
 import kii.kiibook.managerclass.adapters.AdapterSummary;
 import kii.kiibook.managerclass.database.DataShared;
 import kii.kiibook.teacher.R;
@@ -36,9 +31,7 @@ public class SummariesFragment extends Fragment {
         // Inflate the layout for this fragment
         mRoot = inflater.inflate(R.layout.fragment_summary, container, false);
         
-        ArrayList<Summary> lists = DataShared.getInstance().getListSummaries();
-        Collections.reverse(lists);
-        adapter = new AdapterSummary(getActivity(), R.layout.layout_item_list_summary, lists);
+        adapter = new AdapterSummary(getActivity(), R.layout.layout_item_list_summary, DataShared.getInstance().getListSummaries());
         
         list = (ListView) mRoot.findViewById(R.id.list_summaries);
         list.setAdapter(adapter);
@@ -68,7 +61,9 @@ public class SummariesFragment extends Fragment {
     
         switch (item.getItemId()) {
             case R.id.menu_refresh_list:
-                adapter.notifyDataSetChanged();
+                adapter = new AdapterSummary(getActivity(), R.layout.layout_item_list_summary, DataShared.getInstance().getListSummaries());
+                list.setAdapter(adapter);
+                
                 break;
         }
         return super.onOptionsItemSelected(item);

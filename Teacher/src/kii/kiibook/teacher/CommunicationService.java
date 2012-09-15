@@ -248,7 +248,7 @@ public class CommunicationService extends Service implements Constants {
                                 Student std = dataShared.getListOffline().get(index);
                                 dataShared.getListOffline().remove(index);
                                 ArrayList<Student> lists = dataShared.getListOnline();
-                                
+                                stdCurrentAdded.setPic(std.getPic());
                                 lists.add(stdCurrentAdded);
                                 sendMessageToUIUpdate();
                             }

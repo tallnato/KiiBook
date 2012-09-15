@@ -105,7 +105,7 @@ public class PagerAdapter extends FragmentPagerAdapter {
                 return "Avaliações";
                 
             case 3:
-                return "Competencias";
+                return "Competências";
                 
             case 4:
                 return "Documentos";

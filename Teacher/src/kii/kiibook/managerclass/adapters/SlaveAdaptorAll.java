@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -44,7 +45,7 @@ public class SlaveAdaptorAll extends ArrayAdapter<Student> implements OnClickLis
     }
     
     @Override
-    public View getView( int position, View convertView, ViewGroup parent ) {
+    public View getView( final int position, View convertView, ViewGroup parent ) {
     
         View row = convertView;
         
@@ -59,7 +60,14 @@ public class SlaveAdaptorAll extends ArrayAdapter<Student> implements OnClickLis
         TextView status = (TextView) row.findViewById(R.id.classbook_item_status);
         CheckBox check = (CheckBox) row.findViewById(R.id.checkBox_assiduity);
         ImageView image = (ImageView) row.findViewById(R.id.imageView_classmode);
-        image.setOnClickListener(this);
+        image.setOnClickListener(new OnClickListener() {
+            
+            public void onClick( View v ) {
+            
+                showDialogProfile(slave, position);
+                
+            }
+        });
         
         name.setText(slave.getName());
         if (slave.getStatus().equals(SlaveStatus.CONNECTED)) {
@@ -96,11 +104,11 @@ public class SlaveAdaptorAll extends ArrayAdapter<Student> implements OnClickLis
     
     public void onClick( View v ) {
     
-        showDialogProfile(slave);
+        showDialogProfile(slave, 0);
         
     }
     
-    private void showDialogProfile( Student student ) {
+    private void showDialogProfile( Student student, int ind ) {
     
         Intent i;
         PackageManager manager = context.getPackageManager();
@@ -116,8 +124,8 @@ public class SlaveAdaptorAll extends ArrayAdapter<Student> implements OnClickLis
         }
         
         i.addCategory(Intent.CATEGORY_LAUNCHER);
-        
+        Log.d("Index intent profile", "Ind: " + ind + "Std:" + student.toString());
+        i.putExtra("index", ind);
         context.startActivity(i);
     }
-    
 }

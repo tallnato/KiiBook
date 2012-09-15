@@ -19,12 +19,14 @@ import android.os.RemoteException;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnKeyListener;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.AdapterView;
@@ -104,6 +106,12 @@ public class ClassModeFragment extends Fragment implements OnItemClickListener, 
     
         super.onCreate(savedInstanceState);
         
+        setHasOptionsMenu(true);
+        
+        getActivity().getWindow().clearFlags(
+                                        WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
+        getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
+        
         Log.d(TAG, "onCreate");
         serviceIntent = new Intent(getActivity(), CommunicationService.class);
         
@@ -114,7 +122,7 @@ public class ClassModeFragment extends Fragment implements OnItemClickListener, 
         
         getActivity().bindService(serviceIntent, mConnection, Context.BIND_AUTO_CREATE);
         mIsBound = true;
-        setHasOptionsMenu(true);
+        
         getActivity().invalidateOptionsMenu();
         
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
@@ -130,8 +138,7 @@ public class ClassModeFragment extends Fragment implements OnItemClickListener, 
     
         // Inflate the layout for this fragment
         mRoot = inflater.inflate(R.layout.class_mode_frame, container, false);
-        
-        mRoot.requestFocus();
+        mRoot.setFocusable(false);
         
         Log.d(TAG, "onCreateView");
         mSlaveAdaptorOn = new SlaveAdaptor(getActivity(), R.layout.item_class_mode, DataShared.getInstance().getListOnline());
@@ -144,7 +151,33 @@ public class ClassModeFragment extends Fragment implements OnItemClickListener, 
         listLinks.setOnItemClickListener(this);
         
         text = (EditText) mRoot.findViewById(R.id.sum_text);
+        text.setOnClickListener(new OnClickListener() {
+            
+            public void onClick( View v ) {
+            
+                getActivity().getWindow().clearFlags(
+                                                WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
+                                                                                | WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
+                
+            }
+        });
+        
+        mRoot.setOnKeyListener(new OnKeyListener() {
+            
+            public boolean onKey( View v, int keyCode, KeyEvent event ) {
+            
+                if (keyCode == KeyEvent.KEYCODE_BACK) {
+                    getActivity().getWindow().clearFlags(
+                                                    WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
+                                                                                    | WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
+                    return true;
+                }
+                return false;
+            }
+        });
+        
         buttonAddBook = mRoot.findViewById(R.id.button_add_link);
+        buttonAddBook.requestFocus();
         buttonAddBook.setOnClickListener(new OnClickListener() {
             
             public void onClick( View v ) {
@@ -168,6 +201,12 @@ public class ClassModeFragment extends Fragment implements OnItemClickListener, 
         }
         
         return mRoot;
+    }
+    
+    @Override
+    public void onPause() {
+    
+        super.onPause();
     }
     
     private void addMediabook() {
@@ -416,8 +455,9 @@ public class ClassModeFragment extends Fragment implements OnItemClickListener, 
                 Calendar cal = Calendar.getInstance();
                 Summary sum = new Summary(listMediaBooks, text.getText().toString(), cal.getTime(), DataShared.getInstance()
                                                 .getListSummaries().size());
+                Log.e(TAG, sum.getListMedia().toString());
                 sendMsgtoServiceSummary(sum);
-                DataShared.getInstance().getListSummaries().add(sum);
+                DataShared.getInstance().addListSummaries(sum);
             }
         }
     }
@@ -458,8 +498,10 @@ public class ClassModeFragment extends Fragment implements OnItemClickListener, 
     
         this.menu = menu;
         Log.d(TAG, "onCreateOptionsMenu");
-        inflater.inflate(R.menu.turn_off_falcon_eye, menu);
+        
         inflater.inflate(R.menu.menu_new_event, menu);
+        inflater.inflate(R.menu.turn_off_falcon_eye, menu);
+        
         if (!portrait) {
             inflater.inflate(R.menu.send_summary, menu);
         }

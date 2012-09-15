@@ -1,9 +1,9 @@
 <resources>
 
-    <string name="app_name">MyTeacherProfile</string>
+    <string name="app_name">KiiTeacher</string>
+    <string name="hello_world">Hello world!</string>
     <string name="app_name_manager">Gestor de Turma</string>
     <string name="app_manager_label">Gestor de Turma</string>
-    <string name="hello_world">Hello world!</string>
     <string name="menu_settings">Definições</string>
     <string name="menu_newClass">Nova Aula</string>
     <string name="menu_newEvent">Novo Evento</string>
