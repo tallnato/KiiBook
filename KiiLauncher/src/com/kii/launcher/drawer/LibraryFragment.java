@@ -57,6 +57,9 @@ public class LibraryFragment extends Fragment implements IDrawerFragment {
         
         books = new ArrayList<LibraryItem>();
         File folder = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/kiibooks");
+        if (!folder.exists()) {
+            folder.mkdirs();
+        }
         
         new BookImageRetriver().execute(folder.listFiles());
     }
@@ -191,8 +194,10 @@ public class LibraryFragment extends Fragment implements IDrawerFragment {
             list = books.subList(start, start + nElem);
             
             LayoutInflater li = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            GridView gridview = (GridView) li.inflate(R.layout.fragment_kii_drawer_library_tabs, (ViewGroup) collection, false);
+            View v = li.inflate(R.layout.fragment_kii_drawer_library_tabs, (ViewGroup) collection, false);
+            GridView gridview = (GridView) v.findViewById(R.id.gridView1);
             gridview.setAdapter(new LibraryAdapter(getActivity(), list));
+            gridview.setEmptyView(v.findViewById(R.id.fragment_kii_drawer_books_list_empty));
             
             ((ViewPager) collection).addView(gridview);
             

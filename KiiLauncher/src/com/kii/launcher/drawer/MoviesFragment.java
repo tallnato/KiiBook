@@ -38,6 +38,9 @@ public class MoviesFragment extends Fragment implements IDrawerFragment {
     public View onCreateView( LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState ) {
     
         File root = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/Movies");
+        if (!root.exists()) {
+            root.mkdirs();
+        }
         
         if (helper == null) {
             helper = new PositionHelper(root, root);
@@ -81,6 +84,7 @@ public class MoviesFragment extends Fragment implements IDrawerFragment {
         }
     }
     
+    @Override
     public boolean goUp() {
     
         if (mAdapter == null || mAdapter.isRoot()) {

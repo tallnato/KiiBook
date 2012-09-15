@@ -37,6 +37,9 @@ public class PicturesFragment extends Fragment implements IDrawerFragment {
     public View onCreateView( LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState ) {
     
         File root = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/Pictures");
+        if (!root.exists()) {
+            root.mkdirs();
+        }
         
         if (helper == null) {
             helper = new PositionHelper(root, root);
@@ -80,6 +83,7 @@ public class PicturesFragment extends Fragment implements IDrawerFragment {
         }
     }
     
+    @Override
     public boolean goUp() {
     
         if (mAdapter == null || mAdapter.isRoot()) {

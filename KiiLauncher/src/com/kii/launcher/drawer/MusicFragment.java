@@ -35,6 +35,9 @@ public class MusicFragment extends Fragment implements IDrawerFragment {
     public View onCreateView( LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState ) {
     
         File root = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/Music");
+        if (!root.exists()) {
+            root.mkdirs();
+        }
         
         if (helper == null) {
             helper = new PositionHelper(root, root);

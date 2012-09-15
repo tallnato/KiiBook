@@ -44,6 +44,9 @@ public class MoviesFileManagerAdapter extends ArrayAdapter<File> {
         rootName = context.getResources().getString(R.string.drawer_menu_movies);
         
         cameraPath = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/DCIM/Camera");
+        if (!cameraPath.exists()) {
+            cameraPath.mkdirs();
+        }
         
         addAll(helper.getCurrentPath().listFiles(ff));
         addAll(cameraPath.listFiles(ff));
