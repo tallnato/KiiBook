@@ -45,7 +45,9 @@ public class KiiLaucher extends Activity {
     private CirclePageIndicator                  circleIndicator;
     private static boolean                       mIsBound;
     
-    private static ArrayList<PackagePermissions> homeScreen;
+    private static ArrayList<PackagePermissions> centerScreen;
+    private static ArrayList<PackagePermissions> rightScreen;
+    private static ArrayList<PackagePermissions> leftScreen;
     
     private static Messenger                     mService = null;
     private static Messenger                     mMessenger;
@@ -102,32 +104,32 @@ public class KiiLaucher extends Activity {
         List<PackagePermissions> list = appsDataSource.getAllApps();
         appsDataSource.close();
         
-        if (homeScreen == null) {
-            homeScreen = new ArrayList<PackagePermissions>();
-            int i = 0;
-            for (; i < 8; i++) {
-                PackagePermissions item = list.get((int) (Math.random() * list.size()));
-                if (!homeScreen.contains(item)) {
-                    homeScreen.add(item);
-                } else {
-                    i--;
-                }
-            }
-            
-            // for (; i < 8 * 2; i++) {
+        if (centerScreen == null || rightScreen == null || leftScreen == null) {
+            centerScreen = new ArrayList<PackagePermissions>();
+            rightScreen = new ArrayList<PackagePermissions>();
+            leftScreen = new ArrayList<PackagePermissions>();
             
             for (PackagePermissions pp : list) {
-                if (pp.getPackage().contains("kii")) {
-                    homeScreen.add(pp);
-                    if (i++ > 8 * 2) {
-                        break;
-                    }
+                
+                if (pp.getLabel().equals("Calculadora") || pp.getLabel().equals("Chrome") || pp.getLabel().equals("Gmail")
+                                                || pp.getLabel().equals("Polaris Office") || pp.getLabel().equals("KiiRoom")
+                                                || pp.getLabel().equals("Dropbox") || pp.getLabel().equals("Evernote")
+                                                || pp.getLabel().equals("Gestor de Turma") || pp.getLabel().equals("Area das Disciplinas")) {
+                    centerScreen.add(pp);
                 }
-            }
-            // }
-            
-            for (; i < 8 * 3; i++) {
-                homeScreen.add(list.get((int) (Math.random() * list.size())));
+                
+                if (pp.getLabel().equals("Angry Birds") || pp.getLabel().equals("Logo quiz") || pp.getLabel().equals("Português")
+                                                || pp.getLabel().equals("iMathematics") || pp.getLabel().equals("Jewels")
+                                                || pp.getLabel().contains("Portuguese English")
+                                                || pp.getLabel().equals("Visual Anatomy Free") || pp.getLabel().equals("Tradutor")) {
+                    rightScreen.add(pp);
+                }
+                if (pp.getLabel().equals("Google+") || pp.getLabel().equals("Reader") || pp.getLabel().equals("IMDb")
+                                                || pp.getLabel().equals("KiiMarket") || pp.getLabel().equals("YouTube")
+                                                || pp.getLabel().equals("Facebook") || pp.getLabel().equals("Skype")
+                                                || pp.getLabel().equals("Play Music")) {
+                    leftScreen.add(pp);
+                }
             }
         }
         
@@ -591,9 +593,21 @@ public class KiiLaucher extends Activity {
             LayoutInflater li = getLayoutInflater();
             GridView gridview = (GridView) li.inflate(R.layout.activity_kii_homescreen_tabs, (ViewGroup) collection, false);
             gridview.setStackFromBottom(true);
-            System.out.println(num);
-            gridview.setAdapter(new DesktopIconAdapter(KiiLaucher.this, R.layout.activity_kii_homescreen_iconlayout, homeScreen.subList(
-                                            position * 8, (position + 1) * 8)));
+            
+            ArrayList<PackagePermissions> list = null;
+            switch (position) {
+                case 0:
+                    list = leftScreen;
+                    break;
+                case 1:
+                    list = centerScreen;
+                    break;
+                case 2:
+                    list = rightScreen;
+                    break;
+            }
+            
+            gridview.setAdapter(new DesktopIconAdapter(KiiLaucher.this, R.layout.activity_kii_homescreen_iconlayout, list));
             
             ((ViewPager) collection).addView(gridview);
             

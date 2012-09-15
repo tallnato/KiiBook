@@ -217,7 +217,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:paddingBottom="8dip"
-        android:paddingTop="30dip"
+        android:paddingTop="50dip"
         app:fillColor="#FFF"
         app:strokeColor="#ffff"
         app:strokeWidth="1dp" />
