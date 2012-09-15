@@ -146,6 +146,7 @@ public class LibraryFragment extends Fragment implements IDrawerFragment {
                 
                 LibraryItem li = new LibraryItem(f.getName(), f.getAbsolutePath(), icon);
                 
+                System.out.println(li.getPath() + " " + li.getName());
                 publishProgress(li);
             }
             return null;
@@ -194,10 +195,8 @@ public class LibraryFragment extends Fragment implements IDrawerFragment {
             list = books.subList(start, start + nElem);
             
             LayoutInflater li = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            View v = li.inflate(R.layout.fragment_kii_drawer_library_tabs, (ViewGroup) collection, false);
-            GridView gridview = (GridView) v.findViewById(R.id.gridView1);
+            GridView gridview = (GridView) li.inflate(R.layout.fragment_kii_drawer_library_tabs, (ViewGroup) collection, false);
             gridview.setAdapter(new LibraryAdapter(getActivity(), list));
-            gridview.setEmptyView(v.findViewById(R.id.fragment_kii_drawer_books_list_empty));
             
             ((ViewPager) collection).addView(gridview);
             

@@ -1,28 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<GridView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/gridView1"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent" >
-
-    <GridView
-        android:id="@+id/gridView1"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_gravity="center"
-        android:layout_marginBottom="15dip"
-        android:gravity="center"
-        android:numColumns="@integer/drawer_books_horizontal_count"
-        android:padding="0dip"
-        android:stretchMode="columnWidth" />
-
-    <com.kii.launcher.KiiTextView
-        android:id="@+id/fragment_kii_drawer_books_list_empty"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_gravity="center"
-        android:layout_margin="3dip"
-        android:gravity="center"
-        android:text="@string/drawer_menu_empty_folder"
-        android:textSize="25sp"
-        android:textStyle="bold" />
-
-</LinearLayout>
+    android:layout_height="fill_parent"
+    android:layout_gravity="center"
+    android:layout_marginBottom="15dip"
+    android:gravity="center"
+    android:numColumns="@integer/drawer_books_horizontal_count"
+    android:padding="0dip"
+    android:stretchMode="columnWidth" />
