@@ -31,6 +31,7 @@ public class AdapterSummary extends ArrayAdapter<Summary> {
     private final Context       context;
     private final List<Summary> objects;
     private Summary             slave;
+    private MediaBook           book;
     
     public AdapterSummary( Context context, int viewResourceId, ArrayList<Summary> arrayList ) {
     
@@ -49,15 +50,17 @@ public class AdapterSummary extends ArrayAdapter<Summary> {
         
         slave = getItem(position);
         
+        Log.e("", slave.toString());
+        
+        Iterator<MediaBook> it = slave.getListMedia().iterator();
         if (row == null) {
             LayoutInflater inflater = ((Activity) context).getLayoutInflater();
             row = inflater.inflate(layoutResourceId, parent, false);
             LinearLayout container = (LinearLayout) row.findViewById(R.id.container_links);
             LinearLayout link;
             
-            Iterator<MediaBook> it = slave.getListMedia().iterator();
             while (it.hasNext()) {
-                MediaBook book = it.next();
+                book = it.next();
                 final String name = book.getName();
                 final int page = book.getPage();
                 

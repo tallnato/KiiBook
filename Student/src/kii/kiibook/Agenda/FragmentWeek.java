@@ -113,21 +113,18 @@ public class FragmentWeek extends Fragment implements OnLongClickListener, OnCli
         table = (TableLayout) view.findViewById(R.id.table_week_days);
         TableRow row = (TableRow) table.findViewById(R.id.tableRow_days);
         
-        cal = Calendar.getInstance();
-        cal.setFirstDayOfWeek(cal.MONDAY);
-        
         Calendar calendar = Calendar.getInstance();
         calendar.clear();
+        calendar.setFirstDayOfWeek(calendar.MONDAY);
         calendar.setTimeInMillis(timeStamp);
         while (calendar.get(Calendar.DAY_OF_WEEK) > calendar.getFirstDayOfWeek()) {
             calendar.add(Calendar.DATE, -1); // Substract 1 day until first day
                                              // of week.
         }
-        long firstDayOfWeekTimestamp = calendar.getTimeInMillis();
-        calendar.get(Calendar.WEEK_OF_YEAR);
+        calendar.setFirstDayOfWeek(calendar.MONDAY);
         
         int dayofWeek = calendar.get(Calendar.DAY_OF_MONTH);
-        
+        Log.d(getTag(), dayofWeek + " - " + calendar.getFirstDayOfWeek());
         int cons = dayofWeek - 1;
         for (int i = 0; i < 7; i++) {
             cons++;

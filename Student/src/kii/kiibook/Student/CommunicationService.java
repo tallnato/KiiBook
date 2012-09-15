@@ -201,7 +201,7 @@ public class CommunicationService extends Service implements Constants, Parental
         CharSequence text = "Estas em aula!";
         
         // Set the icon, scrolling text and timestamp
-        notification = new Notification(R.drawable.area_disciplina, text, System.currentTimeMillis());
+        notification = new Notification(R.drawable.area_disciplina_small, text, System.currentTimeMillis());
         
         // The PendingIntent to launch our activity if the user selects this
         // notification
@@ -222,7 +222,7 @@ public class CommunicationService extends Service implements Constants, Parental
         
         CharSequence text = "Aula acabou!";
         
-        notification = new Notification(R.drawable.area_disciplina, text, System.currentTimeMillis());
+        notification = new Notification(R.drawable.area_disciplina_small, text, System.currentTimeMillis());
         
         PendingIntent contentIntent = PendingIntent.getActivity(this, 0, new Intent(this, MainActivity.class), 0);
         
@@ -355,7 +355,7 @@ public class CommunicationService extends Service implements Constants, Parental
                             Log.e(TAG, "dass summary");
                         }
                         Summary sum = summary.getSummary();
-                        DataShared.getInstance().getListSummaries().add(sum);
+                        DataShared.getInstance().addListSummaries(sum);
                         Log.d(TAG + "Summary", sum.toString());
                         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

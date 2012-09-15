@@ -8,9 +8,11 @@ import objects.NewEvent;
 import objects.ObjectCreator;
 import objects.Student;
 import objects.Summary;
+import objects.SummaryComparator;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -21,7 +23,7 @@ public class DataShared {
     private ArrayList<Student>           listFriendsOnline = new ArrayList<Student>();
     private ArrayList<MyCalendar>        myCalendar;
     private Set<String>                  blockedApps       = new HashSet<String>();
-    private final ArrayList<Summary>     listSummaries     = new ArrayList<Summary>();
+    private ArrayList<Summary>           listSummaries     = new ArrayList<Summary>();
     private ArrayList<NewEvent>          listEvents        = new ArrayList<NewEvent>();
     private final ObjectCreator          creator;
     private final ArrayList<ClassPeople> classes;
@@ -29,7 +31,7 @@ public class DataShared {
     private DataShared() {
     
         creator = new ObjectCreator();
-        myProfile = creator.createStudent(false);
+        myProfile = creator.createStudent(true);
         classes = creator.getClasses();
         myCalendar = creator.getMyCalendar();
         
@@ -50,7 +52,7 @@ public class DataShared {
         medias.add(new MediaBook("book5", 3, "Page 3"));
         listSummaries.add(new Summary(
                                         medias,
-                                        "Revisãoo de números racionais não negativos.!\nIntroduçãoo da multiplicçãoo de números racionais não negativos.\nResoluçãoo de Exercícios:",
+                                        "Revisão de números racionais não negativos.!\nIntroduçãoo da multiplicçãoo de números racionais não negativos.\nResoluçãoo de Exercícios:",
                                         cal.getTime(), listSummaries.size()));
         cal.set(2012, 9, 21);
         medias.add(new MediaBook("book5", 4, "Page 4"));
@@ -68,7 +70,21 @@ public class DataShared {
     
     public ArrayList<Summary> getListSummaries() {
     
-        return listSummaries;
+        Collections.sort(listSummaries, new SummaryComparator());
+        ArrayList<Summary> lista = listSummaries;
+        System.out.println(lista.toString());
+        Collections.sort(lista, new SummaryComparator());
+        return lista;
+    }
+    
+    public void addListSummaries( Summary sum ) {
+    
+        ArrayList<Summary> list = listSummaries;
+        
+        list.add(sum);
+        Collections.sort(list, new SummaryComparator());
+        listSummaries = list;
+        
     }
     
     public ArrayList<NewEvent> getListEvents() {

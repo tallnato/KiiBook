@@ -239,11 +239,11 @@ public final class R {
     }
     public static final class string {
         public static final int aboutme=0x7f06000a;
-        public static final int app_manager_label=0x7f060002;
+        public static final int app_manager_label=0x7f060003;
         public static final int app_name=0x7f060000;
-        public static final int app_name_manager=0x7f060001;
+        public static final int app_name_manager=0x7f060002;
         public static final int first_tab=0x7f060010;
-        public static final int hello_world=0x7f060003;
+        public static final int hello_world=0x7f060001;
         public static final int info_turma=0x7f06000e;
         public static final int infoacad=0x7f06000c;
         public static final int infobase=0x7f06000b;
