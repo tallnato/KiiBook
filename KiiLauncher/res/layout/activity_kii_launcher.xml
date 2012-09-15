@@ -216,8 +216,8 @@
         android:id="@+id/activity_kii_homescree_apps_indicator"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="5dip"
-        android:paddingTop="5dip"
+        android:paddingBottom="8dip"
+        android:paddingTop="30dip"
         app:fillColor="#FFF"
         app:strokeColor="#ffff"
         app:strokeWidth="1dp" />

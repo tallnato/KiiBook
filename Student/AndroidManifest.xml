@@ -41,16 +41,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="kii.kiibook.ParentalControl.PermissionsExternal"
-            android:icon="@android:drawable/ic_dialog_alert"
-            android:label="@string/title_activity_external" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity
             android:name="kii.kiibook.KiiClass.InitActivity"
             android:icon="@drawable/area_disciplina"
             android:label="@string/title_activity_classmode"
