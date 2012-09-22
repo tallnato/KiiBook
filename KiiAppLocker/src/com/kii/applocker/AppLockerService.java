@@ -115,6 +115,10 @@ public class AppLockerService extends Service {
             return false;
         }
         
+        if (packge.contains("kiibook.kiibookreader")) {
+            return false;
+        }
+        
         return blockedApps.contains(packge);
     }
     
