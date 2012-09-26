@@ -97,4 +97,11 @@ public class Profile implements Serializable {
         this.addr = addr;
     }
     
+    @Override
+    public String toString() {
+    
+        return "Profile [name=" + name + ", aniversary=" + aniversary + ", bi=" + bi + ", numTelf=" + numTelf + ", email=" + email
+                                        + ", sex=" + sex + ", addr=" + addr + "]";
+    }
+    
 }
