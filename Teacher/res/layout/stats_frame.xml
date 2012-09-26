@@ -35,11 +35,13 @@
                     android:background="@android:color/background_light"
                     android:orientation="vertical" >
 
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="-50dp"
-                        android:src="@drawable/diarias" />
+                    <include
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        layout="@layout/avaliations_diaries"
+                        android:background="@android:color/background_light"
+                        android:orientation="vertical" />
+
                 </LinearLayout>
 
                 <!-- Tab tests -->

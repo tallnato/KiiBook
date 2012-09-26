@@ -307,7 +307,24 @@ public class ClassModeFragment extends Fragment implements OnItemClickListener, 
             
                 String book = (String) spinnerBook.getSelectedItem();
                 String cap = (String) spinnerMedia.getSelectedItem();
-                int page = spinnerMedia.getSelectedItemPosition() + 1;
+                
+                int page = 0;
+                
+                switch (spinnerMedia.getSelectedItemPosition()) {
+                    case 0:
+                        page = 4;
+                        break;
+                    case 1:
+                        page = 6;
+                        break;
+                    case 2:
+                        page = 7;
+                        break;
+                    case 3:
+                        page = 9;
+                        break;
+                }
+                
                 listMediaBooks.add(new MediaBook(book, page, cap));
                 links.add(book + " - " + cap);
                 adapterListLinks.notifyDataSetChanged();
@@ -321,6 +338,9 @@ public class ClassModeFragment extends Fragment implements OnItemClickListener, 
             items[i] = media.getList().get(i).getName();
         }
         
+        final String[] caps = { "Multiplicação de números racionais", "Potências de expoente natural",
+                                        "Números inversos diferentes de zero", "Divisão de números racionais" };
+        
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, items);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerBook.setAdapter(adapter);
@@ -329,8 +349,7 @@ public class ClassModeFragment extends Fragment implements OnItemClickListener, 
             
             public void onItemSelected( AdapterView<?> arg0, View arg1, int arg2, long arg3 ) {
             
-                ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, media
-                                                .getList().get(arg2).getPages());
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, caps);
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinnerMedia.setAdapter(adapter);
                 
