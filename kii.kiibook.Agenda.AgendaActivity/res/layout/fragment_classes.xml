@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <libslidemenu.SlideMenu
+        android:id="@+id/slideMenu"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/textView1" >
+
+        <Button
+            android:id="@+id/buttonMenu"
+            android:layout_width="30dp"
+            android:layout_height="fill_parent"
+            android:background="@android:drawable/dark_header" />
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="-50dp"
+            android:rotation="90"
+            android:text="Menu"
+            android:textColor="#fff"
+            android:textSize="24dp" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_marginLeft="-15dp"
+            android:orientation="vertical" >
+
+
+
+            <TextView
+                android:id="@+id/texts"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:gravity="center"
+                android:textColor="@android:color/holo_orange_dark"
+                android:textSize="40dp" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="horizontal" >
+
+    <LinearLayout
+        android:layout_width="170dp"
+        android:layout_height="fill_parent"
+        android:background="@drawable/box_message"
+        android:orientation="vertical" >
+
+        <ListView
+            android:id="@+id/listBoxMessage"
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent" >
+        </ListView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical" >
+
+        <ListView
+            android:id="@+id/listMessages"
+            android:layout_width="fill_parent"
+            android:layout_height="200dp" >
+        </ListView>
+
+        <TextView
+            android:id="@+id/textView1"
+            android:background="@drawable/box_message"
+            android:layout_marginLeft="-5dp"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:gravity="center"
+            android:text="Email" />
+    </LinearLayout>
+
+</LinearLayout>

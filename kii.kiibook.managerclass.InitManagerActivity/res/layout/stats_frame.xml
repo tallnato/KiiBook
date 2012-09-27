@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <TabHost
+        android:id="@+id/tabhost_stats"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:textColor="@android:color/holo_blue_light" >
+
+            <TabWidget
+                android:id="@android:id/tabs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+            </TabWidget>
+
+            <FrameLayout
+                android:id="@android:id/tabcontent"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+
+                <!-- Tab avaliations diary -->
+
+                <LinearLayout
+                    android:id="@+id/stats_tab1"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:background="@android:color/background_light"
+                    android:orientation="vertical" >
+
+                    <TableLayout
+                        android:id="@+id/table_diaries_eval"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_margin="5dp" >
+
+                        <TableRow
+                            android:id="@+id/tableRow_head"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="10dp" >
+
+                            <TextView
+                                android:id="@+id/textView1"
+                                android:layout_width="220dp"
+                                android:layout_height="80dp"
+                                android:layout_marginLeft="10dp"
+                                android:gravity="center"
+                                android:text="NOMES"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/textView2"
+                                android:layout_width="120dp"
+                                android:layout_height="match_parent"
+                                android:layout_marginLeft="10dp"
+                                android:gravity="center"
+                                android:text="Presenças"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/textView3"
+                                android:layout_width="120dp"
+                                android:layout_height="match_parent"
+                                android:layout_marginLeft="10dp"
+                                android:gravity="center"
+                                android:text="Pontualidade"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/textView4"
+                                android:layout_width="120dp"
+                                android:layout_height="match_parent"
+                                android:layout_marginLeft="10dp"
+                                android:gravity="center"
+                                android:text="Comportamento"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/textView4"
+                                android:layout_width="120dp"
+                                android:layout_height="match_parent"
+                                android:layout_marginLeft="10dp"
+                                android:gravity="center"
+                                android:text="Assiduidade"
+                                android:textStyle="bold" />
+                        </TableRow>
+
+                    </TableLayout>
+                </LinearLayout>
+
+                <!-- Tab tests -->
+
+                <LinearLayout
+                    android:id="@+id/stats_tab2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@android:color/background_light"
+                    android:orientation="vertical" >
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="-50dp"
+                        android:src="@drawable/testes" />
+                </LinearLayout>
+
+                <!-- Tab works -->
+
+                <LinearLayout
+                    android:id="@+id/stats_tab3"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@android:color/background_light"
+                    android:orientation="vertical" >
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="-50dp"
+                        android:src="@drawable/trabalhos" />
+                </LinearLayout>
+
+                <!-- Tab tcps -->
+
+                <LinearLayout
+                    android:id="@+id/stats_tab4"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@android:color/background_light"
+                    android:orientation="vertical" >
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="-50dp"
+                        android:src="@drawable/tpc" />
+                </LinearLayout>
+            </FrameLayout>
+        </LinearLayout>
+    </TabHost>
+
+</LinearLayout>

@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/classbook_item_name"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:text="André Santos"
+        android:textColor="#000"
+        android:textSize="18dp" />
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="120dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="100dp"
+            android:layout_marginLeft="110dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/block_falcon_eye"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            android:paddingBottom="10dp"
+            android:paddingLeft="30dp"
+            android:paddingTop="10dp" >
+
+            <TextView
+                android:id="@+id/classbook_item_status"
+                style="@android:style/TextAppearance.DeviceDefault.Large"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="Offline"
+                android:textColor="#FF0000" />
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="50dp"
+                android:layout_marginRight="5dp"
+                android:background="@drawable/block_falcon_eye"
+                android:gravity="center"
+                android:paddingTop="5dp"
+                android:orientation="horizontal" >
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="vertical" >
+
+                    <TextView
+                        style="@android:style/TextAppearance.DeviceDefault.Small"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="Assiduidade" />
+
+                    <CheckBox
+                        android:id="@+id/checkBox_assiduity"
+                        android:checked="false"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="3dp"
+                    android:layout_height="fill_parent"
+                    android:layout_marginLeft="25dp"
+                    android:background="#FF909090" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="25dp"
+                    android:gravity="center"
+                    android:orientation="vertical" >
+
+                    <TextView
+                        style="@android:style/TextAppearance.DeviceDefault.Small"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="Pontualidade" />
+
+                    <CheckBox
+                        android:id="@+id/checkBox_punctuality"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="3dp"
+                    android:layout_height="fill_parent"
+                    android:layout_marginLeft="25dp"
+                    android:background="#FF909090" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="25dp"
+                    android:gravity="center"
+                    android:orientation="vertical" >
+
+                    <TextView
+                        style="@android:style/TextAppearance.DeviceDefault.Small"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="Comportamento" />
+
+                    <RadioGroup
+                        android:id="@+id/classmode_radio_behavior"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:orientation="horizontal" >
+
+                        <RadioButton
+                            android:id="@+id/radio0"
+                            android:layout_width="wrap_content"
+                            android:layout_height="fill_parent"
+                            android:checked="true"
+                            android:text="1" />
+
+                        <RadioButton
+                            android:id="@+id/radio1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="fill_parent"
+                            android:text="2" />
+
+                        <RadioButton
+                            android:id="@+id/radio2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="fill_parent"
+                            android:text="3" />
+                    </RadioGroup>
+                </LinearLayout>
+
+                <View
+                    android:layout_width="3dp"
+                    android:layout_height="fill_parent"
+                    android:layout_marginLeft="25dp"
+                    android:background="#FF909090" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="25dp"
+                    android:gravity="center"
+                    android:orientation="vertical" >
+
+                    <TextView
+                        style="@android:style/TextAppearance.DeviceDefault.Small"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="Participação" />
+
+                    <RadioGroup
+                        android:id="@+id/classmode_radio_participation"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:orientation="horizontal" >
+
+                        <RadioButton
+                            android:id="@+id/RadioButton03"
+                            android:layout_width="wrap_content"
+                            android:layout_height="fill_parent"
+                            android:checked="true"
+                            android:text="1" />
+
+                        <RadioButton
+                            android:id="@+id/RadioButton01"
+                            android:layout_width="wrap_content"
+                            android:layout_height="fill_parent"
+                            android:text="2" />
+
+                        <RadioButton
+                            android:id="@+id/RadioButton02"
+                            android:layout_width="wrap_content"
+                            android:layout_height="fill_parent"
+                            android:text="3" />
+                    </RadioGroup>
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:background="@drawable/block_falcon_eye" >
+
+            <ImageView
+                android:id="@+id/imageView_classmode"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_margin="5dp" />
+        </LinearLayout>
+    </RelativeLayout>
+
+</LinearLayout>

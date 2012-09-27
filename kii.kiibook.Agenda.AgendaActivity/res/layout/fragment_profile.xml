@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	    android:layout_width="fill_parent"
+	    android:layout_height="fill_parent"
+	    android:background="@android:color/white">
+	<TableLayout
+	    android:layout_width="fill_parent"
+	    android:layout_height="fill_parent" 
+	    android:layout_margin="7dip"
+	    android:background="@drawable/fragment_profile_background">
+	
+	    <TextView
+	        android:id="@+id/textView1"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:gravity="center"
+	        android:text="Perfil"
+	        android:textAppearance="?android:attr/textAppearanceLarge" />
+	    
+		<RelativeLayout
+	        android:id="@+id/TopBlock"
+	        style="@style/TopBlock"
+	        android:layout_width="fill_parent"
+	        android:layout_height="190dp">
+	
+	        <RelativeLayout
+	            android:id="@+id/TopBlock_Info"
+	            style="@style/TopBlock_Info"
+	            
+	            android:layout_width="fill_parent"
+	            android:layout_height="fill_parent"
+	            
+	            android:layout_alignParentLeft="true"
+	            android:layout_alignParentTop="true"
+	            
+				android:layout_marginTop="20dp"
+				android:layout_marginLeft="150dp"
+				android:layout_marginRight="20dp"
+				android:layout_marginBottom="20dp"
+				
+				android:paddingLeft="50dp">
+	
+	            <TextView
+	                android:id="@+id/TopBlock_Info_Title_Name"
+	                style="@style/TopBlock_Info_Title_Name"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_alignParentLeft="true"
+	                android:layout_alignParentTop="true"
+	                android:text="Troll Face" />
+	
+	            <TextView
+	                android:id="@+id/TopBlock_Info_Title_ClassYear"
+	                style="@style/TopBlock_Info_Title_ClassYear"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_alignBaseline="@+id/TopBlock_Info_Title_Name"
+	                android:layout_alignBottom="@+id/TopBlock_Info_Title_Name"
+	                android:layout_marginLeft="24dp"
+	                android:layout_toRightOf="@+id/TopBlock_Info_Title_Name"
+	                android:text="5ºA" />
+	
+	        </RelativeLayout>
+	
+	        <LinearLayout
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+	            android:layout_alignParentLeft="true"
+	            android:layout_alignParentTop="true"
+		        android:gravity="center"
+	            android:paddingTop="10dp"
+	            android:paddingLeft="20dp"
+	            android:paddingBottom="10dp">
+		        
+		    	<ImageView
+		            android:id="@+id/TopBlock_Image"
+		            style="@style/TopBlock_Image"
+		            android:layout_width="150dip"
+		            android:layout_height="150dip"
+		            android:padding="5dip"
+		            android:src="@drawable/troll" />
+		    </LinearLayout>     
+	    </RelativeLayout>
+	    
+		<LinearLayout
+		    android:layout_width="fill_parent"
+		    android:layout_height="wrap_content"
+		    android:orientation="vertical"
+	        style="@style/TopBlock">
+	        <TextView 
+			    android:layout_width="fill_parent"
+			    android:layout_height="wrap_content"
+	        	android:gravity="center"
+	        	android:text="Sobre mim"
+	        	android:textAppearance="?android:attr/textAppearanceLarge"
+	        	android:background="@drawable/fragment_profile_about_titles"
+			/>
+	        <TextView 
+			    android:layout_width="fill_parent"
+			    android:layout_height="wrap_content"
+	        	android:gravity="left"
+	    		android:text="Sou uma pessoa diverTda e curiosa que procura sempre saber mais. Gostava de um dia ser médico ou advogado para poder ajudar as pessoas que mais precisão. "
+	        	android:textAppearance="?android:attr/textAppearanceMedium"
+			/>
+	        <TextView 
+			    android:layout_width="fill_parent"
+			    android:layout_height="wrap_content"
+	        	android:gravity="center"
+	        	android:text="Informação básica"
+	        	android:textAppearance="?android:attr/textAppearanceLarge"
+	        	android:background="@drawable/fragment_profile_about_titles"
+			/>
+	        <TextView 
+			    android:layout_width="fill_parent"
+			    android:layout_height="wrap_content"
+	        	android:gravity="left"
+	  			android:text="Nome: António Xavier Pinto Marante.\nSexo: Masculino \nData de Nascimento: 7 de Novembro de 2001, Faro. \nResidência: Albufeira 
+\nIdiomas: Português e Inglês. "
+	        	android:textAppearance="?android:attr/textAppearanceMedium"
+			/>
+	        
+		    
+		</LinearLayout>
+		
+	</TableLayout>
+</LinearLayout>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@android:color/white">
+	<TableLayout
+	    android:layout_width="fill_parent"
+	    android:layout_height="fill_parent" 
+	    android:layout_margin="7dip"
+	    android:background="@drawable/fragment_permissions_background">
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Permissões"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+    
+    <LinearLayout
+		xmlns:android="http://schemas.android.com/apk/res/android"
+		android:orientation="horizontal"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content">
+	
+		<View
+			android:layout_gravity="left"
+			android:layout_width="72dp"
+			android:layout_height="1dp" />
+	
+		<TextView
+			android:id="@+id/app_name"
+			android:paddingLeft="10dip"
+			android:layout_weight="0.5"
+			android:layout_gravity="center"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="Aplicação" />
+	
+		<TextView
+			android:id="@+id/app_name"
+			android:paddingLeft="10dip"
+			android:gravity="right"
+			android:layout_gravity="right"
+			android:layout_width="0dip"
+			android:layout_weight="0.5"
+			android:layout_height="wrap_content"
+			android:text="Bloqueada" />
+	</LinearLayout>
+    
+	<ListView android:id="@id/android:list"
+               android:layout_width="fill_parent"
+               android:layout_height="match_parent"
+               android:background="#00FF00"
+               android:layout_weight="1"
+               android:drawSelectorOnTop="false"/>
+	
+	<TextView android:id="@id/android:empty"
+               android:layout_width="match_parent"
+               android:layout_height="match_parent"
+               android:background="#FF0000"
+               android:text="No data"/>
+	
+	</TableLayout>
+</LinearLayout>
