@@ -9,11 +9,9 @@ import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnLongClickListener;
-import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.view.WindowManager;
@@ -23,14 +21,11 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-import objects.Data;
 import objects.EventType;
 import objects.HourCalendarListView;
 import objects.MyCalendar;
 import objects.NewEvent;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -39,22 +34,28 @@ import java.util.Iterator;
 import kii.kiibook.Student.R;
 import kii.kiibook.Student.database.DataShared;
 
-public class FragmentWeek extends Fragment implements OnLongClickListener, OnClickListener, OnTouchListener {
+public class FragmentWeek extends Fragment implements OnLongClickListener, OnClickListener {
+    
+    public static int                       filter_all   = 0;
+    public static int                       filter_works = 1;
+    public static int                       filter_tpc   = 2;
+    public static int                       filter_tests = 3;
     
     private View                            view;
     private TableLayout                     tableLayout;
-    private boolean                         portrait = false;
+    private boolean                         portrait     = false;
     private LinearLayout                    cell;
-    private int                             idCell   = 0;
+    private int                             idCell       = 0;
     private ArrayList<MyCalendar>           myCalendar;
     private ArrayList<HourCalendarListView> hoursElem;
     private TableLayout                     table;
     
     private Calendar                        cal;
-    private final String[]                  str      = { "SEG - ", "TER - ", "QUA - ", "QUI - ", "SEX - ", "SAB - ", "DOM - " };
-    private final int[]                     ids      = { R.id.textView_seg, R.id.textView_ter, R.id.textView_qua, R.id.textView_qui,
+    private final String[]                  str          = { "SEG - ", "TER - ", "QUA - ", "QUI - ", "SEX - ", "SAB - ", "DOM - " };
+    private final int[]                     ids          = { R.id.textView_seg, R.id.textView_ter, R.id.textView_qua, R.id.textView_qui,
                                     R.id.textView_sex, R.id.textView_sab, R.id.textView_dom };
     private long                            timeStamp;
+    private int                             filters;
     
     public static Fragment newInstance() {
     
@@ -96,6 +97,7 @@ public class FragmentWeek extends Fragment implements OnLongClickListener, OnCli
     
         view = inflater.inflate(R.layout.fragment_week, container, false);
         timeStamp = getArguments().getLong("time");
+        filters = getArguments().getInt("filters");
         
         view.requestFocus();
         
@@ -185,7 +187,9 @@ public class FragmentWeek extends Fragment implements OnLongClickListener, OnCli
                     cell.setId(idCell++);
                     cell.setOnLongClickListener(this);
                     cell.setBackgroundResource(R.drawable.cell_shape);
-                    createCalendar(hour, day);
+                    if (filters == filter_all) {
+                        createCalendar(hour, day);
+                    }
                     
                 }
                 if (!portrait) {
@@ -215,7 +219,18 @@ public class FragmentWeek extends Fragment implements OnLongClickListener, OnCli
             if (dayOfweek == dayOfweekTimeStamp) {
                 Log.w(getTag(), "FOOOOUUUNNNNNDDDDDD");
                 indexDay = getDay(time) - dayOfweekTimeStamp;
-                evList.add(new Events(indexDay, event.getHour(), event));
+                if ((filters == filter_works) && (event.getType() == EventType.Trabalho)) {
+                    evList.add(new Events(indexDay, event.getHour(), event));
+                }
+                if ((filters == filter_tests) && (event.getType() == EventType.Teste)) {
+                    evList.add(new Events(indexDay, event.getHour(), event));
+                }
+                if ((filters == filter_tpc) && (event.getType() == EventType.TPC)) {
+                    evList.add(new Events(indexDay, event.getHour(), event));
+                }
+                if ((filters == filter_all)) {
+                    evList.add(new Events(indexDay, event.getHour(), event));
+                }
             }
         }
         
@@ -444,27 +459,27 @@ public class FragmentWeek extends Fragment implements OnLongClickListener, OnCli
         builder.show();
     }
     
-    private ArrayList<HourCalendarListView> search( long time ) {
-    
-        DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-        
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(time);
-        String str = formatter.format(calendar.getTime());
-        
-        Data data = new Data(str);
-        
-        long times = (System.currentTimeMillis());
-        
-        for (int i = 0; i < myCalendar.size(); i++) {
-            if (myCalendar.get(i).getYear() == data.getAno() && myCalendar.get(i).getMonth() == data.getMes()
-                                            && myCalendar.get(i).getDay() == data.getDia()) {
-                return myCalendar.get(i).getListDay();
-            }
-            
-        }
-        return null;
-    }
+    // private ArrayList<HourCalendarListView> search( long time ) {
+    //
+    // DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+    //
+    // Calendar calendar = Calendar.getInstance();
+    // calendar.setTimeInMillis(time);
+    // String str = formatter.format(calendar.getTime());
+    //
+    // Data data = new Data(str);
+    //
+    // long times = (System.currentTimeMillis());
+    //
+    // for (int i = 0; i < myCalendar.size(); i++) {
+    // if (myCalendar.get(i).getYear() == data.getAno() &&
+    // myCalendar.get(i).getMonth() == data.getMes()
+    // && myCalendar.get(i).getDay() == data.getDia()) {
+    // return myCalendar.get(i).getListDay();
+    // }
+    // }
+    // return null;
+    // }
     
     private void dialogRequestElem( LinearLayout parent ) {
     
@@ -473,16 +488,6 @@ public class FragmentWeek extends Fragment implements OnLongClickListener, OnCli
         DialogNewEvent dialog = new DialogNewEvent(getActivity(), parent, this, this);
         dialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
         dialog.show();
-        
+        insertEvents();
     }
-    
-    public boolean onTouch( View v, MotionEvent event ) {
-    
-        if (event.getAction() == MotionEvent.ACTION_DOWN) {
-            
-        }
-        
-        return false;
-    }
-    
 }

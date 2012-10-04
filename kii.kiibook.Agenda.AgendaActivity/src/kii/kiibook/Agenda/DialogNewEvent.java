@@ -24,7 +24,9 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 
 import objects.EventType;
+import objects.NewEvent;
 import kii.kiibook.Student.R;
+import kii.kiibook.Student.database.DataShared;
 
 public class DialogNewEvent extends Dialog implements OnCheckedChangeListener {
     
@@ -93,6 +95,10 @@ public class DialogNewEvent extends Dialog implements OnCheckedChangeListener {
                     
                     event.setLayoutParams(new TableLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT, 1f));
                     parent.addView(event);
+                    
+                    NewEvent ev = new NewEvent(eventName.getText().toString(), eventDesc.getText().toString(), typeSelected, datePicker
+                                                    .getCalendarView().getDate(), timePicker.getCurrentHour());
+                    DataShared.getInstance().getListEvents().add(ev);
                 }
                 dismiss();
             }
@@ -106,7 +112,6 @@ public class DialogNewEvent extends Dialog implements OnCheckedChangeListener {
                 dismiss();
             }
         });
-        
     }
     
     public void onCheckedChanged( RadioGroup group, int checkedId ) {
@@ -125,7 +130,6 @@ public class DialogNewEvent extends Dialog implements OnCheckedChangeListener {
                 typeSelected = EventType.Outro;
                 break;
         }
-        
     }
     
     public static int getColor( EventType type ) {
@@ -144,7 +148,6 @@ public class DialogNewEvent extends Dialog implements OnCheckedChangeListener {
                 return R.drawable.cell_orange;
                 
             case Escolar:
-                
                 return R.drawable.cell_green;
         }
         return R.drawable.cell_gray;

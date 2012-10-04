@@ -232,6 +232,21 @@ public class CommunicationService extends Service implements Constants, Parental
         
     }
     
+    private void addNotification( CharSequence text, CharSequence title ) {
+    
+        notification = new Notification(R.drawable.area_disciplina_small, text, System.currentTimeMillis());
+        
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        
+        PendingIntent contentIntent = PendingIntent.getActivity(this, 0, intent, 0);
+        
+        notification.setLatestEventInfo(this, title, text, contentIntent);
+        
+        nm.notify("Started", 0, notification);
+        
+    }
+    
     private void enableFalconEye() {
     
         final String broadcast = UdpUtil.getBroadcastAddress(wifi.getDhcpInfo());
@@ -357,9 +372,8 @@ public class CommunicationService extends Service implements Constants, Parental
                         Summary sum = summary.getSummary();
                         DataShared.getInstance().addListSummaries(sum);
                         Log.d(TAG + "Summary", sum.toString());
-                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        startActivity(intent);
+                        addNotification("Novo sumário recebido!", "Gestor de Disciplina");
+                        
                     }
                     if (msg.obj instanceof NewEventNetwork) {
                         Log.d("Service", "receive Summary Network");

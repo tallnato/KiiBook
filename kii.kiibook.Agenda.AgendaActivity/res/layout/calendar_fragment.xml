@@ -13,22 +13,48 @@
         <LinearLayout
             android:layout_width="470dp"
             android:layout_height="fill_parent"
-            android:layout_margin="5dp"
-            android:background="@drawable/shape_calendar"
             android:orientation="vertical" >
 
-            <TextView
+            <LinearLayout
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="Próximos Eventos"
-                android:textSize="20dp" />
+                android:layout_height="250dp"
+                android:layout_margin="5dp"
+                android:background="@drawable/shape_calendar"
+                android:orientation="vertical" >
 
-            <ListView
-                android:id="@+id/calendar_listView"
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="Próximos Eventos"
+                    android:textSize="20dp" />
+
+                <ListView
+                    android:id="@+id/calendar_listView"
+                    android:layout_width="fill_parent"
+                    android:layout_height="match_parent" >
+                </ListView>
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="fill_parent"
-                android:layout_height="fill_parent" >
-            </ListView>
+                android:layout_height="fill_parent"
+                android:layout_margin="5dp"
+                android:background="@drawable/shape_calendar"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="Filtros"
+                    android:textSize="16dp" />
+
+                <Spinner
+                    android:id="@+id/spinner_filters"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </LinearLayout>
         </LinearLayout>
 
         <LinearLayout
