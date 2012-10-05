@@ -28,7 +28,7 @@ import objects.NewEvent;
 import kii.kiibook.Student.R;
 import kii.kiibook.Student.database.DataShared;
 
-public class DialogNewEvent extends Dialog implements OnCheckedChangeListener {
+class DialogNewEvent extends Dialog implements OnCheckedChangeListener {
     
     private final LinearLayout                      parent;
     private final Activity                          context;
@@ -40,7 +40,6 @@ public class DialogNewEvent extends Dialog implements OnCheckedChangeListener {
     private DatePicker                              datePicker;
     private TimePicker                              timePicker;
     private final android.view.View.OnClickListener click;
-    private final Dialog                            me;
     
     public DialogNewEvent( Activity context, LinearLayout parent, OnLongClickListener longClickListener,
                                     android.view.View.OnClickListener clickLiestener ) {
@@ -52,7 +51,7 @@ public class DialogNewEvent extends Dialog implements OnCheckedChangeListener {
         click = clickLiestener;
         
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
-        me = this;
+        
     }
     
     @Override
@@ -83,22 +82,26 @@ public class DialogNewEvent extends Dialog implements OnCheckedChangeListener {
             public void onClick( View v ) {
             
                 TextView event = new TextView(context);
-                if ((eventName.getText() != null) || (eventDesc.getText() != null)) {
-                    event.setText(typeSelected.toString() + " " + eventName.getText() + " - " + eventDesc.getText() + " - "
-                                                    + datePicker.getDayOfMonth() + "/" + datePicker.getMonth() + "/" + datePicker.getYear()
-                                                    + " - " + timePicker.getCurrentHour() + "h");
+                if ((eventName.getText() != null) && (eventDesc.getText() != null)) {
+                    event.setText(eventName.getText() + "\n" + eventDesc.getText() + "\n" + datePicker.getDayOfMonth() + "/"
+                                                    + datePicker.getMonth() + "/" + datePicker.getYear() + " - "
+                                                    + timePicker.getCurrentHour() + "h");
                     event.setOnClickListener(click);
                     event.setTextColor(Color.BLACK);
                     event.setGravity(Gravity.CENTER);
                     event.setOnLongClickListener(clickListener);
+                    EventType types = typeSelected;
                     event.setBackgroundResource(getColor(typeSelected));
-                    
                     event.setLayoutParams(new TableLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT, 1f));
+                    
                     parent.addView(event);
                     
-                    NewEvent ev = new NewEvent(eventName.getText().toString(), eventDesc.getText().toString(), typeSelected, datePicker
-                                                    .getCalendarView().getDate(), timePicker.getCurrentHour());
+                    NewEvent ev = new NewEvent(eventName.getText().toString(), eventDesc.getText() + "\n" + datePicker.getDayOfMonth()
+                                                    + "/" + datePicker.getMonth() + "/" + datePicker.getYear() + " - "
+                                                    + timePicker.getCurrentHour() + "h", types, datePicker.getCalendarView().getDate(),
+                                                    timePicker.getCurrentHour());
                     DataShared.getInstance().getListEvents().add(ev);
+                    
                 }
                 dismiss();
             }

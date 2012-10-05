@@ -117,6 +117,13 @@ public class CommunicationService extends Service implements Constants {
         return null;
     }
     
+    @Override
+    public boolean onUnbind( Intent intent ) {
+    
+        Log.w(TAG, "cenassssssssssss");
+        return super.onUnbind(intent);
+    }
+    
     public void getPackages( Student slave ) {
     
         ApplicationList msg = new ApplicationList();
@@ -253,7 +260,6 @@ public class CommunicationService extends Service implements Constants {
                                 sendMessageToUIUpdate();
                             }
                         }
-                        
                     }
                     mComManager.sendUdpMessage(new Connect(myIp, "Master of puppets :D", mComManager.getTcpPort(), d.getStudent()
                                                     .getIpAdrress()));

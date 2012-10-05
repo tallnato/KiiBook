@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.Gravity;
@@ -203,7 +204,7 @@ public class FragmentWeek extends Fragment implements OnLongClickListener, OnCli
         insertEvents();
     }
     
-    private void insertEvents() {
+    protected void insertEvents() {
     
         int indexDay;
         Iterator<NewEvent> it = DataShared.getInstance().getListEvents().iterator();
@@ -217,18 +218,16 @@ public class FragmentWeek extends Fragment implements OnLongClickListener, OnCli
             long time = event.getDate();
             int dayOfweek = getFirstDayofWeek(time) - 1;
             if (dayOfweek == dayOfweekTimeStamp) {
-                Log.w(getTag(), "FOOOOUUUNNNNNDDDDDD");
+                
                 indexDay = getDay(time) - dayOfweekTimeStamp;
                 if ((filters == filter_works) && (event.getType() == EventType.Trabalho)) {
                     evList.add(new Events(indexDay, event.getHour(), event));
-                }
-                if ((filters == filter_tests) && (event.getType() == EventType.Teste)) {
+                } else if ((filters == filter_tpc) && (event.getType() == EventType.TPC)) {
                     evList.add(new Events(indexDay, event.getHour(), event));
-                }
-                if ((filters == filter_tpc) && (event.getType() == EventType.TPC)) {
-                    evList.add(new Events(indexDay, event.getHour(), event));
-                }
-                if ((filters == filter_all)) {
+                    // } else if ((filters == filter_tests) && (event.getType()
+                    // == EventType.Teste)) {
+                    // evList.add(new Events(indexDay, event.getHour(), event));
+                } else if ((filters == filter_all)) {
                     evList.add(new Events(indexDay, event.getHour(), event));
                 }
             }
@@ -243,7 +242,7 @@ public class FragmentWeek extends Fragment implements OnLongClickListener, OnCli
             
             LinearLayout cello = (LinearLayout) view.findViewWithTag("day" + ev.getIndex() + "hour" + ev.getHour());
             TextView events = new TextView(this.getActivity());
-            events.setText(ev.getEvent().getWhat() + " - " + ev.getEvent().getDescription());
+            events.setText(ev.getEvent().getWhat() + "\n" + ev.getEvent().getDescription());
             events.setOnClickListener(this);
             events.setTextColor(Color.BLACK);
             events.setOnLongClickListener(this);
@@ -441,6 +440,8 @@ public class FragmentWeek extends Fragment implements OnLongClickListener, OnCli
             parent = (LinearLayout) child.getParent();
         }
         dialogRequestElem(parent);
+        
+        insertEvents();
         return true;
     }
     
@@ -459,28 +460,6 @@ public class FragmentWeek extends Fragment implements OnLongClickListener, OnCli
         builder.show();
     }
     
-    // private ArrayList<HourCalendarListView> search( long time ) {
-    //
-    // DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-    //
-    // Calendar calendar = Calendar.getInstance();
-    // calendar.setTimeInMillis(time);
-    // String str = formatter.format(calendar.getTime());
-    //
-    // Data data = new Data(str);
-    //
-    // long times = (System.currentTimeMillis());
-    //
-    // for (int i = 0; i < myCalendar.size(); i++) {
-    // if (myCalendar.get(i).getYear() == data.getAno() &&
-    // myCalendar.get(i).getMonth() == data.getMes()
-    // && myCalendar.get(i).getDay() == data.getDia()) {
-    // return myCalendar.get(i).getListDay();
-    // }
-    // }
-    // return null;
-    // }
-    
     private void dialogRequestElem( LinearLayout parent ) {
     
         view.clearFocus();
@@ -488,6 +467,14 @@ public class FragmentWeek extends Fragment implements OnLongClickListener, OnCli
         DialogNewEvent dialog = new DialogNewEvent(getActivity(), parent, this, this);
         dialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
         dialog.show();
-        insertEvents();
+        Handler handler = new Handler();
+        handler.post(new Runnable() {
+            
+            public void run() {
+            
+                insertEvents();
+            }
+        });
     }
+    
 }

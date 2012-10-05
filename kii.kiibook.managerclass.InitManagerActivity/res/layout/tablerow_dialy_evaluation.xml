@@ -9,47 +9,42 @@
         android:id="@+id/textView1"
         android:layout_width="220dp"
         android:layout_height="80dp"
-        android:layout_marginBottom="3dp"
         android:layout_marginLeft="10dp"
         android:gravity="center"
         android:text="Sem Nome" />
 
     <TextView
-        android:id="@+id/textView_cell1"
+        android:id="@+id/textView2"
         android:layout_width="125dp"
         android:layout_height="match_parent"
-        android:layout_marginBottom="3dp"
-        android:layout_marginLeft="3dp"
+        android:layout_marginLeft="5dp"
         android:background="@android:color/holo_green_dark"
         android:gravity="center"
         android:text="14 em 14" />
 
     <TextView
-        android:id="@+id/textView_cell2"
+        android:id="@+id/textView3"
         android:layout_width="125dp"
         android:layout_height="match_parent"
-        android:layout_marginBottom="3dp"
-        android:layout_marginLeft="3dp"
+        android:layout_marginLeft="5dp"
         android:background="@android:color/holo_orange_dark"
         android:gravity="center"
         android:text="Médio" />
 
     <TextView
-        android:id="@+id/textView_cell3"
+        android:id="@+id/textView4"
         android:layout_width="125dp"
         android:layout_height="match_parent"
-        android:layout_marginBottom="3dp"
-        android:layout_marginLeft="3dp"
+        android:layout_marginLeft="5dp"
         android:background="@android:color/holo_red_dark"
         android:gravity="center"
         android:text="Baixo" />
 
     <TextView
-        android:id="@+id/textView_cell4"
+        android:id="@+id/textView5"
         android:layout_width="125dp"
         android:layout_height="match_parent"
-        android:layout_marginBottom="3dp"
-        android:layout_marginLeft="3dp"
+        android:layout_marginLeft="5dp"
         android:background="@android:color/holo_green_dark"
         android:gravity="center"
         android:text="Elevado" />

@@ -204,9 +204,10 @@ public class ClassModeFragment extends Fragment implements OnItemClickListener, 
     }
     
     @Override
-    public void onPause() {
+    protected void finalize() throws Throwable {
     
-        super.onPause();
+        Log.w(TAG, "finalize");
+        super.finalize();
     }
     
     private void addMediabook() {
