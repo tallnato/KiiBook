@@ -89,7 +89,7 @@ public class MusicFileManagerAdapter extends ArrayAdapter<File> {
                 
                 Intent i = new Intent();
                 i.setAction(android.content.Intent.ACTION_VIEW);
-                i.setDataAndType(Uri.fromFile(item), "music/*");
+                i.setDataAndType(Uri.fromFile(item), "audio/*");
                 getContext().startActivity(i);
             }
         });

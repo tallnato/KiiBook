@@ -56,7 +56,7 @@ public class KiiLaucher extends Activity {
     private ProgressDialog                       dialog;
     
     public KiiLaucher() {
-    
+        
         super();
         
         mMessenger = new Messenger(new LauncherHandler());
@@ -65,7 +65,11 @@ public class KiiLaucher extends Activity {
     
     @Override
     public void onCreate( Bundle savedInstanceState ) {
-    
+        
+        Intent i = new Intent();
+        i.setClassName("com.kii.applocker", "com.kii.applocker.AppLockerService");
+        startService(i);
+        
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_kii_launcher);
         
@@ -74,7 +78,7 @@ public class KiiLaucher extends Activity {
             
             @Override
             public boolean onLongClick( View v ) {
-            
+                
                 Intent intent = new Intent(Intent.ACTION_SET_WALLPAPER);
                 startActivity(Intent.createChooser(intent, "Select Wallpaper"));
                 
@@ -98,7 +102,7 @@ public class KiiLaucher extends Activity {
     }
     
     private void setHomeScreen() {
-    
+        
         AppsListDataSource appsDataSource = new AppsListDataSource(getApplicationContext());
         appsDataSource.open();
         List<PackagePermissions> list = appsDataSource.getAllApps();
@@ -145,16 +149,17 @@ public class KiiLaucher extends Activity {
     }
     
     private void setButtons() {
-    
+        
         ImageView logo = (ImageView) findViewById(R.id.activity_kii_launcher_logo);
         logo.setOnClickListener(new OnClickListener() {
             
             @Override
             public void onClick( View v ) {
-            
+                
                 Bundle bundle = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.slide_in_up, android.R.anim.fade_out)
                                                 .toBundle();
                 startActivity(new Intent(getApplicationContext(), DrawerActivity.class), bundle);
+                
             }
         });
         
@@ -163,7 +168,7 @@ public class KiiLaucher extends Activity {
             
             @Override
             public void onClick( View v ) {
-            
+                
                 Intent i;
                 PackageManager manager = getPackageManager();
                 i = manager.getLaunchIntentForPackage("kii.profile");
@@ -187,7 +192,7 @@ public class KiiLaucher extends Activity {
             
             @Override
             public void onClick( View v ) {
-            
+                
                 Intent i;
                 PackageManager manager = getPackageManager();
                 i = manager.getLaunchIntentForPackage("kii.kiibook.Student");
@@ -211,7 +216,7 @@ public class KiiLaucher extends Activity {
             
             @Override
             public void onClick( View v ) {
-            
+                
                 findViewById(R.id.activity_kii_launcher_calendar).setVisibility(View.VISIBLE);
                 v.setVisibility(View.GONE);
                 ((TextView) v.findViewById(R.id.activity_kii_launcher_calendar_notification_count)).setText("0");
@@ -240,7 +245,7 @@ public class KiiLaucher extends Activity {
             
             @Override
             public void onClick( View v ) {
-            
+                
                 Toast.makeText(getApplicationContext(), "mostrar mensagens...", Toast.LENGTH_SHORT).show();
             }
         });
@@ -250,7 +255,7 @@ public class KiiLaucher extends Activity {
             
             @Override
             public void onClick( View v ) {
-            
+                
                 findViewById(R.id.activity_kii_launcher_messages).setVisibility(View.VISIBLE);
                 v.setVisibility(View.GONE);
                 ((TextView) v.findViewById(R.id.activity_kii_launcher_messages_notification_count)).setText("0");
@@ -268,7 +273,7 @@ public class KiiLaucher extends Activity {
             
             @Override
             public void onClick( View v ) {
-            
+                
                 Intent i;
                 PackageManager manager = getPackageManager();
                 i = manager.getLaunchIntentForPackage("kii.kiibook.Student");
@@ -289,7 +294,7 @@ public class KiiLaucher extends Activity {
             
             @Override
             public void onClick( View v ) {
-            
+                
                 findViewById(R.id.activity_kii_launcher_homework).setVisibility(View.VISIBLE);
                 v.setVisibility(View.GONE);
                 ((TextView) v.findViewById(R.id.activity_kii_launcher_homework_notification_count)).setText("0");
@@ -318,7 +323,7 @@ public class KiiLaucher extends Activity {
             
             @Override
             public void onClick( View v ) {
-            
+                
                 Toast.makeText(getApplicationContext(), "mostrar news...", Toast.LENGTH_SHORT).show();
             }
         });
@@ -328,7 +333,7 @@ public class KiiLaucher extends Activity {
             
             @Override
             public void onClick( View v ) {
-            
+                
                 findViewById(R.id.activity_kii_launcher_news).setVisibility(View.VISIBLE);
                 v.setVisibility(View.GONE);
                 ((TextView) v.findViewById(R.id.activity_kii_launcher_news_notification_count)).setText("0");
@@ -344,7 +349,7 @@ public class KiiLaucher extends Activity {
     
     @Override
     protected void onPause() {
-    
+        
         super.onPause();
         
         if (mIsBound) {
@@ -367,7 +372,7 @@ public class KiiLaucher extends Activity {
     
     @Override
     protected void onResume() {
-    
+        
         super.onResume();
         
         TextView day = (TextView) findViewById(R.id.activity_kii_launcher_calendar_day);
@@ -394,14 +399,14 @@ public class KiiLaucher extends Activity {
     
     @Override
     protected void onStop() {
-    
+        
         super.onStop();
         
         dialog = null;
     }
     
     private void playNotify() {
-    
+        
         /*try {
             Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
             Ringtone r = RingtoneManager.getRingtone(getApplicationContext(), notification);
@@ -414,16 +419,16 @@ public class KiiLaucher extends Activity {
     
     @Override
     public void onBackPressed() {
-    
+        
     }
     
     private class LauncherHandler extends Handler {
         
         @Override
         public void handleMessage( Message msg ) {
-        
-            switch (msg.what) {
             
+            switch (msg.what) {
+                
                 case KiiLauncherService.MSG_NEW_CALENDAR_NOTIFICATION: {
                     
                     if (msg.arg1 == 0) {
@@ -535,7 +540,7 @@ public class KiiLaucher extends Activity {
     
     @Override
     public boolean onKeyDown( int keyCode, KeyEvent event ) {
-    
+        
         switch (keyCode) {
             case KeyEvent.KEYCODE_C: {
                 
@@ -583,13 +588,13 @@ public class KiiLaucher extends Activity {
         
         @Override
         public int getCount() {
-        
+            
             return 3;
         }
         
         @Override
         public Object instantiateItem( View collection, int position ) {
-        
+            
             LayoutInflater li = getLayoutInflater();
             GridView gridview = (GridView) li.inflate(R.layout.activity_kii_homescreen_tabs, (ViewGroup) collection, false);
             gridview.setStackFromBottom(true);
@@ -616,19 +621,19 @@ public class KiiLaucher extends Activity {
         
         @Override
         public void destroyItem( View collection, int position, Object view ) {
-        
+            
             ((ViewPager) collection).removeView((View) view);
         }
         
         @Override
         public boolean isViewFromObject( View view, Object object ) {
-        
+            
             return view == object;
         }
         
         @Override
         public int getItemPosition( Object object ) {
-        
+            
             return POSITION_NONE;
         }
     }
@@ -637,14 +642,14 @@ public class KiiLaucher extends Activity {
         
         @Override
         protected void onPreExecute() {
-        
+            
             dialog = ProgressDialog.show(KiiLaucher.this, "", "Loading. Please wait...", true, false);
             dialog.show();
         }
         
         @Override
         protected Void doInBackground( Context... context ) {
-        
+            
             AppsListDataSource appsDataSource = new AppsListDataSource(context[0]);
             
             appsDataSource.open();
@@ -659,7 +664,7 @@ public class KiiLaucher extends Activity {
         
         @Override
         protected void onPostExecute( Void result ) {
-        
+            
             if (dialog != null) {
                 dialog.dismiss();
             }
@@ -668,7 +673,7 @@ public class KiiLaucher extends Activity {
     }
     
     private void getInstalledApps( Context context, AppsListDataSource appsDataSource ) {
-    
+        
         PackageManager pm = context.getPackageManager();
         
         Intent mainIntent = new Intent(Intent.ACTION_MAIN, null);
@@ -686,7 +691,7 @@ public class KiiLaucher extends Activity {
         
         @Override
         public void onServiceConnected( ComponentName className, IBinder service ) {
-        
+            
             mService = new Messenger(service);
             try {
                 Message msg = Message.obtain(null, KiiLauncherService.MSG_REGISTER_CLIENT);
@@ -700,7 +705,7 @@ public class KiiLaucher extends Activity {
         
         @Override
         public void onServiceDisconnected( ComponentName className ) {
-        
+            
             mService = null;
         }
     };
