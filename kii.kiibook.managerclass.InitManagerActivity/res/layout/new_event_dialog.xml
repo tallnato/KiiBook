@@ -3,9 +3,9 @@
     android:id="@+id/scrollView1"
     android:layout_width="500dp"
     android:layout_height="wrap_content"
-    android:padding="5dp"
     android:descendantFocusability="beforeDescendants"
-    android:focusableInTouchMode="true" >
+    android:focusableInTouchMode="true"
+    android:padding="5dp" >
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -50,26 +50,10 @@
                 android:background="@android:color/holo_orange_dark" />
         </LinearLayout>
 
-        <EditText
-            android:id="@+id/dialog_new_event_edittext"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="O quê" >
-
-            <requestFocus />
-        </EditText>
-
-        <View
-            android:layout_width="fill_parent"
-            android:layout_height="2dp"
-            android:layout_marginBottom="30dp"
-            android:layout_marginTop="30dp"
-            android:background="@android:color/holo_orange_dark" />
-
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
             android:text="Tipo"
             android:textSize="18dp" />
 
@@ -77,7 +61,8 @@
             android:id="@+id/dialog_new_event_radioGroup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
+            android:layout_gravity="center"
+            android:checkedButton="3"
             android:orientation="horizontal" >
 
             <RadioButton
@@ -90,18 +75,22 @@
                 android:id="@+id/dialog_new_event_work"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
                 android:text="Trabalho" />
 
             <RadioButton
                 android:id="@+id/dialog_new_event_tpc"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
                 android:text="TPC" />
 
             <RadioButton
                 android:id="@+id/dialog_new_event_other"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:checked="true"
                 android:text="Outro" />
         </RadioGroup>
 
@@ -121,6 +110,68 @@
 
             <requestFocus />
         </EditText>
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="2dp"
+            android:layout_marginBottom="15dp"
+            android:layout_marginTop="30dp"
+            android:background="@android:color/holo_orange_dark" />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:text="Ligações:"
+            android:textSize="18dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/background_light"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:background="@android:color/background_light"
+                android:orientation="horizontal" >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.8"
+                    android:background="@android:color/background_light"
+                    android:orientation="vertical" >
+
+                    <Spinner
+                        android:id="@+id/dialog_new_event_spinner_book"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                    <Spinner
+                        android:id="@+id/dialog_new_event_spinner_page"
+                        android:layout_marginTop="5dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/dialog_new_event_add_link"
+                    style="@android:style/TextAppearance.Holo.Widget.Button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:text="Adicionar" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/dialog_new_event_container_links"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/background_light"
+                android:orientation="vertical" >
+            </LinearLayout>
+        </LinearLayout>
 
         <View
             android:layout_width="fill_parent"

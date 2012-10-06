@@ -40,13 +40,14 @@ import kii.kiibook.teacher.R;
 
 public class SlaveAdaptor extends ArrayAdapter<Student> implements OnClickListener {
     
+    final Messenger                 mMessenger = new Messenger(new ActivityServiceHandler());
     private final int               layoutResourceId;
     private final Context           context;
     private final List<Student>     objects;
     private Student                 slave;
     private Dialog                  dialog;
     private PermissionsArrayAdapter mAdapter;
-    final Messenger                 mMessenger = new Messenger(new ActivityServiceHandler());
+    
     protected Messenger             mService;
     private int                     position;
     
@@ -132,7 +133,6 @@ public class SlaveAdaptor extends ArrayAdapter<Student> implements OnClickListen
                         
                         break;
                 }
-                
             }
         });
         AlertDialog alert = builder.create();

@@ -19,7 +19,6 @@
         android:icon="@drawable/area_disciplina"
         android:label="@string/app_name"
         android:theme="@style/KiiTheme" >
-        
         <receiver android:name=".AppWatcher" >
             <intent-filter>
                 <action android:name="kii.falconeye.start" />
@@ -33,17 +32,18 @@
         <activity
             android:name="kii.kiibook.Agenda.AgendaActivity"
             android:icon="@drawable/agenda"
-            android:label="Agenda" >
+            android:label="Agenda"
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name="kii.kiibook.KiiClass.InitActivity"
             android:icon="@drawable/area_disciplina"
+             android:screenOrientation="portrait" 
             android:label="@string/title_activity_classmode"
             android:theme="@android:style/Theme.DeviceDefault.NoActionBar" >
             <intent-filter>
@@ -54,7 +54,8 @@
         </activity>
         <activity
             android:name="kii.kiibook.KiiClass.MainActivity"
-            android:icon="@drawable/area_disciplina"
+            android:icon="@drawable/area_disciplina" 
+            android:screenOrientation="portrait" 
             android:label="@string/title_activity_classmode" >
         </activity>
         <activity
@@ -62,7 +63,6 @@
             android:label="@string/title_activity_password"
             android:noHistory="true"
             android:theme="@android:style/Theme.DeviceDefault.Dialog" />
-        
         <activity
             android:name="kii.kiibook.ParentalControl.NotifDialog"
             android:label="Aplicação bloqueada!"
@@ -71,8 +71,8 @@
 
         <service
             android:name="kii.kiibook.ParentalControl.FalconEyeService"
-            android:process=":myProcess"
-            android:exported="false" >
+            android:exported="false"
+            android:process=":myProcess" >
             <intent-filter>
                 <action android:name="kii.kiibook.ParentalControl.FalconEyeService" />
 

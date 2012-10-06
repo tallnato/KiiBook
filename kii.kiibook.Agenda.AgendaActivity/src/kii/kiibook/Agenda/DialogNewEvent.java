@@ -6,6 +6,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
 import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnLongClickListener;
@@ -40,15 +41,24 @@ class DialogNewEvent extends Dialog implements OnCheckedChangeListener {
     private DatePicker                              datePicker;
     private TimePicker                              timePicker;
     private final android.view.View.OnClickListener click;
+    private FragmentTransaction                     transaction;
+    private FragmentWeek                            fragment;
+    private int                                     filters;
+    private long                                    timeStamp;
     
     public DialogNewEvent( Activity context, LinearLayout parent, OnLongClickListener longClickListener,
-                                    android.view.View.OnClickListener clickLiestener ) {
+                                    android.view.View.OnClickListener clickLiestener, FragmentTransaction transaction, FragmentWeek frag,
+                                    int filter, long time ) {
     
         super(context);
         this.parent = parent;
         this.context = context;
+        this.transaction = transaction;
         clickListener = longClickListener;
         click = clickLiestener;
+        fragment = frag;
+        filters = filter;
+        timeStamp = time;
         
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
         
@@ -94,13 +104,23 @@ class DialogNewEvent extends Dialog implements OnCheckedChangeListener {
                     event.setBackgroundResource(getColor(typeSelected));
                     event.setLayoutParams(new TableLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT, 1f));
                     
-                    parent.addView(event);
+                    // parent.addView(event);
                     
                     NewEvent ev = new NewEvent(eventName.getText().toString(), eventDesc.getText() + "\n" + datePicker.getDayOfMonth()
                                                     + "/" + datePicker.getMonth() + "/" + datePicker.getYear() + " - "
                                                     + timePicker.getCurrentHour() + "h", types, datePicker.getCalendarView().getDate(),
                                                     timePicker.getCurrentHour());
                     DataShared.getInstance().getListEvents().add(ev);
+                    
+                    transaction.detach(fragment);
+                    transaction.remove(fragment);
+                    fragment = (FragmentWeek) FragmentWeek.newInstance();
+                    Bundle args = new Bundle();
+                    args.putLong("time", timeStamp);
+                    args.putInt("filters", filters);
+                    fragment.setArguments(args);
+                    transaction.add(R.id.pager_calendar, fragment, "frag");
+                    transaction.commit();
                     
                 }
                 dismiss();

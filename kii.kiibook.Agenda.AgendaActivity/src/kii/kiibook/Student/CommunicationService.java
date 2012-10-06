@@ -5,9 +5,11 @@ import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
+import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
@@ -62,9 +64,11 @@ public class CommunicationService extends Service implements Constants, Parental
     public static final int         MSG_UNREGISTER_CLIENT   = 2;
     public static final int         MSG_FALCONEYE_TURNOFF   = 3;
     private static final int        MSG_FALCONEYE_TRY_AGAIN = 3;
+    private static final String     APPLOCKER_BROADCAST     = "kiibook.applocker";
     
     ArrayList<Messenger>            mClients                = new ArrayList<Messenger>();
     final Messenger                 mMessenger              = new Messenger(new ServiceActivityHandler());
+    private final ServiceReceiver   myReceiver              = new ServiceReceiver();
     protected Messenger             mService;
     protected Toast                 textStatus;
     private NotificationManager     nm;
@@ -127,7 +131,9 @@ public class CommunicationService extends Service implements Constants, Parental
     public TcpClient                con;
     private ServiceActivityHandler  handlerService;
     private boolean                 thisService;
+    public ArrayList<String>        setApps;
     private static boolean          isRunning               = false;
+    private CommunicationService    servico;
     
     @Override
     public IBinder onBind( Intent intent ) {
@@ -157,7 +163,7 @@ public class CommunicationService extends Service implements Constants, Parental
         thisService = true;
         isRunning = true;
         me = DataShared.getInstance().getMyProfile();
-        
+        servico = this;
         // initialization Falcon Eye
         wifi = (WifiManager) getSystemService(Context.WIFI_SERVICE);
         WifiInfo wifiInfo = wifi.getConnectionInfo();
@@ -168,6 +174,10 @@ public class CommunicationService extends Service implements Constants, Parental
         ul.start();
         
         nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(APPLOCKER_BROADCAST);
+        registerReceiver(myReceiver, filter);
         
     }
     
@@ -347,7 +357,7 @@ public class CommunicationService extends Service implements Constants, Parental
                         Log.d("Service", "receive Summary Network");
                         ApplicationList_Response_ACK app_ack = (ApplicationList_Response_ACK) msg.obj;
                         
-                        ArrayList<String> setApps = new ArrayList<String>();
+                        setApps = new ArrayList<String>();
                         Iterator<PackagePermissions> it = app_ack.getPackages().iterator();
                         while (it.hasNext()) {
                             PackagePermissions pack = it.next();
@@ -465,5 +475,32 @@ public class CommunicationService extends Service implements Constants, Parental
             
         }
         
+    }
+    
+    class ServiceReceiver extends BroadcastReceiver {
+        
+        @Override
+        public void onReceive( Context context, Intent intent ) {
+        
+            String action = intent.getAction();
+            
+            if (action.equals(APPLOCKER_BROADCAST)) {
+                if (connected) {
+                    Toast.makeText(servico, "Send broadcast to applocker @ connected", Toast.LENGTH_SHORT).show();
+                    Intent i = new Intent();
+                    i.setAction("com.kii.falconeye.teacher");
+                    i.putStringArrayListExtra("Key:BlockedApps", setApps);
+                    sendBroadcast(i);
+                } else {
+                    Toast.makeText(servico, "Send broadcast to applocker @ disconnected", Toast.LENGTH_SHORT).show();
+                    Intent off = new Intent();
+                    off.setAction("com.kii.falconeye.parental");
+                    sendBroadcast(off);
+                }
+            } else {
+                Toast.makeText(servico, "BroadcastReceiver @CommunicationService - wrong action", Toast.LENGTH_SHORT).show();
+            }
+            
+        }
     }
 }

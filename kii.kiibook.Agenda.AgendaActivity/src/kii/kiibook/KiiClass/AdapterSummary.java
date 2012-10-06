@@ -73,7 +73,7 @@ public class AdapterSummary extends ArrayAdapter<Summary> {
                 link.addView(point);
                 
                 TextView view = new TextView(row.getContext());
-                view.setText(name + " - " + book.getCap());
+                view.setText(name + " - " + book.getPageName());
                 view.setTextColor(row.getResources().getColor(android.R.color.holo_blue_dark));
                 view.setOnClickListener(new OnClickListener() {
                     

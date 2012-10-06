@@ -6,9 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.OnTouchListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
@@ -16,7 +14,6 @@ import android.widget.CalendarView;
 import android.widget.CalendarView.OnDateChangeListener;
 import android.widget.ListView;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import objects.MyCalendar;
 import objects.NewEvent;
@@ -31,7 +28,7 @@ import kii.kiibook.Student.CommunicationService;
 import kii.kiibook.Student.R;
 import kii.kiibook.Student.database.DataShared;
 
-public class AgendaActivity extends FragmentActivity implements OnDateChangeListener, OnTouchListener, OnItemSelectedListener {
+public class AgendaActivity extends FragmentActivity implements OnDateChangeListener, OnItemSelectedListener {
     
     private static final String   TAG      = "CalendarMyStudent";
     private CalendarView          calendar;
@@ -108,30 +105,6 @@ public class AgendaActivity extends FragmentActivity implements OnDateChangeList
         
     }
     
-    // private ArrayList<HourCalendarListView> search( long time ) {
-    //
-    // DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-    //
-    // Calendar calendar = Calendar.getInstance();
-    // calendar.setTimeInMillis(time);
-    // String str = formatter.format(calendar.getTime());
-    // Log.d(TAG, str);
-    // Data data = new Data(str);
-    //
-    // long times = (System.currentTimeMillis());
-    //
-    // for (int i = 0; i < myCalendar.size(); i++) {
-    // if (myCalendar.get(i).getYear() == data.getAno() &&
-    // myCalendar.get(i).getMonth() == data.getMes()
-    // && myCalendar.get(i).getDay() == data.getDia()) {
-    // Log.d(TAG, myCalendar.get(i).toString());
-    // return myCalendar.get(i).getListDay();
-    // }
-    //
-    // }
-    // return null;
-    // }
-    
     private String getDateString( long time ) {
     
         Date date = new Date();
@@ -154,15 +127,6 @@ public class AgendaActivity extends FragmentActivity implements OnDateChangeList
         listViewDay.setAdapter(adapter);
     }
     
-    public boolean onTouch( View v, MotionEvent event ) {
-    
-        if (event.getAction() == MotionEvent.ACTION_UP) {
-            Toast.makeText(this, "Action UP: " + event.getAction(), Toast.LENGTH_SHORT).show();
-        }
-        
-        return false;
-    }
-    
     public void onItemSelected( AdapterView<?> arg0, View arg1, int arg2, long arg3 ) {
     
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -171,8 +135,8 @@ public class AgendaActivity extends FragmentActivity implements OnDateChangeList
         fragment = (FragmentWeek) FragmentWeek.newInstance();
         Bundle args = new Bundle();
         args.putLong("time", calendar.getDate());
-        args.putInt("filters", arg2);
-        filter = arg2;
+        args.putInt("filters", arg2 + 1);
+        filter = arg2 + 1;
         fragment.setArguments(args);
         transaction.add(R.id.pager_calendar, fragment, "frag");
         transaction.commit();

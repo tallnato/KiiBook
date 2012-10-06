@@ -11,14 +11,14 @@ public class MediaBook implements Serializable {
     
     private static final long serialVersionUID = -434654396391436685L;
     
-    public MediaBook( String name, int page, String pages ) {
+    public MediaBook( String name, int page, String pageName ) {
     
         this.name = name;
         this.page = page;
-        this.pages = pages;
+        this.pages = pageName;
     }
     
-    public String getCap() {
+    public String getPageName() {
     
         return pages;
     }

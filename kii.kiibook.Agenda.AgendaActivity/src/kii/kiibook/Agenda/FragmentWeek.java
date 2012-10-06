@@ -5,7 +5,6 @@ import android.app.AlertDialog;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.Gravity;
@@ -37,10 +36,10 @@ import kii.kiibook.Student.database.DataShared;
 
 public class FragmentWeek extends Fragment implements OnLongClickListener, OnClickListener {
     
-    public static int                       filter_all   = 0;
-    public static int                       filter_works = 1;
-    public static int                       filter_tpc   = 2;
-    public static int                       filter_tests = 3;
+    public final static int                 filter_all   = 1;
+    public final static int                 filter_tests = 2;
+    public final static int                 filter_works = 3;
+    public final static int                 filter_tpc   = 4;
     
     private View                            view;
     private TableLayout                     tableLayout;
@@ -56,19 +55,12 @@ public class FragmentWeek extends Fragment implements OnLongClickListener, OnCli
     private final int[]                     ids          = { R.id.textView_seg, R.id.textView_ter, R.id.textView_qua, R.id.textView_qui,
                                     R.id.textView_sex, R.id.textView_sab, R.id.textView_dom };
     private long                            timeStamp;
-    private int                             filters;
+    private static int                      filters;
     
     public static Fragment newInstance() {
     
         FragmentWeek mFrgment = new FragmentWeek();
         return mFrgment;
-    }
-    
-    @Override
-    public void onCreate( Bundle savedInstanceState ) {
-    
-        // TODO Auto-generated method stub
-        super.onCreate(savedInstanceState);
     }
     
     private int getDay( long time ) {
@@ -220,15 +212,28 @@ public class FragmentWeek extends Fragment implements OnLongClickListener, OnCli
             if (dayOfweek == dayOfweekTimeStamp) {
                 
                 indexDay = getDay(time) - dayOfweekTimeStamp;
-                if ((filters == filter_works) && (event.getType() == EventType.Trabalho)) {
-                    evList.add(new Events(indexDay, event.getHour(), event));
-                } else if ((filters == filter_tpc) && (event.getType() == EventType.TPC)) {
-                    evList.add(new Events(indexDay, event.getHour(), event));
-                    // } else if ((filters == filter_tests) && (event.getType()
-                    // == EventType.Teste)) {
-                    // evList.add(new Events(indexDay, event.getHour(), event));
-                } else if ((filters == filter_all)) {
-                    evList.add(new Events(indexDay, event.getHour(), event));
+                
+                Log.e(getTag(), "Filter: " + filters + " EventType: " + event.getType());
+                
+                switch (filters) {
+                    case filter_works:
+                        if (event.getType() == EventType.Trabalho) {
+                            evList.add(new Events(indexDay, event.getHour(), event));
+                        }
+                        break;
+                    case filter_tpc:
+                        if (event.getType() == EventType.TPC) {
+                            evList.add(new Events(indexDay, event.getHour(), event));
+                        }
+                        break;
+                    case filter_tests:
+                        if (event.getType() == EventType.Teste) {
+                            evList.add(new Events(indexDay, event.getHour(), event));
+                        }
+                        break;
+                    case filter_all:
+                        evList.add(new Events(indexDay, event.getHour(), event));
+                        break;
                 }
             }
         }
@@ -464,17 +469,11 @@ public class FragmentWeek extends Fragment implements OnLongClickListener, OnCli
     
         view.clearFocus();
         
-        DialogNewEvent dialog = new DialogNewEvent(getActivity(), parent, this, this);
+        DialogNewEvent dialog = new DialogNewEvent(getActivity(), parent, this, this, getActivity().getSupportFragmentManager()
+                                        .beginTransaction(), this, filters, timeStamp);
         dialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
         dialog.show();
-        Handler handler = new Handler();
-        handler.post(new Runnable() {
-            
-            public void run() {
-            
-                insertEvents();
-            }
-        });
+        
     }
     
 }
