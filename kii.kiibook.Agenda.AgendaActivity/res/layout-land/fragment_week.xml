@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout_week"
+    android:layout_width="match_parent"
+    android:gravity="center"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <TableLayout
+        android:id="@+id/table_week_days"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <TableRow
+            android:id="@+id/tableRow_days"
+            android:layout_width="fill_parent"
+            android:layout_height="30dp" >
+
+            <TextView
+                android:id="@+id/textView_weekNum"
+                android:layout_width="105dp"
+                android:layout_height="30dp" />
+
+            <TextView
+                android:id="@+id/textView_seg"
+                android:layout_width="105dp"
+                android:layout_height="30dp"
+                android:background="@drawable/cell_black_cell"
+                android:gravity="center"
+                android:textColor="@android:color/black" />
+
+            <TextView
+                android:id="@+id/textView_ter"
+                android:layout_width="105dp"
+                android:layout_height="30dp"
+                android:background="@drawable/cell_black_cell"
+                android:gravity="center"
+                android:textColor="@android:color/black" />
+
+            <TextView
+                android:id="@+id/textView_qua"
+                android:layout_width="105dp"
+                android:layout_height="30dp"
+                android:background="@drawable/cell_black_cell"
+                android:gravity="center"
+                android:textColor="@android:color/black" />
+
+            <TextView
+                android:id="@+id/textView_qui"
+                android:layout_width="105dp"
+                android:layout_height="30dp"
+                android:background="@drawable/cell_black_cell"
+                android:gravity="center"
+                android:textColor="@android:color/black" />
+
+            <TextView
+                android:id="@+id/textView_sex"
+                android:layout_width="105dp"
+                android:layout_height="30dp"
+                android:background="@drawable/cell_black_cell"
+                android:gravity="center"
+                android:textColor="@android:color/black" />
+
+            <TextView
+                android:id="@+id/textView_sab"
+                android:layout_width="105dp"
+                android:layout_height="30dp"
+                android:background="@drawable/cell_black_cell"
+                android:gravity="center"
+                android:textColor="@android:color/black" />
+
+            <TextView
+                android:id="@+id/textView_dom"
+                android:layout_width="105dp"
+                android:layout_height="30dp"
+                android:background="@drawable/cell_black_cell"
+                android:gravity="center"
+                android:textColor="@android:color/black" />
+        </TableRow>
+    </TableLayout>
+
+    <ScrollView
+        android:id="@+id/scrollView_calendar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbarAlwaysDrawHorizontalTrack="false"
+        android:scrollbarAlwaysDrawVerticalTrack="false" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
+
+            <TableLayout
+                android:id="@+id/tablelayout_week"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+            </TableLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

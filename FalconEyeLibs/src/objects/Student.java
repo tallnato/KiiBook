@@ -20,12 +20,14 @@ public class Student extends Profile implements Serializable {
     private SlaveStatus              status           = SlaveStatus.DISCONNECT;
     private List<PackagePermissions> packages;
     private ComChannel               com              = null;
+    private int                      pic;
     
     public Student( String name, Data aniversary, int bi, int numTelf, String email, Sex sex, Address addr, String ipAdd, long id ) {
     
         super(name, aniversary, bi, numTelf, email, sex, addr);
         ipAdrress = ipAdd;
         this.id = id;
+        
         packages = null;
     }
     
@@ -42,6 +44,16 @@ public class Student extends Profile implements Serializable {
     public double getAverage() {
     
         return average;
+    }
+    
+    public int getPic() {
+    
+        return pic;
+    }
+    
+    public void setPic( int pic ) {
+    
+        this.pic = pic;
     }
     
     public ComChannel getComChannel() {

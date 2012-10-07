@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+    
+    <item
+        android:id="@+id/menu_doc_return"
+        android:icon="@android:drawable/arrow_up_float"
+        android:orderInCategory="100"
+        android:showAsAction="collapseActionView"
+        android:title="Retroceder"/>
+</menu>

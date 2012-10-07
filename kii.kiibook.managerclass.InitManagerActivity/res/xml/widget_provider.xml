@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
+    android:initialLayout="@layout/activity_my_profile"
+    android:minHeight="230dp"
+    android:minWidth="500dp"
+    android:updatePeriodMillis="100" />

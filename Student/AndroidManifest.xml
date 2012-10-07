@@ -40,10 +40,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-<<<<<<< HEAD
-       
-=======
->>>>>>> b85df02826eff255ed37cebfe2c99cbb3e5928cd
+
         <activity
             android:name="kii.kiibook.KiiClass.InitActivity"
             android:icon="@drawable/area_disciplina"

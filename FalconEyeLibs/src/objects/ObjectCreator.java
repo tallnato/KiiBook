@@ -10,20 +10,17 @@ public class ObjectCreator {
     
     public final static int              NUM_CLASSES = 10;
     private final int                    NUM_STD     = 30;
-    private final String[]               firstName   = { "Guilherme", "Gustavo", "João", "Enzo", "Lucas", "Eduardo", "Henrique", "Bruno",
-                                    "Rodrigo", "Leonardo", "Diogo", "Vítor", "Carlos", "Igor", "Luis" };
-    private final String[]               lastName    = { "ABREU", "ALMEIDA", "ALVES", "ANDRADE", "ANJOS", "ANTUNES", "ARAUJO", "ASSUNCAO",
-                                    "AZEVEDO", "BAPTISTA", "BARBOSA", "BARROS", "BATISTA", "BORGES", "CARNEIRO", "CARVALHO", "CRUZ",
-                                    "CUNHA", "DOMINGUES", "ESTEVES", "FARIA", "FIGUEIREDO", "FONSECA", "FREITAS", "GARCIA", "GASPAR",
-                                    "GOMES", "GONCALVES" };
+    
     private final static String[]        classType   = { "Educação Visual e Tecnológica", "História e Geografia de Portugal",
                                     "Língua Portuguesa", "Matemática", "Ciências Físico-Químicas", "Ciências Naturais", "Educação Fisica",
                                     "Francês", " Geografia", "História", "Inglês", "Espanhol" };
     
+    private final static String[]        names       = { "Patricia Almeida", "Renato Almeida", "Vitor Gonçalves", "Rui Neto",
+                                    "Martinho Fernandes", "António Marante" };
+    
     private static ArrayList<MyCalendar> lists;
     private static String                TAG         = "ObjectCreator";
     private ArrayList<ClassPeople>       list;
-    private Student                      student;
     private ClassPeople                  turma;
     
     public ObjectCreator() {
@@ -51,26 +48,19 @@ public class ObjectCreator {
     public Student createStudent( boolean sexoFem ) {
     
         if (sexoFem) {
-            String name = "Andreia Silva";
+            String name = "Catarina Catarino";
             return new Student(name, new Data(), 123112456, 918761321, "test@tester.com", Sex.Masculino, new Address("Portugal", "Porto",
                                             "Boavista", "Avenida da Liberdade", 45), "", 1);
             
         }
-        String name = "Gustavo Oliveira";
+        String name = "João Cabrita";
         return new Student(name, new Data(), 123112456, 918761321, "test@tester.com", Sex.Masculino, new Address("Portugal", "Porto",
                                         "Boavista", "Avenida da Liberdade", 45), "", 2);
     }
     
     public Profile createTeacher() {
     
-        Random generator = new Random();
-        String name = firstName[generator.nextInt(firstName.length)];
-        String last = lastName[generator.nextInt(lastName.length)];
-        last = last.toLowerCase();
-        char c = last.charAt(0);
-        c = Character.toUpperCase(c);
-        
-        name = name + " " + last;
+        String name = "Albert Einstein";
         Profile profile = new Profile(name, new Data(), 123112456, 918761321, "test@tester.com", Sex.Masculino, new Address("Portugal",
                                         "Porto", "Boavista", "Avenida da Liberdade", 45));
         return profile;
@@ -91,23 +81,20 @@ public class ObjectCreator {
         for (int i = 0; i < 3; i++) {
             do {
                 String nameClass = classes[i];
+                
                 turma = new ClassPeople(nameClass, classType[generator.nextInt(classType.length)]);
+                turma.addStudent(createStudent(true));
+                
             }
             while (exists(turma));
-            for (int k = 0; k < NUM_STD; k++) {
-                String first = firstName[generator.nextInt(firstName.length)];
-                String last = lastName[generator.nextInt(lastName.length)];
-                last = last.toLowerCase();
-                char c = last.charAt(0);
-                c = Character.toUpperCase(c);
-                String nameStd = first + " " + last;
-                turma.addStudent(new Student(nameStd, new Data("12/08/2002"), 123123123, 911312312, first + "@gmail.com", Sex.Masculino,
-                                                new Address("Portugal", "Porto", "Boavista", "Avenida da Liberdade", 45)));
+            for (int k = 0; k < names.length; k++) {
+                
+                String nameStd = names[k];
+                turma.addStudent(new Student(nameStd, new Data("12/08/2002"), 123123123, 911312312, nameStd + "@gmail.com", Sex.Masculino,
+                                                new Address("Portugal", "Porto", "Boavista", "Avenida da Liberdade", 10 + k), "", 10 + k));
             }
-            turma.addStudent(createStudent(true));
-            turma.addStudent(createStudent(false));
             list.add(turma);
-            
+            turma.addStudent(createStudent(false));
             Collections.sort(list);
         }
     }

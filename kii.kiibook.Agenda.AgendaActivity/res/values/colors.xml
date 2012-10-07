@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="fragment_profile_background">#aacdff</color>
+    <color name="fragment_friends_background">#cecece</color>
+    <color name="fragment_classes_background">#00FF00</color>
+    <color name="fragment_messages_background">#0000FF</color>
+    <color name="fragment_news_background">#FF0000</color>
+    <color name="fragment_permissions_background">#0000FF</color>
+    <color name="custom_normal">#3300FF00</color>
+    <color name="custom_activated">#33FF0000</color>
+    <color name="list_normal">#999999</color>
+    <color name="list_activated">#000000</color>
+
+</resources>

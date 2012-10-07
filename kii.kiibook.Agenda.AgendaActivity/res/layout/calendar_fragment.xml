@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="330dp"
+        android:gravity="center"
+        android:orientation="horizontal" >
+
+        <LinearLayout
+            android:layout_width="470dp"
+            android:layout_height="fill_parent"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="250dp"
+                android:layout_margin="5dp"
+                android:background="@drawable/shape_calendar"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="Próximos Eventos"
+                    android:textSize="20dp" />
+
+                <ListView
+                    android:id="@+id/calendar_listView"
+                    android:layout_width="fill_parent"
+                    android:layout_height="match_parent" >
+                </ListView>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_margin="5dp"
+                android:background="@drawable/shape_calendar"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="Filtros"
+                    android:textSize="16dp" />
+
+                <Spinner
+                    android:id="@+id/spinner_filters"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:background="@drawable/shape_calendar"
+            android:orientation="vertical" >
+
+            <CalendarView
+                android:id="@+id/calendarView_agenda"
+                android:layout_width="300dp"
+                android:layout_height="300dp"
+                android:layout_margin="10dp"
+                android:showWeekNumber="false" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/pager_calendar"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_gravity="center"
+        android:layout_margin="5dp"
+        android:background="@drawable/shape_calendar"
+        android:padding="5dp" >
+    </FrameLayout>
+
+</LinearLayout>

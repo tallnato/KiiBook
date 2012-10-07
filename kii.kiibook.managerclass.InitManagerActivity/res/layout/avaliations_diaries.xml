@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/cenas"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <TableLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_margin="5dp" >
+
+        <TableRow
+            android:id="@+id/tableRow_head"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp" >
+
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="220dp"
+                android:layout_height="80dp"
+                android:layout_marginLeft="10dp"
+                android:gravity="center"
+                android:text="NOMES"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="120dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:gravity="center"
+                android:text="Presenças"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="120dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:gravity="center"
+                android:text="Pontualidade"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="120dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:gravity="center"
+                android:text="Comportamento"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="120dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:gravity="center"
+                android:text="Assiduidade"
+                android:textStyle="bold" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/tableRow_line"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp" >
+
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="220dp"
+                android:layout_height="80dp"
+                android:layout_marginLeft="10dp"
+                android:gravity="center"
+                android:text="Sem Nome" />
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="125dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="5dp"
+                android:background="@android:color/holo_green_dark"
+                android:gravity="center"
+                android:text="14 em 14" />
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="125dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="5dp"
+                android:background="@android:color/holo_green_dark"
+                android:gravity="center"
+                android:text="Elevado" />
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="125dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="5dp"
+                android:background="@android:color/holo_green_dark"
+                android:gravity="center"
+                android:text="Elevado" />
+
+            <TextView
+                android:id="@+id/textView5"
+                android:layout_width="125dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="5dp"
+                android:background="@android:color/holo_green_dark"
+                android:gravity="center"
+                android:text="Elevado" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/tableRow_line"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp" >
+
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="220dp"
+                android:layout_height="80dp"
+                android:layout_marginLeft="10dp"
+                android:gravity="center"
+                android:text="Sem Nome" />
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="125dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="5dp"
+                android:background="@android:color/holo_green_dark"
+                android:gravity="center"
+                android:text="14 em 14" />
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="125dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="5dp"
+                android:background="@android:color/holo_orange_dark"
+                android:gravity="center"
+                android:text="Médio" />
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="125dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="5dp"
+                android:background="@android:color/holo_red_dark"
+                android:gravity="center"
+                android:text="Baixo" />
+
+            <TextView
+                android:id="@+id/textView5"
+                android:layout_width="125dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="5dp"
+                android:background="@android:color/holo_green_dark"
+                android:gravity="center"
+                android:text="Elevado" />
+        </TableRow>
+
+        <include
+            android:layout_marginBottom="5dp"
+            layout="@layout/tablerow_dialy_evaluation" />
+
+        <include
+            android:layout_marginBottom="5dp"
+            layout="@layout/tablerow_dialy_evaluation" />
+
+        <include
+            android:layout_marginBottom="5dp"
+            layout="@layout/tablerow_dialy_evaluation" />
+
+        <include
+            android:layout_marginBottom="5dp"
+            layout="@layout/tablerow_dialy_evaluation" />
+
+        <include
+            android:layout_marginBottom="5dp"
+            layout="@layout/tablerow_dialy_evaluation" />
+
+        <include
+            android:layout_marginBottom="5dp"
+            layout="@layout/tablerow_dialy_evaluation" />
+    </TableLayout>
+
+</LinearLayout>

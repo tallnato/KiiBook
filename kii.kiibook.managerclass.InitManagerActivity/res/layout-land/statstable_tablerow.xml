@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableRow xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clickable="true" >
+
+    <TextView
+        android:id="@+id/table_name"
+        android:layout_width="710dp"
+        android:layout_height="match_parent"
+        android:background="@drawable/cell_shape"
+        android:gravity="center"
+        android:clickable="true"
+        android:padding="5dp"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="#fff" >
+    </TextView>
+
+    <TableLayout
+        android:id="@+id/table_att"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/table_name" >
+
+        <TableRow
+            android:id="@+id/table_att_titles"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:id="@+id/att1"
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/cell_black_cell"
+                android:gravity="center"
+                android:padding="5dp"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="#000" >
+            </TextView>
+
+            <TextView
+                android:id="@+id/att2"
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/cell_black_cell"
+                android:gravity="center"
+                android:padding="5dp"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="#000" >
+            </TextView>
+
+            <TextView
+                android:id="@+id/att3"
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/cell_black_cell"
+                android:gravity="center"
+                android:padding="5dp"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="#000" >
+            </TextView>
+
+            <TextView
+                android:id="@+id/att4"
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/cell_black_cell"
+                android:gravity="center"
+                android:padding="5dp"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="#000" >
+            </TextView>
+        </TableRow>
+    </TableLayout>
+</TableRow>

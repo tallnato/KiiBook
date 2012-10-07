@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ToggleButton xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/button_falconEye"
+    android:textColor="#fff"
+    android:textOn="Ligado"
+    android:textOff="Desligado"
+    android:background="@android:color/holo_red_light"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="Olho Falcão" />
