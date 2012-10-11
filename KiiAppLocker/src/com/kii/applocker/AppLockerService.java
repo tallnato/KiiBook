@@ -17,7 +17,6 @@ import android.os.IBinder;
 import android.os.Message;
 import android.os.Messenger;
 import android.util.Log;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -72,11 +71,9 @@ public class AppLockerService extends Service {
         super.onCreate();
         log("Service Started.");
         Log.e("cenas", "Service Started.");
-        
         mHandler.sendEmptyMessageDelayed(MSG_CHECK_ON_TOP, CHECK_INTERVAL);
         
         mActivityManager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
-        
         
         
         setBlockedAppsSharedPreferences();
@@ -99,8 +96,6 @@ public class AppLockerService extends Service {
         intent.setAction(STATE_BROADCAST);
         sendBroadcast(intent);
         
-        Toast.makeText(getApplicationContext(), "sending toast...", Toast.LENGTH_SHORT).show();
-        
         classMode = false;
         if (!classMode) {
             notifyParental();
@@ -118,6 +113,7 @@ public class AppLockerService extends Service {
         mHandler.removeMessages(MSG_SET_BLOCKED_APPS_PARENTAL);
         
         Log.e("cenas", "Service Stopped.");
+        Log.d("cenas", "Service Stopped.");
         
         NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         notificationManager.cancelAll();
@@ -171,6 +167,9 @@ public class AppLockerService extends Service {
         if (packge.contains("kiibook.kiibookreader")) {
             return false;
         }
+        if (packge.contains("com.kii.applocker")) {
+            return false;
+        }
         
         return blockedApps.contains(packge);
     }
@@ -195,37 +194,6 @@ public class AppLockerService extends Service {
                     mHandler.sendEmptyMessageDelayed(MSG_CHECK_ON_TOP, CHECK_INTERVAL);
                     
                     break;
-                case MSG_SET_BLOCKED_APPS_PARENTAL:
-                    if (classMode) {
-                        Log.e("cenas", "in class mode, cannot overide...");
-                        break;
-                    }
-                    
-                    Bundle b = msg.getData();
-                    if (b == null) {
-                        Toast.makeText(getApplicationContext(), "No bundle received...", Toast.LENGTH_SHORT).show();
-                        log("No bundle received...");
-                        break;
-                    }
-                    if (!b.containsKey(blockedAppsKey)) {
-                        
-                        Toast.makeText(getApplicationContext(), "No apps received in bundle...", Toast.LENGTH_SHORT).show();
-                        log("No apps received in bundle...");
-                        break;
-                    }
-                    
-                    blockedApps = b.getStringArrayList(blockedAppsKey);
-                    // log("blocked apps setted activity..." + blockedApps);
-                    
-                    SharedPreferences settings = getSharedPreferences(PREFS_NAME, Context.MODE_MULTI_PROCESS);
-                    SharedPreferences.Editor editor = settings.edit();
-                    editor.putStringSet(blockedAppsKey, new HashSet<String>(blockedApps));
-                    editor.commit();
-                    
-                    notifyBlockedAppsParental();
-                    
-                    break;
-                    
                 default:
                     super.handleMessage(msg);
             }
@@ -234,7 +202,7 @@ public class AppLockerService extends Service {
     
     private void setBlockedAppsSharedPreferences() {
         
-        SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
+        SharedPreferences settings = getSharedPreferences(PREFS_NAME, Context.MODE_MULTI_PROCESS);
         if (settings.contains(blockedAppsKey)) {
             blockedApps = new ArrayList<String>(settings.getStringSet(blockedAppsKey, new HashSet<String>()));
         } else {
@@ -244,35 +212,6 @@ public class AppLockerService extends Service {
         log("setBlockedAppsSharedPreferences ");
     }
     
-    private void getStateSharedPreferences() {
-        
-        SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
-        if (settings.contains(stateKey)) {
-            classMode = settings.getBoolean(stateKey, false);
-        } else {
-            classMode = false;
-        }
-        
-        if (classMode) {
-            if (settings.contains(tempBlockedAppsKey)) {
-                blockedApps = new ArrayList<String>(settings.getStringSet(tempBlockedAppsKey, new HashSet<String>()));
-            } else {
-                blockedApps = null;
-            }
-        }
-        
-    }
-    
-    private void writeStateSharedPreferences() {
-        
-        SharedPreferences settings = getSharedPreferences(PREFS_NAME, Context.MODE_MULTI_PROCESS);
-        SharedPreferences.Editor editor = settings.edit();
-        editor.putBoolean(stateKey, classMode);
-        if (classMode) {
-            editor.putStringSet(tempBlockedAppsKey, new HashSet<String>(blockedApps));
-        }
-        editor.commit();
-    }
     
     private class ServiceReceiver extends BroadcastReceiver {
         
@@ -288,19 +227,13 @@ public class AppLockerService extends Service {
                 Log.e("cenas", "parental mode started...");
                 notifyParental();
                 
-                Toast.makeText(getApplicationContext(), "Parental broadcast...", Toast.LENGTH_SHORT).show();
-                
-                writeStateSharedPreferences();
+                notifyBlockedAppsParental();
             } else if (action.equals(TEACHER_BROADCAST)) {
                 
-                notifyTeacher();
-                
-                
-                Toast.makeText(getApplicationContext(), "teacher broadcast...", Toast.LENGTH_SHORT).show();
                 classMode = true;
                 Log.e("cenas", "teacher mode started...");
                 
-                notifyBlockedAppsTeacher();
+                notifyTeacher();
                 
                 Bundle b = intent.getExtras();
                 if (b == null) {
@@ -316,7 +249,7 @@ public class AppLockerService extends Service {
                 blockedApps = b.getStringArrayList(blockedAppsKey);
                 // log("blockedApps setted broadcast  " + blockedApps);
                 
-                writeStateSharedPreferences();
+                notifyBlockedAppsTeacher();
             }
         }
     }
@@ -357,7 +290,7 @@ public class AppLockerService extends Service {
         String title = "Modo Parental";
         String text = "Aplicações bloqueadas actualizadas...";
         Notification notification = new Notification.Builder(this).setContentTitle(title).setTicker(title).setContentText(text)
-                                        .setSmallIcon(R.drawable.ic_launcher).setAutoCancel(true)
+                                        .setSmallIcon(R.drawable.ic_launcher)
                                         .build();
         
         notificationManager.notify(ParentalUpdateID, notification);
@@ -372,7 +305,7 @@ public class AppLockerService extends Service {
         String title = "Modo Aula";
         String text = "Aplicações bloqueadas actualizadas...";
         Notification notification = new Notification.Builder(this).setContentTitle(title).setTicker(title).setContentText(text)
-                                        .setSmallIcon(R.drawable.ic_launcher).setAutoCancel(true).build();
+                                        .setSmallIcon(R.drawable.ic_launcher).build();
         
         notificationManager.notify(TeacherUpdateID, notification);
     }

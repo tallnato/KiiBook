@@ -17,7 +17,9 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name=".AppLocker"
-            android:label="@string/title_activity_app_locker" >
+            android:label="@string/title_activity_app_locker"
+            android:launchMode="singleTop"
+            android:taskAffinity="com.kii.applocker.AppTask" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -25,29 +27,25 @@
             </intent-filter>
         </activity>
         
-        <receiver
-            android:name=".Cenas">
-            <intent-filter>
-                <action android:name="com.kii.falconeye.parental" />
-                <action android:name="com.kii.falconeye.teacher" />
-            </intent-filter>
-        </receiver>
-        
         <activity
             android:name=".PasswordDialog"
             android:label="Introduza a password"
             android:noHistory="true"
+            android:launchMode="singleTop"
             android:theme="@android:style/Theme.DeviceDefault.Dialog" />
         
         <activity
             android:name=".NotifDialog"
             android:label="Aplicação bloqueada!"
             android:noHistory="true"
+            android:launchMode="singleTop"
+            android:taskAffinity="com.kii.applocker.NotifTask"
             android:theme="@android:style/Theme.DeviceDefault.Dialog" />
 
         <service
             android:name=".AppLockerService"
             android:process=":process"
+            android:stopWithTask="false"
             android:exported="true" />
     </application>
 

@@ -66,9 +66,7 @@ public class KiiLaucher extends Activity {
     @Override
     public void onCreate( Bundle savedInstanceState ) {
         
-        Intent i = new Intent();
-        i.setClassName("com.kii.applocker", "com.kii.applocker.AppLockerService");
-        startService(i);
+        
         
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_kii_launcher);
@@ -90,15 +88,9 @@ public class KiiLaucher extends Activity {
         
         new InstalledAppsWorker().execute(this);
         
-        startService(new Intent("com.kii.applocker.AppLockerService"));
-        
-        /*AppWidgetManager awm = AppWidgetManager.getInstance(getApplicationContext());
-        List<AppWidgetProviderInfo> list = awm.getInstalledProviders();
-        System.out.println("size: " + list.size());
-        for (AppWidgetProviderInfo widget : list) {
-            System.out.println(widget);
-        }*/
-        
+        Intent i = new Intent();
+        i.setClassName("com.kii.applocker", "com.kii.applocker.AppLockerService");
+        startService(i);
     }
     
     private void setHomeScreen() {

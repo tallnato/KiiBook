@@ -23,7 +23,7 @@
             android:clearTaskOnLaunch="true"
             android:launchMode="singleTask"
             android:stateNotNeeded="true"
-        android:icon="@drawable/ic_launcher_small"
+        	android:icon="@drawable/ic_launcher_small"
             android:windowSoftInputMode="adjustPan" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -55,5 +55,4 @@
             </intent-filter>
         </receiver>
     </application>
-
 </manifest>

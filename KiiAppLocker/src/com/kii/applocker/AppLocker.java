@@ -2,19 +2,15 @@
 package com.kii.applocker;
 
 import android.app.ListActivity;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.IBinder;
 import android.os.Message;
 import android.os.Messenger;
-import android.os.RemoteException;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,6 +20,7 @@ import android.widget.CheckBox;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -31,8 +28,8 @@ public class AppLocker extends ListActivity {
     
     private PermissionsArrayAdapter mAdapter;
     final Messenger                 mMessenger      = new Messenger(new IncomingHandler());
-    private Messenger               mService        = null;
-    private final ServiceConnection mConnection     = new AppLockerServiceConnection();
+    /*private Messenger               mService        = null;
+    private final ServiceConnection mConnection     = new AppLockerServiceConnection();*/
     
     private final int               PASSWORD_DIALOG = 0x01;
     
@@ -84,15 +81,16 @@ public class AppLocker extends ListActivity {
         super.onStart();
         
         startActivityForResult(new Intent(getApplicationContext(), PasswordDialog.class), PASSWORD_DIALOG);
-        bindService(new Intent(this, AppLockerService.class), mConnection, Context.BIND_AUTO_CREATE);
+        // bindService(new Intent(this, AppLockerService.class), mConnection,
+        // Context.BIND_AUTO_CREATE);
     }
     
     @Override
-    public void onStop() {
+    public void onPause() {
         
-        super.onStop();
+        super.onPause();
         
-        try {
+        /*try {
             Message msg = Message.obtain(null, AppLockerService.MSG_SET_BLOCKED_APPS_PARENTAL);
             Bundle b = new Bundle();
             b.putStringArrayList(AppLockerService.blockedAppsKey, mAdapter.getBlockedApps());
@@ -104,7 +102,18 @@ public class AppLocker extends ListActivity {
             e.printStackTrace();
         }
         
-        unbindService(mConnection);
+        unbindService(mConnection);*/
+        
+        
+        SharedPreferences settings = getSharedPreferences(AppLockerService.PREFS_NAME, Context.MODE_MULTI_PROCESS);
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putStringSet(AppLockerService.blockedAppsKey, new HashSet<String>(mAdapter.getBlockedApps()));
+        editor.commit();
+        
+        
+        Intent intent = new Intent();
+        intent.setAction(AppLockerService.PARENTAL_BROADCAST);
+        sendBroadcast(intent);
     }
     
     @Override
@@ -168,7 +177,7 @@ public class AppLocker extends ListActivity {
         }
     }
     
-    private class AppLockerServiceConnection implements ServiceConnection {
+    /*private class AppLockerServiceConnection implements ServiceConnection {
         
         @Override
         public void onServiceConnected( ComponentName className, IBinder service ) {
@@ -181,6 +190,6 @@ public class AppLocker extends ListActivity {
             
             mService = null;
         }
-    };
+    };*/
     
 }
