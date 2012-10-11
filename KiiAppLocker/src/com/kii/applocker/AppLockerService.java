@@ -70,7 +70,6 @@ public class AppLockerService extends Service {
         
         super.onCreate();
         log("Service Started.");
-        Log.e("cenas", "Service Started.");
         mHandler.sendEmptyMessageDelayed(MSG_CHECK_ON_TOP, CHECK_INTERVAL);
         
         mActivityManager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
@@ -82,15 +81,6 @@ public class AppLockerService extends Service {
         filter.addAction(PARENTAL_BROADCAST);
         filter.addAction(TEACHER_BROADCAST);
         registerReceiver(myReceiver, filter);
-        
-        NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-        
-        Notification notification = new Notification.Builder(this).setContentTitle("AppLocker a correr").setTicker("Modo aula activo")
-                                        .setContentText("oncreate")
-                                        .setSmallIcon(android.R.drawable.ic_lock_lock).setAutoCancel(true)
-                                        .build();
-        
-        notificationManager.notify(50, notification);
         
         Intent intent = new Intent();
         intent.setAction(STATE_BROADCAST);
@@ -112,7 +102,6 @@ public class AppLockerService extends Service {
         mHandler.removeMessages(MSG_CHECK_ON_TOP);
         mHandler.removeMessages(MSG_SET_BLOCKED_APPS_PARENTAL);
         
-        Log.e("cenas", "Service Stopped.");
         Log.d("cenas", "Service Stopped.");
         
         NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
@@ -300,7 +289,6 @@ public class AppLockerService extends Service {
         
         NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         notificationManager.cancel(ParentalUpdateID);
-        notificationManager.cancel(TeacherUpdateID);
         
         String title = "Modo Aula";
         String text = "Aplicações bloqueadas actualizadas...";
@@ -315,6 +303,7 @@ public class AppLockerService extends Service {
         
         NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         notificationManager.cancel(ParentalID);
+        notificationManager.cancel(TeacherID);
         
         Notification notification = new Notification.Builder(this)
         .setContentTitle("Modo aula activo")
