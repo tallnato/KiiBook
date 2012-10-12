@@ -358,8 +358,6 @@ public class ClassModeFragment extends Fragment implements OnItemClickListener, 
             
             public void onNothingSelected( AdapterView<?> arg0 ) {
             
-                // TODO Auto-generated method stub
-                
             }
         });
         
@@ -508,7 +506,6 @@ public class ClassModeFragment extends Fragment implements OnItemClickListener, 
             mService.send(msg);
         }
         catch (RemoteException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }

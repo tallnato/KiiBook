@@ -37,7 +37,6 @@ public class MainActivity extends FragmentActivity implements OnTabChangeListene
     @Override
     protected void onCreate( Bundle savedInstanceState ) {
     
-        // TODO Auto-generated method stub
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_classmode);
         

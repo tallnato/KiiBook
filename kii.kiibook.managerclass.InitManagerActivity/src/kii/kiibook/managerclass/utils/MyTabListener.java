@@ -1,8 +1,6 @@
-
-package kii.kiibook.Student;
+package kii.kiibook.managerclass.utils;
 
 import android.app.ActionBar;
-import android.app.ActionBar.Tab;
 import android.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 
@@ -17,6 +15,10 @@ public class MyTabListener implements ActionBar.TabListener {
         this.mViewPager = mViewPager;
     }
     
+    public void onTabUnselected( ActionBar.Tab tab, FragmentTransaction fragmentTransaction ) {
+    
+    }
+    
     public void onTabSelected( ActionBar.Tab tab, FragmentTransaction fragmentTransaction ) {
     
         // When the given tab is selected, switch to the corresponding page in
@@ -24,12 +26,7 @@ public class MyTabListener implements ActionBar.TabListener {
         mViewPager.setCurrentItem(tab.getPosition());
     }
     
-    public void onTabReselected( Tab arg0, FragmentTransaction arg1 ) {
+    public void onTabReselected( ActionBar.Tab tab, FragmentTransaction fragmentTransaction ) {
     
     }
-    
-    public void onTabUnselected( Tab tab, FragmentTransaction ft ) {
-    
-    }
-    
 }

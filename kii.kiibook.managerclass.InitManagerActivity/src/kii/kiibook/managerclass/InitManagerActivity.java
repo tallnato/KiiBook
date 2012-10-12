@@ -17,7 +17,6 @@ import java.util.Iterator;
 
 import kii.kiibook.managerclass.database.DataShared;
 import kii.kiibook.teacher.R;
-import kii.kiibook.teacher.fragments.ClassesFragment;
 
 public class InitManagerActivity extends Activity implements OnKeyListener {
     
@@ -47,7 +46,7 @@ public class InitManagerActivity extends Activity implements OnKeyListener {
             public void onClick( DialogInterface dialog, int item ) {
             
                 Bundle b = new Bundle();
-                b.putInt(ClassesFragment.CLASS, item);
+                b.putInt(ManagerClassActivity.CLASS, item);
                 Intent myIntent = new Intent(InitManagerActivity.this, ManagerClassActivity.class);
                 myIntent.putExtras(b);
                 startActivity(myIntent);

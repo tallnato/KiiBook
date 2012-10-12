@@ -2,6 +2,8 @@
 package kii.kiibook.Agenda;
 
 import android.app.AlertDialog;
+import android.content.Context;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -20,9 +22,11 @@ import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import objects.EventType;
 import objects.HourCalendarListView;
+import objects.MediaBook;
 import objects.MyCalendar;
 import objects.NewEvent;
 
@@ -72,6 +76,18 @@ public class FragmentWeek extends Fragment implements OnLongClickListener, OnCli
         cal = Calendar.getInstance();
         cal.setTime(date);
         return cal.get(Calendar.DAY_OF_MONTH);
+    }
+    
+    private long getTime( int day, int month, int year ) {
+    
+        Calendar cal = Calendar.getInstance();
+        cal.setFirstDayOfWeek(cal.MONDAY);
+        cal.set(year, month, day);
+        cal.set(Calendar.HOUR_OF_DAY, 0);
+        cal.set(Calendar.MINUTE, 0);
+        cal.set(Calendar.MILLISECOND, 0);
+        cal.set(Calendar.SECOND, 0);
+        return cal.getTimeInMillis();
     }
     
     private int getFirstDayofWeek( long time ) {
@@ -243,11 +259,9 @@ public class FragmentWeek extends Fragment implements OnLongClickListener, OnCli
         while (iterator.hasNext()) {
             Events ev = iterator.next();
             
-            Log.w(getTag(), ev.toString());
-            
             LinearLayout cello = (LinearLayout) view.findViewWithTag("day" + ev.getIndex() + "hour" + ev.getHour());
             TextView events = new TextView(this.getActivity());
-            events.setText(ev.getEvent().getWhat() + "\n" + ev.getEvent().getDescription());
+            events.setText(ev.getEvent().getDescription());
             events.setOnClickListener(this);
             events.setTextColor(Color.BLACK);
             events.setOnLongClickListener(this);
@@ -452,17 +466,122 @@ public class FragmentWeek extends Fragment implements OnLongClickListener, OnCli
     
     public void onClick( View v ) {
     
+        // TODO get the event of the list, and show all the event links add to
+        // the event & send broadcast to kiireader for open the book on a
+        // specific page
         TextView text = (TextView) v;
-        TextView txt = new TextView(getActivity());
-        txt.setText(text.getText());
+        LinearLayout lay = (LinearLayout) text.getParent();
         
-        txt.setBackgroundDrawable(text.getBackground());
-        txt.setTextSize(30);
-        txt.setTextColor(text.getTextColors());
-        txt.setGravity(Gravity.CENTER);
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setView(txt);
-        builder.show();
+        int day = getFirstDayofWeek(timeStamp);
+        Calendar cal = Calendar.getInstance();
+        cal.setTimeInMillis(timeStamp);
+        int month = cal.get(Calendar.MONTH);
+        int year = cal.get(Calendar.YEAR);
+        String str = (String) lay.getTag();
+        String[] val = str.split("hour");
+        String hour = val[1];
+        String[] val1 = val[0].split("day");
+        String dayIdx = val1[1];
+        
+        int id = Integer.parseInt(dayIdx);
+        day += (id - 1);
+        int hourr = Integer.parseInt(hour);
+        
+        long time = getTime(day, month, year);
+        NewEvent event = search(time, hourr);
+        if (event != null) {
+            if (event.getLinks().isEmpty()) {
+                Log.e("CENAS", "links empty");
+            }
+            LinearLayout layo = new LinearLayout(getActivity());
+            layo.setOrientation(LinearLayout.VERTICAL);
+            
+            TextView txt = new TextView(getActivity());
+            txt.setText(event.getType().toString());
+            // txt.setBackgroundDrawable(text.getBackground());
+            txt.setTextSize(40);
+            txt.setTextColor(text.getTextColors());
+            txt.setGravity(Gravity.CENTER);
+            layo.addView(txt);
+            
+            View line = new View(getActivity());
+            LayoutParams params = new LayoutParams(LayoutParams.FILL_PARENT, 2);
+            line.setLayoutParams(params);
+            line.setBackgroundResource(android.R.color.holo_blue_bright);
+            layo.addView(line);
+            
+            txt = new TextView(getActivity());
+            txt.setText("Descrição:");
+            txt.setTextSize(20);
+            txt.setTextColor(Color.DKGRAY);
+            txt.setGravity(Gravity.LEFT);
+            layo.addView(txt);
+            
+            txt = new TextView(getActivity());
+            txt.setText(event.getDescription());
+            txt.setTextSize(30);
+            txt.setTextColor(text.getTextColors());
+            txt.setGravity(Gravity.CENTER);
+            layo.addView(txt);
+            
+            txt = new TextView(getActivity());
+            txt.setText("Ligações:");
+            txt.setTextSize(20);
+            txt.setTextColor(Color.DKGRAY);
+            txt.setGravity(Gravity.LEFT);
+            layo.addView(txt);
+            
+            Iterator<MediaBook> it = event.getLinks().iterator();
+            while (it.hasNext()) {
+                final MediaBook media = it.next();
+                
+                txt = new TextView(getActivity());
+                txt.setPadding(0, 0, 0, 15);
+                txt.setText(media.getName() + ": " + media.getPageName());
+                txt.setTextSize(16);
+                txt.setTextColor(Color.BLUE);
+                txt.setGravity(Gravity.CENTER);
+                txt.setOnClickListener(new OnClickListener() {
+                    
+                    public void onClick( View v ) {
+                    
+                        broadcastOpenBook(getActivity(), media.getName(), media.getPage(), true);
+                    }
+                });
+                
+                layo.addView(txt);
+            }
+            
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setView(layo);
+            builder.show();
+            
+            Toast.makeText(getActivity(), event.toString(), Toast.LENGTH_SHORT).show();
+        } else {
+            TextView txt = new TextView(getActivity());
+            txt.setText(text.getText());
+            
+            txt.setBackgroundDrawable(text.getBackground());
+            txt.setTextSize(30);
+            txt.setTextColor(text.getTextColors());
+            txt.setGravity(Gravity.CENTER);
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setView(txt);
+            builder.show();
+        }
+        
+    }
+    
+    private NewEvent search( long time, int h ) {
+    
+        Iterator<NewEvent> ite = DataShared.getInstance().getListEvents().iterator();
+        while (ite.hasNext()) {
+            NewEvent ev = ite.next();
+            if ((ev.getDate() == time) && (ev.getHour() == h)) {
+                return ev;
+            }
+        }
+        return null;
     }
     
     private void dialogRequestElem( LinearLayout parent ) {
@@ -476,4 +595,13 @@ public class FragmentWeek extends Fragment implements OnLongClickListener, OnCli
         
     }
     
+    public static void broadcastOpenBook( Context context, String bookName, int page, boolean openOnTop ) {
+    
+        Log.d("LINK", "broadcastOpenBook");
+        Intent i = new Intent("KIIREADER_OPEN_BOOK");
+        i.putExtra("NAME", bookName);
+        i.putExtra("PAGE", page);
+        i.putExtra("ONTOP", openOnTop);
+        context.sendBroadcast(i);
+    }
 }

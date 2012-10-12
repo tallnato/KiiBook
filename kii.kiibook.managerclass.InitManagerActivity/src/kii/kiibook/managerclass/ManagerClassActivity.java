@@ -22,14 +22,14 @@ import java.util.Iterator;
 import kii.kiibook.managerclass.adapters.AdapterSummary;
 import kii.kiibook.managerclass.database.DataShared;
 import kii.kiibook.managerclass.fragments.SummariesFragment;
+import kii.kiibook.managerclass.utils.MyTabListener;
 import kii.kiibook.teacher.R;
-import kii.kiibook.teacher.fragments.ClassesFragment;
-import kii.kiibook.teacher.listeners.MyTabListener;
 
 public class ManagerClassActivity extends FragmentActivity {
     
     private static final String STATE_SELECTED_NAVIGATION_ITEM = "selected_navigation_item";
     private static final String TAG                            = "MainActivity";
+    public final static String  CLASS                          = "class";
     
     public static final int     BOOK                           = 0;
     public static final int     FALCON_EYE                     = 1;
@@ -55,7 +55,7 @@ public class ManagerClassActivity extends FragmentActivity {
         setContentView(R.layout.manager_class);
         
         Bundle bundle = getIntent().getExtras();
-        classId = bundle.getInt(ClassesFragment.CLASS);
+        classId = bundle.getInt(CLASS);
         classPeople = DataShared.getInstance().getClasses().get(classId);
         
         // Create the adapter that will return a fragment for each section
@@ -147,7 +147,7 @@ public class ManagerClassActivity extends FragmentActivity {
             public void onClick( DialogInterface dialog, int item ) {
             
                 Bundle b = new Bundle();
-                b.putInt(ClassesFragment.CLASS, item);
+                b.putInt(CLASS, item);
                 Intent myIntent = new Intent(ManagerClassActivity.this, ManagerClassActivity.class);
                 myIntent.putExtras(b);
                 startActivity(myIntent);

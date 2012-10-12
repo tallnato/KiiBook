@@ -74,8 +74,6 @@ public class SkillsFragment extends Fragment implements OnTabChangeListener {
             
             public void onNothingSelected( AdapterView<?> arg0 ) {
             
-                // TODO Auto-generated method stub
-                
             }
         });
         
@@ -95,8 +93,6 @@ public class SkillsFragment extends Fragment implements OnTabChangeListener {
     
     public void onTabChanged( String tabId ) {
     
-        // TODO Auto-generated method stub
-        
     }
     
 }

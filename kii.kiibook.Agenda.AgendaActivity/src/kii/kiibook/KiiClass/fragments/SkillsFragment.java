@@ -66,8 +66,6 @@ public class SkillsFragment extends Fragment implements OnItemSelectedListener {
     
     public void onNothingSelected( AdapterView<?> arg0 ) {
     
-        // TODO Auto-generated method stub
-        
     }
     
 }

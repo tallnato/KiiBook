@@ -95,12 +95,6 @@ public class ComunicationServer extends Thread implements Constants {
             selector = SelectorProvider.provider().openSelector();
             
             tcpChannel = ServerSocketChannel.open();
-            // InetSocketAddress iaddr = new
-            // InetSocketAddress(InetAddress.getLocalHost(), 5000); // TODO
-            // change
-            // port
-            // to
-            // 0
             
             InetSocketAddress iaddr = new InetSocketAddress("0.0.0.0", 5000);
             

@@ -66,6 +66,7 @@ public class CommunicationService extends Service implements Constants {
     protected Toast             textStatus;
     public Student              stdCurrentAdded;
     private boolean             enable;
+    public boolean              firstTime             = false;
     private static boolean      isRunning             = false;
     
     @Override
@@ -78,6 +79,7 @@ public class CommunicationService extends Service implements Constants {
     @Override
     public void onCreate() {
     
+        Toast.makeText(CommunicationService.this, "onCreate", Toast.LENGTH_SHORT).show();
         WifiManager wifi = (WifiManager) getSystemService(Context.WIFI_SERVICE);
         WifiInfo wifiInfo = wifi.getConnectionInfo();
         myIp = Formatter.formatIpAddress(wifiInfo.getIpAddress());
@@ -140,7 +142,6 @@ public class CommunicationService extends Service implements Constants {
             if (slave.getStatus() == SlaveStatus.CONNECTED) {
                 slave.setStatus(SlaveStatus.DISCONNECT);
                 
-                checkDefaultPermissions(slave, true);
                 mComManager.sendTCPMessage(new GetSlaveApplicationList(slave.getComChannel(), msg));
                 Log.d(TAG, "Disconnect: " + slave.getName() + " @ " + slave.getIpAdrress());
                 sendMessageToUIUpdate();
@@ -181,7 +182,7 @@ public class CommunicationService extends Service implements Constants {
         Iterator<PackagePermissions> it = list.iterator();
         if (unlock) {
             while (it.hasNext()) {
-                it.next().setBlocked(true);
+                it.next().setBlocked(false);
                 
             }
         } else {
@@ -195,6 +196,7 @@ public class CommunicationService extends Service implements Constants {
                     app.setBlocked(false);
                 }
             }
+            
         }
         sendApplicationsList(std);
         return std;
@@ -248,7 +250,6 @@ public class CommunicationService extends Service implements Constants {
                         
                         stdCurrentAdded = d.getStudent();
                         
-                        // stdCurrentAdded.setStatus(SlaveStatus.CONNECTED);
                         for (int index = 0; index < dataShared.getListOffline().size(); index++) {
                             if (dataShared.getListOffline().get(index).getName().equals(stdCurrentAdded.getName())) {
                                 
@@ -258,8 +259,11 @@ public class CommunicationService extends Service implements Constants {
                                 stdCurrentAdded.setPic(std.getPic());
                                 lists.add(stdCurrentAdded);
                                 sendMessageToUIUpdate();
+                                firstTime = true;
+                                Toast.makeText(getApplicationContext(), "handleUdpMessage receive new slave", Toast.LENGTH_SHORT).show();
                             }
                         }
+                        
                     }
                     mComManager.sendUdpMessage(new Connect(myIp, "Master of puppets :D", mComManager.getTcpPort(), d.getStudent()
                                                     .getIpAdrress()));
@@ -280,21 +284,25 @@ public class CommunicationService extends Service implements Constants {
                 
                 nc.getComChannel().setAttachment(s);
                 
-                getPackages(stdCurrentAdded);
-                
-            } else {}
+                if (firstTime) {
+                    getPackages(stdCurrentAdded);
+                    Toast.makeText(getApplicationContext(), "send ApplicationList", Toast.LENGTH_SHORT).show();
+                    firstTime = false;
+                }
+            }
         }
         
         private void handleNetworkTcpMessage( NewTcpMessage msg ) {
         
-            Log.w("", "handleNetworkTcpMessage " + msg.getMsg().getClass());
             if (msg.getMsg() instanceof ApplicationList_Response) {
-                
+                Toast.makeText(getApplicationContext(), "ApplicationList_Response", Toast.LENGTH_SHORT).show();
                 Student s = dataShared.getConnectedStudents(msg.getSlave().getIpAdrress());
+                
                 List<PackagePermissions> apps = ((ApplicationList_Response) msg.getMsg()).getPackages();
                 s.setPackages(apps);
                 checkDefaultPermissions(s, false);
                 sendMessageToUIUpdate();
+                Toast.makeText(getApplicationContext(), "ApplicationList_Response : send ACK", Toast.LENGTH_SHORT).show();
                 
             }
             if (msg.getMsg() instanceof CloseConnectionAck) {

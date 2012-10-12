@@ -40,10 +40,10 @@ import kii.kiibook.teacher.R;
 
 public class DialogNewEvent extends Dialog implements OnCheckedChangeListener, OnItemSelectedListener, OnClickListener {
     
-    final String[]               caps  = { "Multiplicação de números racionais", "Potências de expoente natural",
+    final String[]               caps = { "Multiplicação de números racionais", "Potências de expoente natural",
                                     "Números inversos diferentes de zero", "Divisão de números racionais" };
     
-    private ArrayList<MediaBook> links = new ArrayList<MediaBook>();
+    private ArrayList<MediaBook> links;
     private EventType            typeSelected;
     private final Messenger      mService;
     private final Context        context;
@@ -64,6 +64,7 @@ public class DialogNewEvent extends Dialog implements OnCheckedChangeListener, O
         super(context);
         this.mService = mService;
         this.context = context;
+        links = new ArrayList<MediaBook>();
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
     }
     
@@ -204,8 +205,6 @@ public class DialogNewEvent extends Dialog implements OnCheckedChangeListener, O
     
     public void onNothingSelected( AdapterView<?> arg0 ) {
     
-        // TODO Auto-generated method stub
-        
     }
     
     public void onClick( View v ) {
@@ -235,8 +234,7 @@ public class DialogNewEvent extends Dialog implements OnCheckedChangeListener, O
                         break;
                 }
                 links.add(new MediaBook(book, pageNum, page));
-                // TODO save link to a list
-                // add book
+                
                 break;
             
             case R.id.dialog_new_event_button_save:
@@ -244,11 +242,10 @@ public class DialogNewEvent extends Dialog implements OnCheckedChangeListener, O
                 int hour = timePicker.getCurrentHour();
                 
                 /**
-                 * TODO Rebuild class NewEvent for catch mediabook links and
-                 * sending them to the student
+                 * TODO TESTING all of this code that send event with links
                  **/
                 
-                newEvent = new NewEvent("", eventDesc.getText().toString(), typeSelected, date, hour);
+                newEvent = new NewEvent(eventDesc.getText().toString(), typeSelected, date, hour, links);
                 
                 Message msg = new Message();
                 msg.obj = newEvent;
@@ -257,7 +254,6 @@ public class DialogNewEvent extends Dialog implements OnCheckedChangeListener, O
                     mService.send(msg);
                 }
                 catch (RemoteException e) {
-                    // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
                 

@@ -35,12 +35,13 @@ import objects.Student;
 import java.util.List;
 
 import kii.kiibook.managerclass.PermissionsArrayAdapter;
+import kii.kiibook.managerclass.database.DataShared;
 import kii.kiibook.teacher.CommunicationService;
 import kii.kiibook.teacher.R;
 
 public class SlaveAdaptor extends ArrayAdapter<Student> implements OnClickListener {
     
-    final Messenger                 mMessenger = new Messenger(new ActivityServiceHandler());
+    final Messenger                 mMessenger  = new Messenger(new ActivityServiceHandler());
     private final int               layoutResourceId;
     private final Context           context;
     private final List<Student>     objects;
@@ -50,6 +51,38 @@ public class SlaveAdaptor extends ArrayAdapter<Student> implements OnClickListen
     
     protected Messenger             mService;
     private int                     position;
+    private final ServiceConnection mConnection = new ServiceConnection() {
+                                                    
+                                                    public void onServiceConnected( ComponentName className, IBinder service ) {
+                                                    
+                                                        mService = new Messenger(service);
+                                                        
+                                                        try {
+                                                            Message msg = Message.obtain(null, CommunicationService.MSG_REGISTER_CLIENT);
+                                                            msg.replyTo = mMessenger;
+                                                            mService.send(msg);
+                                                        }
+                                                        catch (RemoteException e) {
+                                                            // In this case the
+                                                            // service has
+                                                            // crashed before we
+                                                            // could even do
+                                                            // anything with it
+                                                        }
+                                                    }
+                                                    
+                                                    public void onServiceDisconnected( ComponentName className ) {
+                                                    
+                                                        // This is called when
+                                                        // the connection with
+                                                        // the service has been
+                                                        // unexpectedly
+                                                        // disconnected -
+                                                        // process crashed.
+                                                        mService = null;
+                                                        
+                                                    }
+                                                };
     
     public SlaveAdaptor( Context context, int viewResourceId, List<Student> objects ) {
     
@@ -180,10 +213,9 @@ public class SlaveAdaptor extends ArrayAdapter<Student> implements OnClickListen
             public void onClick( View v ) {
             
                 student.setPackages(mAdapter.getBlockedApps());
-                
-                dialog.dismiss();
+                DataShared.getInstance().getConnectedStudents(student.getIpAdrress()).setPackages(mAdapter.getBlockedApps());
                 sendMsgtoService();
-                
+                dialog.dismiss();
             }
         });
         dialog.setCancelable(false);
@@ -211,36 +243,4 @@ public class SlaveAdaptor extends ArrayAdapter<Student> implements OnClickListen
         
     }
     
-    private final ServiceConnection mConnection = new ServiceConnection() {
-                                                    
-                                                    public void onServiceConnected( ComponentName className, IBinder service ) {
-                                                    
-                                                        mService = new Messenger(service);
-                                                        
-                                                        try {
-                                                            Message msg = Message.obtain(null, CommunicationService.MSG_REGISTER_CLIENT);
-                                                            msg.replyTo = mMessenger;
-                                                            mService.send(msg);
-                                                        }
-                                                        catch (RemoteException e) {
-                                                            // In this case the
-                                                            // service has
-                                                            // crashed before we
-                                                            // could even do
-                                                            // anything with it
-                                                        }
-                                                    }
-                                                    
-                                                    public void onServiceDisconnected( ComponentName className ) {
-                                                    
-                                                        // This is called when
-                                                        // the connection with
-                                                        // the service has been
-                                                        // unexpectedly
-                                                        // disconnected -
-                                                        // process crashed.
-                                                        mService = null;
-                                                        
-                                                    }
-                                                };
 }

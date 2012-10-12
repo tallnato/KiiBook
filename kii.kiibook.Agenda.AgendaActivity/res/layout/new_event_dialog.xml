@@ -4,7 +4,8 @@
     android:layout_width="500dp"
     android:layout_height="wrap_content"
     android:descendantFocusability="beforeDescendants"
-    android:focusableInTouchMode="true" >
+    android:focusableInTouchMode="true"
+    android:padding="5dp" >
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -29,8 +30,8 @@
                     android:layout_height="match_parent"
                     android:layout_marginLeft="30dp"
                     android:layout_weight="0.8"
-                    android:text="Novo Evento"
                     android:gravity="center_vertical"
+                    android:text="Novo Evento"
                     android:textColor="@android:color/holo_orange_dark"
                     android:textSize="25dp" />
 
@@ -40,13 +41,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/ic_menu_save" />
-
-                <Button
-                    android:id="@+id/dialog_new_event_button_exit"
-                    style="@android:style/TextAppearance.Holo.Widget.Button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/ic_menu_close_clear_cancel" />
             </LinearLayout>
 
             <View
@@ -56,32 +50,10 @@
                 android:background="@android:color/holo_orange_dark" />
         </LinearLayout>
 
-        <ScrollView
-            android:id="@+id/scrollView_1"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" >
-
-            <EditText
-                android:id="@+id/dialog_new_event_edittext"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="O quê" >
-
-                <requestFocus />
-            </EditText>
-        </ScrollView>
-
-        <View
-            android:layout_width="fill_parent"
-            android:layout_height="2dp"
-            android:layout_marginBottom="30dp"
-            android:layout_marginTop="30dp"
-            android:background="@android:color/holo_orange_dark" />
-
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
             android:text="Tipo"
             android:textSize="18dp" />
 
@@ -89,31 +61,36 @@
             android:id="@+id/dialog_new_event_radioGroup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
+            android:layout_gravity="center"
+            android:checkedButton="3"
             android:orientation="horizontal" >
+
+            <RadioButton
+                android:id="@+id/dialog_new_event_test"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Teste" />
 
             <RadioButton
                 android:id="@+id/dialog_new_event_work"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
                 android:text="Trabalho" />
 
             <RadioButton
                 android:id="@+id/dialog_new_event_tpc"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
                 android:text="TPC" />
-
-            <RadioButton
-                android:id="@+id/dialog_new_event_school"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Escolar" />
 
             <RadioButton
                 android:id="@+id/dialog_new_event_other"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:checked="true"
                 android:text="Outro" />
         </RadioGroup>
 
@@ -124,21 +101,77 @@
             android:layout_marginTop="30dp"
             android:background="@android:color/holo_orange_dark" />
 
-        <ScrollView
-            android:id="@+id/scrollView_1"
+        <EditText
+            android:id="@+id/dialog_new_event_edittext_desc"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" >
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Descrição" >
 
-            <EditText
-                android:id="@+id/dialog_new_event_edittext_desc"
+            <requestFocus />
+        </EditText>
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="2dp"
+            android:layout_marginBottom="15dp"
+            android:layout_marginTop="30dp"
+            android:background="@android:color/holo_orange_dark" />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:text="Ligações:"
+            android:textSize="18dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/background_light"
+            android:orientation="vertical" >
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="Descrição" >
+                android:layout_height="80dp"
+                android:background="@android:color/background_light"
+                android:orientation="horizontal" >
 
-                <requestFocus />
-            </EditText>
-        </ScrollView>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.8"
+                    android:background="@android:color/background_light"
+                    android:orientation="vertical" >
+
+                    <Spinner
+                        android:id="@+id/dialog_new_event_spinner_book"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                    <Spinner
+                        android:id="@+id/dialog_new_event_spinner_page"
+                        android:layout_marginTop="5dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/dialog_new_event_add_link"
+                    style="@android:style/TextAppearance.Holo.Widget.Button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:text="Adicionar" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/dialog_new_event_container_links"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/background_light"
+                android:orientation="vertical" >
+            </LinearLayout>
+        </LinearLayout>
 
         <View
             android:layout_width="fill_parent"

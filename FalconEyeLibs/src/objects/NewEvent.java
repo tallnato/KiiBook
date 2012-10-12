@@ -2,34 +2,24 @@
 package objects;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class NewEvent implements Serializable {
     
-    private static final long serialVersionUID = -6849186650737564963L;
-    private String            what;
-    private String            description;
-    private EventType         type;
-    private long              date;
-    private int               hour;
+    private static final long    serialVersionUID = -6849186650737564963L;
+    private String               description;
+    private EventType            type;
+    private long                 date;
+    private int                  hour;
+    private ArrayList<MediaBook> links            = new ArrayList<MediaBook>();
     
-    public NewEvent( String what, String description, EventType type, long date, int hour ) {
+    public NewEvent( String what, EventType typeSelected, long date, int hour, ArrayList<MediaBook> links ) {
     
-        super();
-        this.what = what;
-        this.description = description;
-        this.type = type;
+        this.description = what;
+        this.type = typeSelected;
         this.date = date;
         this.hour = hour;
-    }
-    
-    public String getWhat() {
-    
-        return what;
-    }
-    
-    public void setWhat( String what ) {
-    
-        this.what = what;
+        this.links = links;
     }
     
     public String getDescription() {
@@ -72,10 +62,21 @@ public class NewEvent implements Serializable {
         this.hour = hour;
     }
     
+    public ArrayList<MediaBook> getLinks() {
+    
+        return links;
+    }
+    
+    public void setLinks( ArrayList<MediaBook> links ) {
+    
+        this.links = links;
+    }
+    
     @Override
     public String toString() {
     
-        return "NewEvent [what=" + what + ", description=" + description + ", type=" + type + ", date=" + date + ", hour=" + hour + "]";
+        return "NewEvent [description=" + description + ", type=" + type + ", date=" + date + ", hour=" + hour + ", links="
+                                        + links.toString() + "]";
     }
     
 }

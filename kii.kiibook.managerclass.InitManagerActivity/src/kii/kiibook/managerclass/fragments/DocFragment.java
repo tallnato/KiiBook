@@ -23,10 +23,10 @@ import android.widget.Toast;
 import java.io.File;
 import java.util.ArrayList;
 
+import kii.kiibook.managerclass.adapters.AdapterDocsView;
 import kii.kiibook.managerclass.database.DataShared;
 import kii.kiibook.managerclass.utils.FileListView;
 import kii.kiibook.teacher.R;
-import kii.kiibook.teacher.adapters.AdapterListView;
 
 public class DocFragment extends Fragment implements OnItemClickListener {
     
@@ -39,7 +39,7 @@ public class DocFragment extends Fragment implements OnItemClickListener {
     private ArrayList<FileListView> files;
     private ListView                listView;
     private File                    currentDir;
-    private AdapterListView         adapter;
+    private AdapterDocsView         adapter;
     private int                     classId;
     private String                  className;
     private final String            title    = "Documentos - ";
@@ -69,7 +69,7 @@ public class DocFragment extends Fragment implements OnItemClickListener {
         checkExternalMedia();
         checkFilesList(null);
         
-        adapter = new AdapterListView(getActivity(), files);
+        adapter = new AdapterDocsView(getActivity(), files);
         listView = (ListView) view.findViewById(R.id.mylist_doc);
         
         // Assign adapter to ListView
@@ -117,7 +117,7 @@ public class DocFragment extends Fragment implements OnItemClickListener {
                 if (file.delete()) {
                     Log.d(TAG, "File deleted!");
                     checkFilesList(currentDir);
-                    adapter = new AdapterListView(getActivity(), files);
+                    adapter = new AdapterDocsView(getActivity(), files);
                     listView.setAdapter(adapter);
                     
                 } else {
@@ -207,7 +207,7 @@ public class DocFragment extends Fragment implements OnItemClickListener {
             showCustomDialog(files.get(arg2).getFile());
         } else {
             checkFilesList(files.get(arg2).getFile());
-            adapter = new AdapterListView(getActivity(), files);
+            adapter = new AdapterDocsView(getActivity(), files);
             listView.setAdapter(adapter);
             Log.d(TAG, "is a Directory");
         }
@@ -235,7 +235,7 @@ public class DocFragment extends Fragment implements OnItemClickListener {
             if (!currentDir.getParentFile().getAbsolutePath().equals("/mnt")) {
                 checkFilesList(currentDir.getParentFile());
                 
-                adapter = new AdapterListView(getActivity(), files);
+                adapter = new AdapterDocsView(getActivity(), files);
                 listView.setAdapter(adapter);
                 return true;
             }

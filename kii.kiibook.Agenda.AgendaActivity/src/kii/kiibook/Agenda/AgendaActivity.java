@@ -121,7 +121,7 @@ public class AgendaActivity extends FragmentActivity implements OnDateChangeList
         ArrayList<NextEventsListView> events = new ArrayList<NextEventsListView>();
         while (it.hasNext()) {
             NewEvent ev = it.next();
-            events.add(new NextEventsListView(getDateString(ev.getDate()), ev.getType(), ev.getWhat() + " - " + ev.getDescription()));
+            events.add(new NextEventsListView(getDateString(ev.getDate()), ev.getType(), ev.getDescription()));
         }
         adapter = new AdapterCalendarView(this, events);
         listViewDay.setAdapter(adapter);
@@ -144,8 +144,6 @@ public class AgendaActivity extends FragmentActivity implements OnDateChangeList
     
     public void onNothingSelected( AdapterView<?> arg0 ) {
     
-        // TODO Auto-generated method stub
-        
     }
     
 }

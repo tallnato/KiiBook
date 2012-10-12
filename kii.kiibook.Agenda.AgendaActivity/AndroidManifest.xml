@@ -31,6 +31,7 @@
 
         <activity
             android:name="kii.kiibook.Agenda.AgendaActivity"
+            android:taskAffinity="kii.kiibook.Agenda.AgendaX"
             android:icon="@drawable/agenda"
             android:label="Agenda"
             android:screenOrientation="portrait" >
@@ -42,8 +43,9 @@
         </activity>
         <activity
             android:name="kii.kiibook.KiiClass.InitActivity"
+            android:taskAffinity="kii.kiibook.KiiClass.xxx"
             android:icon="@drawable/area_disciplina"
-             android:screenOrientation="portrait" 
+            android:screenOrientation="portrait" 
             android:label="@string/title_activity_classmode"
             android:theme="@android:style/Theme.DeviceDefault.NoActionBar" >
             <intent-filter>
@@ -54,31 +56,11 @@
         </activity>
         <activity
             android:name="kii.kiibook.KiiClass.MainActivity"
+            android:taskAffinity="kii.kiibook.KiiClass.x"
             android:icon="@drawable/area_disciplina" 
             android:screenOrientation="portrait" 
             android:label="@string/title_activity_classmode" >
         </activity>
-        <activity
-            android:name="kii.kiibook.ParentalControl.PasswordDialog"
-            android:label="@string/title_activity_password"
-            android:noHistory="true"
-            android:theme="@android:style/Theme.DeviceDefault.Dialog" />
-        <activity
-            android:name="kii.kiibook.ParentalControl.NotifDialog"
-            android:label="Aplicação bloqueada!"
-            android:noHistory="true"
-            android:theme="@android:style/Theme.DeviceDefault.Dialog" />
-
-        <service
-            android:name="kii.kiibook.ParentalControl.FalconEyeService"
-            android:exported="false"
-            android:process=":myProcess" >
-            <intent-filter>
-                <action android:name="kii.kiibook.ParentalControl.FalconEyeService" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </service>
     </application>
 
 </manifest>

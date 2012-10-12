@@ -1,5 +1,5 @@
 
-package kii.kiibook.Student.adapters_items;
+package kii.kiibook.managerclass.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -11,14 +11,15 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import kii.kiibook.Student.R;
+import kii.kiibook.managerclass.utils.ItemListView;
+import kii.kiibook.teacher.R;
 
-public class AdapterListView extends BaseAdapter {
+public class AdapterDocsView extends BaseAdapter {
     
     private final LayoutInflater mInflater;
     private final ArrayList      itens;
     
-    public AdapterListView( Context context, ArrayList arrayList ) {
+    public AdapterDocsView( Context context, ArrayList arrayList ) {
     
         // Itens que preencheram o listview
         itens = arrayList;

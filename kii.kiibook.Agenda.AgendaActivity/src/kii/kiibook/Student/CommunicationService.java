@@ -48,10 +48,9 @@ import java.util.Iterator;
 import java.util.List;
 
 import kii.kiibook.KiiClass.MainActivity;
-import kii.kiibook.ParentalControl.ParentalConstants;
 import kii.kiibook.Student.database.DataShared;
 
-public class CommunicationService extends Service implements Constants, ParentalConstants {
+public class CommunicationService extends Service implements Constants {
     
     private WifiManager             wifi;
     private String                  ip;
@@ -335,6 +334,7 @@ public class CommunicationService extends Service implements Constants, Parental
                     
                     if (msg.obj instanceof ApplicationList) {
                         
+                        Toast.makeText(CommunicationService.this, "ApplicationList", Toast.LENGTH_SHORT).show();
                         ApplicationList_Response resp = new ApplicationList_Response(packages);
                         
                         con.sendMessage(resp);
@@ -354,7 +354,7 @@ public class CommunicationService extends Service implements Constants, Parental
                         
                     }
                     if (msg.obj instanceof ApplicationList_Response_ACK) {
-                        Log.d("Service", "receive Summary Network");
+                        Toast.makeText(CommunicationService.this, "ApplicationList_Response_ACK", Toast.LENGTH_SHORT).show();
                         ApplicationList_Response_ACK app_ack = (ApplicationList_Response_ACK) msg.obj;
                         
                         setApps = new ArrayList<String>();
@@ -386,7 +386,7 @@ public class CommunicationService extends Service implements Constants, Parental
                         
                     }
                     if (msg.obj instanceof NewEventNetwork) {
-                        Log.d("Service", "receive Summary Network");
+                        Log.d("Service", "receive NewEventNetwork");
                         NewEventNetwork summary = (NewEventNetwork) msg.obj;
                         
                         if (summary.getSummary() == null) {
@@ -500,7 +500,6 @@ public class CommunicationService extends Service implements Constants, Parental
             } else {
                 Toast.makeText(servico, "BroadcastReceiver @CommunicationService - wrong action", Toast.LENGTH_SHORT).show();
             }
-            
         }
     }
 }

@@ -53,8 +53,6 @@ public class StatsFragment extends Fragment implements OnTabChangeListener {
     
     public void onTabChanged( String tabId ) {
     
-        // TODO Auto-generated method stub
-        
     }
     
 }
