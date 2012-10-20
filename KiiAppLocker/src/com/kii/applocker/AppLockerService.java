@@ -52,7 +52,7 @@ public class AppLockerService extends Service {
     private final ServiceReceiver myReceiver                    = new ServiceReceiver();
     
     public AppLockerService() {
-        
+    
         super();
         mHandler = new IncomingHandler();
         mMessenger = new Messenger(mHandler);
@@ -60,20 +60,19 @@ public class AppLockerService extends Service {
     
     @Override
     public int onStartCommand( Intent intent, int flags, int startId ) {
-        
+    
         log("Received start id " + startId + ": " + intent);
         return START_STICKY;
     }
     
     @Override
     public void onCreate() {
-        
+    
         super.onCreate();
         log("Service Started.");
         mHandler.sendEmptyMessageDelayed(MSG_CHECK_ON_TOP, CHECK_INTERVAL);
         
         mActivityManager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
-        
         
         setBlockedAppsSharedPreferences();
         
@@ -96,7 +95,7 @@ public class AppLockerService extends Service {
     
     @Override
     public void onDestroy() {
-        
+    
         super.onDestroy();
         
         mHandler.removeMessages(MSG_CHECK_ON_TOP);
@@ -118,13 +117,11 @@ public class AppLockerService extends Service {
     
     @Override
     public IBinder onBind( Intent intent ) {
-        
+    
         NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         
-        
         Notification notification = new Notification.Builder(this).setContentTitle("AppLocker a correr").setTicker("Modo aula activo")
-                                        .setContentText("onbind").setSmallIcon(android.R.drawable.ic_lock_lock).setAutoCancel(true)
-                                        .build();
+                                        .setContentText("onbind").setSmallIcon(android.R.drawable.ic_lock_lock).setAutoCancel(true).build();
         
         notificationManager.notify(60, notification);
         
@@ -132,7 +129,7 @@ public class AppLockerService extends Service {
     }
     
     private void checkOnTop() {
-        
+    
         String onTop = getOnTop();
         if (isAppBlocked(onTop)) {
             startHome(getApplicationContext(), onTop);
@@ -142,13 +139,13 @@ public class AppLockerService extends Service {
     }
     
     private String getOnTop() {
-        
+    
         String strTopPKName = mActivityManager.getRunningTasks(1).get(0).topActivity.getPackageName();
         return strTopPKName;
     }
     
     private boolean isAppBlocked( String packge ) {
-        
+    
         if (blockedApps == null || blockedApps.isEmpty()) {
             return false;
         }
@@ -164,7 +161,7 @@ public class AppLockerService extends Service {
     }
     
     private void startHome( Context context, String topActivity ) {
-        
+    
         Intent i = new Intent(context, NotifDialog.class);
         i.addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS | Intent.FLAG_ACTIVITY_FORWARD_RESULT | Intent.FLAG_ACTIVITY_NEW_TASK
                                         | Intent.FLAG_ACTIVITY_PREVIOUS_IS_TOP | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
@@ -175,7 +172,7 @@ public class AppLockerService extends Service {
         
         @Override
         public void handleMessage( Message msg ) {
-            
+        
             switch (msg.what) {
                 case MSG_CHECK_ON_TOP:
                     checkOnTop();
@@ -190,7 +187,7 @@ public class AppLockerService extends Service {
     }
     
     private void setBlockedAppsSharedPreferences() {
-        
+    
         SharedPreferences settings = getSharedPreferences(PREFS_NAME, Context.MODE_MULTI_PROCESS);
         if (settings.contains(blockedAppsKey)) {
             blockedApps = new ArrayList<String>(settings.getStringSet(blockedAppsKey, new HashSet<String>()));
@@ -201,12 +198,11 @@ public class AppLockerService extends Service {
         log("setBlockedAppsSharedPreferences ");
     }
     
-    
     private class ServiceReceiver extends BroadcastReceiver {
         
         @Override
         public void onReceive( Context context, Intent intent ) {
-            
+        
             String action = intent.getAction();
             
             if (action.equals(PARENTAL_BROADCAST)) {
@@ -216,7 +212,6 @@ public class AppLockerService extends Service {
                 Log.e("cenas", "parental mode started...");
                 notifyParental();
                 
-                notifyBlockedAppsParental();
             } else if (action.equals(TEACHER_BROADCAST)) {
                 
                 classMode = true;
@@ -234,77 +229,36 @@ public class AppLockerService extends Service {
                     return;
                 }
                 
-                
                 blockedApps = b.getStringArrayList(blockedAppsKey);
-                // log("blockedApps setted broadcast  " + blockedApps);
-                
-                notifyBlockedAppsTeacher();
             }
         }
     }
     
     private void log( String msg ) {
-        
+    
         Log.d(AppLockerService.class.toString(), msg);
     }
     
     private void notifyParental() {
-        
-        PendingIntent contentIntent = PendingIntent.getActivity(this,
-                                        50, new Intent(this, AppLocker.class),
-                                        0);
+    
+        PendingIntent contentIntent = PendingIntent.getActivity(this, 50, new Intent(this, AppLocker.class), 0);
         
         NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         notificationManager.cancel(TeacherID);
         
-        Notification notification = new Notification.Builder(this)
-        .setContentTitle("Controlo parental activo ")
-        .setTicker("Controlo parental activo")
-        .setSmallIcon(R.drawable.ic_launcher)
-        .setAutoCancel(false)
-        .setOngoing(true)
-        .setContentIntent(contentIntent)
-        .build();
+        Notification notification = new Notification.Builder(this).setContentTitle("Controlo parental activo ")
+                                        .setTicker("Controlo parental activo").setSmallIcon(R.drawable.ic_launcher).setAutoCancel(false)
+                                        .setOngoing(true).setContentIntent(contentIntent).build();
         
         notificationManager.notify(ParentalID, notification);
     }
     
-    private void notifyBlockedAppsParental() {
-        
-        
-        NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-        notificationManager.cancel(ParentalUpdateID);
-        notificationManager.cancel(TeacherUpdateID);
-        
-        String title = "Modo Parental";
-        String text = "Aplicações bloqueadas actualizadas...";
-        Notification notification = new Notification.Builder(this).setContentTitle(title).setTicker(title).setContentText(text)
-                                        .setSmallIcon(R.drawable.ic_launcher)
-                                        .build();
-        
-        notificationManager.notify(ParentalUpdateID, notification);
-    }
-    
-    private void notifyBlockedAppsTeacher() {
-        
-        NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-        notificationManager.cancel(ParentalUpdateID);
-        
-        String title = "Modo Aula";
-        String text = "Aplicações bloqueadas actualizadas...";
-        Notification notification = new Notification.Builder(this).setContentTitle(title).setTicker(title).setContentText(text)
-                                        .setSmallIcon(R.drawable.ic_launcher).build();
-        
-        notificationManager.notify(TeacherUpdateID, notification);
-    }
-    
     private void notifyTeacher() {
-        
-        
+    
         NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         notificationManager.cancel(ParentalID);
         notificationManager.cancel(TeacherID);
-        
+        /*
         Notification notification = new Notification.Builder(this)
         .setContentTitle("Modo aula activo")
         .setTicker("Modo aula activo")
@@ -313,6 +267,6 @@ public class AppLockerService extends Service {
         .setOngoing(true)
         .build();
         
-        notificationManager.notify(TeacherID, notification);
+        notificationManager.notify(TeacherID, notification);*/
     }
 }

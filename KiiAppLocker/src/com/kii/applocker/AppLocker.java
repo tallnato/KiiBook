@@ -35,9 +35,8 @@ public class AppLocker extends ListActivity {
     
     @Override
     public void onCreate( Bundle savedInstanceState ) {
-        
+    
         super.onCreate(savedInstanceState);
-        
         
         SharedPreferences settings = getSharedPreferences(AppLockerService.PREFS_NAME, Context.MODE_MULTI_PROCESS);
         Set<String> temp = null;
@@ -52,7 +51,7 @@ public class AppLocker extends ListActivity {
             
             @Override
             public void onItemClick( AdapterView<?> arg0, View arg1, int arg2, long arg3 ) {
-                
+            
                 PackagePermissions pp = mAdapter.getItem(arg2);
                 pp.setBlocked(!pp.isBlocked());
                 
@@ -66,7 +65,7 @@ public class AppLocker extends ListActivity {
     
     @Override
     protected void onActivityResult( int requestCode, int resultCode, Intent data ) {
-        
+    
         if (requestCode == PASSWORD_DIALOG) {
             
             if (resultCode == RESULT_CANCELED) {
@@ -77,39 +76,21 @@ public class AppLocker extends ListActivity {
     
     @Override
     public void onStart() {
-        
+    
         super.onStart();
         
         startActivityForResult(new Intent(getApplicationContext(), PasswordDialog.class), PASSWORD_DIALOG);
-        // bindService(new Intent(this, AppLockerService.class), mConnection,
-        // Context.BIND_AUTO_CREATE);
     }
     
     @Override
     public void onPause() {
-        
+    
         super.onPause();
-        
-        /*try {
-            Message msg = Message.obtain(null, AppLockerService.MSG_SET_BLOCKED_APPS_PARENTAL);
-            Bundle b = new Bundle();
-            b.putStringArrayList(AppLockerService.blockedAppsKey, mAdapter.getBlockedApps());
-            msg.setData(b);
-            
-            mService.send(msg);
-        }
-        catch (RemoteException e) {
-            e.printStackTrace();
-        }
-        
-        unbindService(mConnection);*/
-        
         
         SharedPreferences settings = getSharedPreferences(AppLockerService.PREFS_NAME, Context.MODE_MULTI_PROCESS);
         SharedPreferences.Editor editor = settings.edit();
         editor.putStringSet(AppLockerService.blockedAppsKey, new HashSet<String>(mAdapter.getBlockedApps()));
         editor.commit();
-        
         
         Intent intent = new Intent();
         intent.setAction(AppLockerService.PARENTAL_BROADCAST);
@@ -118,14 +99,14 @@ public class AppLocker extends ListActivity {
     
     @Override
     public boolean onCreateOptionsMenu( Menu menu ) {
-        
+    
         getMenuInflater().inflate(R.menu.activity_app_locker, menu);
         return true;
     }
     
     @Override
     public boolean onOptionsItemSelected( MenuItem item ) {
-        
+    
         switch (item.getItemId()) {
             case R.id.menu_select_all:
                 mAdapter.selectAll();
@@ -140,7 +121,7 @@ public class AppLocker extends ListActivity {
     }
     
     private List<PackagePermissions> getInstalledApps() {
-        
+    
         PackageManager pm = getPackageManager();
         ArrayList<PackagePermissions> res = new ArrayList<PackagePermissions>();
         
@@ -169,27 +150,11 @@ public class AppLocker extends ListActivity {
         
         @Override
         public void handleMessage( Message msg ) {
-            
+        
             switch (msg.what) {
                 default:
                     super.handleMessage(msg);
             }
         }
     }
-    
-    /*private class AppLockerServiceConnection implements ServiceConnection {
-        
-        @Override
-        public void onServiceConnected( ComponentName className, IBinder service ) {
-            
-            mService = new Messenger(service);
-        }
-        
-        @Override
-        public void onServiceDisconnected( ComponentName className ) {
-            
-            mService = null;
-        }
-    };*/
-    
 }
