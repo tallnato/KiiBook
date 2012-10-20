@@ -24,7 +24,8 @@
             android:launchMode="singleTask"
             android:stateNotNeeded="true"
         	android:icon="@drawable/ic_launcher_small"
-            android:windowSoftInputMode="adjustPan" >
+            android:windowSoftInputMode="adjustPan"
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -36,10 +37,12 @@
         <activity
             android:name="com.kii.launcher.drawer.DrawerActivity"
             android:label="@string/drawer_title"
-            android:theme="@style/DrawerStyle" />
+            android:theme="@style/DrawerStyle"
+            android:screenOrientation="portrait" />
         <activity
             android:name="com.kii.launcher.Lockscreen"
-            android:label="@string/drawer_title" />
+            android:label="@string/drawer_title"
+            android:screenOrientation="portrait" />
 
         <service
             android:name="com.kii.launcher.KiiLauncherService"
