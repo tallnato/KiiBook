@@ -356,14 +356,10 @@ public class KiiLaucher extends Activity {
             
                 Intent i;
                 PackageManager manager = getPackageManager();
-                i = manager.getLaunchIntentForPackage("kii.kiibook.Student");
+                i = manager.getLaunchIntentForPackage("com.google.android.apps.currents");
                 if (i == null) {
-                    i = manager.getLaunchIntentForPackage("com.google.android.apps.currents");
-                    
-                    if (i == null) {
-                        Toast.makeText(getApplicationContext(), "Google Currents não instalado...", Toast.LENGTH_SHORT).show();
-                        return;
-                    }
+                    Toast.makeText(getApplicationContext(), "Google Currents não instalado...", Toast.LENGTH_SHORT).show();
+                    return;
                 }
                 i.addCategory(Intent.CATEGORY_LAUNCHER);
                 Bundle bundle = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.slide_in_up, android.R.anim.fade_out)
@@ -384,14 +380,11 @@ public class KiiLaucher extends Activity {
                 
                 Intent i;
                 PackageManager manager = getPackageManager();
-                i = manager.getLaunchIntentForPackage("kii.kiibook.Student");
+                i = manager.getLaunchIntentForPackage("com.google.android.apps.currents");
+                
                 if (i == null) {
-                    i = manager.getLaunchIntentForPackage("com.google.android.apps.currents");
-                    
-                    if (i == null) {
-                        Toast.makeText(getApplicationContext(), "Google Currents não instalado...", Toast.LENGTH_SHORT).show();
-                        return;
-                    }
+                    Toast.makeText(getApplicationContext(), "Google Currents não instalado...", Toast.LENGTH_SHORT).show();
+                    return;
                 }
                 i.addCategory(Intent.CATEGORY_LAUNCHER);
                 Bundle bundle = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.slide_in_up, android.R.anim.fade_out)
